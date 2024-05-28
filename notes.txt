@@ -2,6 +2,8 @@ https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-Writing
 
 https://github.com/appinha/42cursus-03-minishell
 
+https://www.youtube.com/playlist?list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY
+
 What our program should have:
 - Display a Prompt:
 	Your shell should show a prompt (e.g., $ or myshell>) when it is ready to receive a new command from the user.
@@ -30,6 +32,14 @@ Allowed external functs:
 		- exit;
 	-> Functions Duda used on Pipex:
 		- fork;
+		- access;
+		- wait;
+		- waitpid;
+		- dup2;
+		- pipe;
+		- execve;
+		- getenv;
+		- perror;
 	-> Functions Nat used on minitalk:
 		- signal;
 		- sigaction;
@@ -45,8 +55,6 @@ Allowed external functs:
 		- add_history;
 		- access;
 	Functions I am in doubt
-	- wait;
-	- waitpid;
 	- wait3;
 	- wait4;
 	- getcwd;
@@ -55,20 +63,15 @@ Allowed external functs:
 	- lstat;
 	- fstat;
 	- unlink;
-	- execve;
 	- dup;
-	- dup2;
-	- pipe;
 	- opendir;
 	- readdir;
 	- closedir;
 	- strerror;
-	- perror;
 	- isatty;
 	- ttyname;
 	- ttyslot;
 	- ioctl;
-	- getenv;
 	- tcsetattr;
 	- tcgetattr;
 	- tgetent;

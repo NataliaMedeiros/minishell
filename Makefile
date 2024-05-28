@@ -6,11 +6,12 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/05/28 11:40:00 by natalia       ########   odam.nl          #
+#    Updated: 2024/05/28 17:23:58 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
+
 LIBFT = ./libft/libft.a
 
 RED = \033[31m
@@ -47,12 +48,12 @@ $(NAME): $(LIBFT) $(OBJECTS)
 	@cc $(CFLAGS) -c -o $@ $^
 
 clean:
-	@$(MAKE) clean -C ./Libft
+	@$(MAKE) clean -C ./libft
 	@rm -f $(OBJECTS)
 # @echo "$(GREEN)\t OFILES Cleansed! $(RESET)🆗"
 
 fclean:
-	@$(MAKE) fclean -C ./Libft
+	@$(MAKE) fclean -C ./libft
 	@rm -f $(NAME)
 	@rm -f $(OBJECTS)
 # @echo "$(GREEN)$(BOLD)\t ALL Cleansed! $(RESET)🆗"
