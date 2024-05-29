@@ -4,6 +4,8 @@ https://github.com/appinha/42cursus-03-minishell
 
 https://www.youtube.com/playlist?list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY
 
+test
+
 What our program should have:
 - Display a Prompt:
 	Your shell should show a prompt (e.g., $ or myshell>) when it is ready to receive a new command from the user.
@@ -53,7 +55,6 @@ Allowed external functs:
 		- rl_replace_line;
 		- rl_redisplay;
 		- add_history;
-		- access;
 	Functions I am in doubt
 	- wait3;
 	- wait4;
