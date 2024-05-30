@@ -34,8 +34,8 @@ To store these tokens, we use a command table, which organizes all these tokens 
 
 
 | Function		| From lib			| Description
-| :--			| :--				| :--				| :--
-| **printf**	| `man 3 printf`	| `<stdio.h>`		| write output to stdout
+| :--			| :--				| :--	
+| **printf** 		| `<stdio.h>`			| write output to stdout
 
 ---
 
