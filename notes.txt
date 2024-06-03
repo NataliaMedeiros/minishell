@@ -86,3 +86,34 @@ Allowed external functs:
 		- tgetstr;
 		- tgoto;
 		- tputs;
+
+
+List with some commands sample (not necessary we should implement all):
+	ls
+	ls -l
+	cd /path/to/directory
+	mkdir new_directory
+	rmdir directory_to_remove
+	cp file1 file2
+	mv old_file new_file
+	rm file_to_remove
+	pwd
+	touch new_file.txt
+	cat file.txt
+	nano file.txt
+	less file.txt
+	find /path/to/search -name "filename"
+	./program_name
+	ping example.com
+	ifconfig
+	ps aux
+	kill PID
+	echo "Hello, World!"
+	touch "my file.txt"
+	ls -l "my file.txt"
+	rm "my file.txt"
+	echo 'Hello, $USER!'
+	grep "Hello, World!" file.txt
+	find . -name "*.txt" -exec grep "search string" '{}' \;
+
+

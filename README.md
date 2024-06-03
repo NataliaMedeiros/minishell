@@ -34,8 +34,22 @@ To store these tokens, we use a command table, which organizes all these tokens 
 
 
 | Function		| From lib			| Description
-| :--			| :--				| :--	
-| **printf** 		| `<stdio.h>`			| write output to stdout
+| :--			| :--				| :--
+| **printf** 	| `<stdio.h>`		| write output to stdout
+| **readline**	| <readline/readline.h><readline/history.h> | get a line from a user with editing
+| **rl_clear_history** |
+| **rl_on_new_line** |
+| **rl_replace_line** |
 
+,
+, rl_redisplay, add_history,
+printf, malloc, free, write, access, open, read,
+close, fork, wait, waitpid, wait3, wait4, signal,≈
+sigaction, sigemptyset, sigaddset, kill, exit,
+getcwd, chdir, stat, lstat, fstat, unlink, execve,
+dup, dup2, pipe, opendir, readdir, closedir,
+strerror, perror, isatty, ttyname, ttyslot, ioctl,
+getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
+tgetnum, tgetstr, tgoto, tputs
 ---
 
