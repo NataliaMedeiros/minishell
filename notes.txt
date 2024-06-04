@@ -57,7 +57,7 @@ Allowed external functs:
 			char *
 			readline (const char *prompt);
 		- rl_clear_history;
-		- rl_on_new_line;
+		- rl_on_new_line; - Typically, rl_on_new_line is used when a program needs to reset the input state because the cursor has moved to a new line.
 		- rl_replace_line;
 		- rl_redisplay;
 		- add_history;
@@ -91,7 +91,9 @@ Allowed external functs:
 List with some commands sample (not necessary we should implement all):
 	ls
 	ls -l
+	echo  "hello" >> infile
 	cd /path/to/directory
+	cd /path
 	mkdir new_directory
 	rmdir directory_to_remove
 	cp file1 file2
@@ -115,5 +117,10 @@ List with some commands sample (not necessary we should implement all):
 	echo 'Hello, $USER!'
 	grep "Hello, World!" file.txt
 	find . -name "*.txt" -exec grep "search string" '{}' \;
+
+	//TO DO - entender melhor a funcao access
+	//TO DO - entender melhor as funcao de check path da DUDA
+	//TO DO - verificar qual melhor lugar para colocar o check_path
+	//TO DO - entender mais conceitos do Pipex (fork, process, etc)
 
 

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/05/31 11:46:11 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/04 16:46:29 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	add_command_back(t_command **head, char *content)
 	if (command == NULL)
 		printf("Fail to include philo\n");
 	current_command->next = command;
+	//incluir link pra head
 }
 
 int	has_quotes(char *argv)
@@ -112,7 +113,7 @@ char	*remove_spaces(char *argv)
 	return (new_argv);
 }
 
-void	parser(char *argv)
+t_command	*initialize_commands(char *argv)
 {
 	char		**commands;
 	char		*new_argv;
@@ -145,6 +146,31 @@ void	parser(char *argv)
 	while (command_list != NULL)
 	{
 		printf("command %s and token %u\n", command_list->command, command_list->token);
+		command_list = command_list->next;
+	}
+	return (command_list);
+}
+
+void	initialize_cmd_table(char *argv)
+{
+	//t_cmd_table	*cmd_table;
+
+	printf("%s\n", ft_strchr(argv, '|'));
+	// return (cmd_table);
+}
+
+void	parser(char *argv, char **envp)
+{
+	t_command	*command_list;
+	//t_cmd_table	*cmd_table;
+
+	command_list = initialize_commands(argv);
+	//cmd_table =
+	//initialize_cmd_table(argv);
+	while (command_list->command != NULL)
+	{
+		char	*path = check_path(command_list->command, envp);
+		printf("%s\n", path);
 		command_list = command_list->next;
 	}
 }

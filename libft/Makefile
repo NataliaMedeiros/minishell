@@ -48,6 +48,7 @@ FILES =	ft_adapted_atoi.c \
 		ft_lstsize.c \
 		ft_lstlast.c \
 		ft_strrchr.c \
+		ft_strncmp.c \
 
 OFILES = $(FILES:%.c=%.o)
 
