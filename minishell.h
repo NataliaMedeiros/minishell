@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/04 16:42:12 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/06 14:48:54 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,27 @@ typedef struct s_cmd_table
 	struct s_cmd_table	*next;
 }						t_cmd_table;
 
+typedef struct s_data
+{
+	char	*command_line;
+	char	**envp;
+}			t_data;
+
 /* parser */
 t_token		check_token(char *argv);
-t_command	*new_command(char *command);
-t_command	*last_command(t_command *lst);
-void		add_command_back(t_command **head, char *content);
-void		parser(char *argv, char **envp);
+void		parser(t_data *data);
 char		*check_path(char *cmd, char **envp);
+int			nb_commands(char *cmd_line);
+
+/*t_command*/
+t_command	*new_command(char *command);
+void		add_command_back(t_command **head, char *content);
+int			has_quotes(char *argv);
+char		*remove_spaces(char *argv);
+t_command	*initialize_commands(char *argv);
+t_command	*last_node(t_command *lst);
+
+/* ft_adapted_split */
+char	**ft_split_adp(char const *s, char const *separators);
 
 #endif

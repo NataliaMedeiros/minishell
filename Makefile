@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/06/03 17:01:27 by natalia       ########   odam.nl          #
+#    Updated: 2024/06/06 14:45:34 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ RESET = \033[0m
 
 SOURCE = main.c \
 		parser.c \
-		envp.c \
+		check_path.c \
+		ft_adapted_split.c \
+		t_command_utils.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 
