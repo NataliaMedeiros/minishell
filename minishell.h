@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
+/*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: natalia <natalia@student.42.fr>              +#+                     */
+/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/07 12:04:43 by edribeir      ########   odam.nl         */
+/*   Created: 2024/06/07 10:47:19 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/06/07 10:54:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	main (int argc, char **argv)
-{
-	if (argc != 1)
-	{
-		ft_putendl_fd(2, "There is too much arguments");
-		exit (EXIT_FAILURE);
-	}
-	(void)argv;
-}
+# include "libft/libft.h"
+
+#endif
