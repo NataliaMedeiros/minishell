@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/06/07 10:58:45 by edribeir      ########   odam.nl          #
+#    Updated: 2024/06/10 11:47:50 by eduarda       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,10 @@ SOURCE = main.c \
 OBJECTS = $(SOURCE:%.c=%.o)
 
 CC = cc
+
 CFLAGS = -Wall -Werror -Wextra -g
+
+LIBS = -L/usr/lib/x86_64-linux-gnu -lreadline
 
 LIBFTDIR = libft
 
@@ -41,7 +44,7 @@ $(LIBFT):
 	@echo "Compiled ✅ $(LIBFT)"
 
 $(NAME): $(LIBFT) $(OBJECTS)
-	@cc $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME)
+	@cc $(CFLAGS) $(OBJECTS) $(LIBFT) $(LIBS) -o $(NAME)
 	@echo "$(PINK)$(BOLD)\n\t Ready! $(RESET)🎉\n"
 
 %.o:%.c

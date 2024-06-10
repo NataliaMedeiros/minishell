@@ -3,3 +3,4 @@ libft/*.o
 libft/libft.a
 .vscode
 minishell
+teste.c
