@@ -6,8 +6,9 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/03 17:06:03 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/03 17:06:04 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/06 15:14:22 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+

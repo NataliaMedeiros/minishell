@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/06/06 14:45:34 by natalia       ########   odam.nl          #
+#    Updated: 2024/06/06 15:14:10 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,9 @@ $(LIBFT):
 
 $(NAME): $(LIBFT) $(OBJECTS)
 	@cc $(CFLAGS) $(OBJECTS) $(LFLAGS) $(LIBFT) -o $(NAME)
-# @echo "$(PINK)$(BOLD)\n\t Ready! $(RESET)🎉\n" we can decide the colors together
+	@echo "$(GREEN)$(BOLD)\n--------------------------------------$(RESET)"
+	@echo "$(PINK)$(BOLD)\n\t Minishell ready! $(RESET)🎉\n"
+	@echo "$(GREEN)$(BOLD)--------------------------------------\n$(RESET)"
 
 %.o:%.c
 	@cc $(CFLAGS) -c -o $@ $^
@@ -59,13 +61,13 @@ $(NAME): $(LIBFT) $(OBJECTS)
 clean:
 	@$(MAKE) clean -C ./libft
 	@rm -f $(OBJECTS)
-# @echo "$(GREEN)\t OFILES Cleansed! $(RESET)🆗"
+	@echo "$(GREEN)$(BOLD)\t OFILES Cleansed! $(RESET)🆗"
 
 fclean:
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(NAME)
 	@rm -f $(OBJECTS)
-# @echo "$(GREEN)$(BOLD)\t ALL Cleansed! $(RESET)🆗"
+	@echo "$(GREEN)$(BOLD)\t ALL Cleansed! $(RESET)🆗"
 
 re: fclean all
 

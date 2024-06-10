@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/06 14:48:54 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/10 13:08:11 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@ typedef struct s_command
 typedef struct s_cmd_table
 {
 	char				*cmd;
-	t_token				token;
+	char				*token;
 	struct s_cmd_table	*next;
 }						t_cmd_table;
 
 typedef struct s_data
 {
 	char	*command_line;
+	char	**cmd;
+	char	**token;
 	char	**envp;
 }			t_data;
 
