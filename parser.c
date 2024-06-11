@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/10 13:09:06 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/11 17:26:47 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,8 @@ void	split_cmds(t_data **data)
 		(*data)->cmd[counter] = fill_cmd((*data)->command_line, start, i);
 		if ((*data)->command_line[i] != '\0')
 			(*data)->token[counter] = fill_token((*data)->command_line, i);
-		else
-			(*data)->token[counter] = NULL;
-		printf("count:%d and %s\n", counter, (*data)->cmd[counter]);
-		printf("token:%d and %s\n", counter, (*data)->token[counter]);
+		printf("cmd[%d]: %s\n", counter, (*data)->cmd[counter]);
+		printf("token[%d]: %s\n", counter, (*data)->token[counter]);
 		counter++;
 		i++;
 		if ((*data)->command_line[i] != '>' || (*data)->command_line[i] != '<')
@@ -182,13 +180,13 @@ t_cmd_table	*initialize_cmd_table(t_data *data)
 	return (cmd_table);
 }
 
-void	parser(t_data *data)
+void	parser(t_data **data)
 {
 	t_command	*command_list;
 	t_cmd_table	*cmd_table;
 
-	command_list = initialize_commands(data->command_line);
-	cmd_table = initialize_cmd_table(data);
+	command_list = initialize_commands((*data)->command_line);
+	cmd_table = initialize_cmd_table(*data);
 	while (command_list != NULL)
 	{
 		//printf("command %s and token %u\n", command_list->command, command_list->token);

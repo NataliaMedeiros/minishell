@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/10 13:08:26 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/10 13:11:11 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 		data->envp = envp;
 		add_history(data->command_line);
 		printf("input = %s\n", data->command_line);
-		parser(data);
+		parser(&data);
 		check_path(data->command_line, data->envp);
 		rl_on_new_line();
 	}
