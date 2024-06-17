@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 14:44:28 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/06 15:01:16 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/17 11:49:11 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,30 +83,7 @@ char	*remove_spaces(char *argv)
 	return (new_argv);
 }
 
-t_command	*initialize_commands(char *argv)
-{
-	char		**commands;
-	char		*new_argv;
-	t_command	*command_list;
-	int			i;
 
-	if (has_quotes(argv) == 1)
-	{
-		new_argv = remove_spaces(argv);
-		commands = ft_split(new_argv, '"');
-	}
-	else
-		commands = ft_split(argv, ' ');
-	i = 0;
-	command_list = new_command(commands[0]);
-	i++;
-	while (commands[i] != NULL)
-	{
-		add_command_back(&command_list, commands[i]);
-		i++;
-	}
-	return (command_list);
-}
 
 t_command	*last_node(t_command *lst)
 {
