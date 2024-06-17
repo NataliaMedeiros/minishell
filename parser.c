@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/17 12:09:40 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/06/17 13:02:39 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,11 @@ int	nb_commands(char *cmd_line)
 {
 	int	i;
 	int	count;
-	char	c;
 
 	i = 0;
 	count = 1;
 	while (cmd_line[i] != '\0')
 	{
-		c = cmd_line[i];
 		if (cmd_line[i] == '|' || cmd_line[i] == '>' || cmd_line[i] == '<')
 		{
 			count += 1;
@@ -68,7 +66,7 @@ char	*fill_cmd(char *cmd_line, int start, int end)
 		start++;
 	len = end - start;
 	token = cmd_line[end];
-	printf("t = %c\n", token);
+	// printf("t = %c\n", token);
 	while (i < len)
 	{
 		if (token != '\0' && cmd_line[start] == ' ' && cmd_line[start + 1] == token)
@@ -85,12 +83,16 @@ char *fill_token(char *cmd_line, int i)
 	char *token;
 	int len;
 
-	if (cmd_line[i] == '>' && cmd_line[i + 1] == '>')
-		len = 2;
-	else if (cmd_line[i] == '<' && cmd_line[i + 1] == '<')
+	if (cmd_line[i] == '\0')
+	{
+		return (NULL);
+	}
+	
+	if ((cmd_line[i] == '>' && cmd_line[i + 1] == '>') ||
+		(cmd_line[i] == '<' && cmd_line[i + 1] == '<'))
 		len = 2;
 	else
-		len =1;
+		len = 1;
 	token = ft_calloc((len + 1), sizeof(char));
 	//protect calloc
 	token[0] = cmd_line[i];
@@ -105,7 +107,7 @@ void	split_cmds(t_data **data)
 	int		nb_token;
 	int		counter;
 	int		i;
-	int start;
+	int		start;
 
 	nb_cmd = nb_commands((*data)->command_line);
 	(*data)->cmd = ft_calloc((nb_cmd + 1), sizeof(char));
@@ -123,9 +125,8 @@ void	split_cmds(t_data **data)
 				&& (*data)->command_line[i] != '>' && (*data)->command_line[i] != '<')
 			i++;
 		(*data)->cmd[counter] = fill_cmd((*data)->command_line, start, i);
-		if ((*data)->command_line[i] != '\0')
-			(*data)->token[counter] = fill_token((*data)->command_line, i);
-		printf("cmd[%d]: %s\n", counter, (*data)->cmd[counter]);
+		(*data)->token[counter] = fill_token((*data)->command_line, i);
+		// printf("cmd[%d]: %s\n", counter, (*data)->cmd[counter]);
 		printf("token[%d]: %s\n", counter, (*data)->token[counter]);
 		counter++;
 		i++;
@@ -188,7 +189,7 @@ void	parser(t_data **data)
 	cmd_table = initialize_cmd_table(*data);
 	while (cmd_table != NULL)
 	{
-		printf("command %s and token %s\n", cmd_table->cmd, cmd_table->token);
+		printf("command %s\n", cmd_table->cmd);
 		cmd_table = cmd_table->next;
 	}
 }
