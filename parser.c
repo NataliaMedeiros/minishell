@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/17 13:02:39 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/06/17 17:21:28 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ t_token	check_token(char *argv)
 	if (argv[0] == '<')
 	{
 		if (argv[1] == '<')
-			return (LESSLESS);
-		return (LESS);
+			return (HEREDOC);
+		return (IN);
 	}
 	if (argv[0] == '>')
 	{
 		if (argv[1] == '>')
-			return (GREATGREAT);
-		return (GREAT);
+			return (APPEND);
+		return (OUT);
 	}
 	return (WORDS);
 }
@@ -115,7 +115,8 @@ void	split_cmds(t_data **data)
 		return ;
 	nb_token = nb_cmd - 1;
 	(*data)->token = ft_calloc((nb_token + 1), sizeof(char));
-	//protect null
+	if ((*data)->token == NULL)
+		return ;
 	counter = 0;
 	i = 0;
 	start = 0;
@@ -126,7 +127,7 @@ void	split_cmds(t_data **data)
 			i++;
 		(*data)->cmd[counter] = fill_cmd((*data)->command_line, start, i);
 		(*data)->token[counter] = fill_token((*data)->command_line, i);
-		// printf("cmd[%d]: %s\n", counter, (*data)->cmd[counter]);
+		printf("cmd[%d]: %s\n", counter, (*data)->cmd[counter]);
 		printf("token[%d]: %s\n", counter, (*data)->token[counter]);
 		counter++;
 		i++;
@@ -172,6 +173,8 @@ t_cmd_table	*initialize_cmd_table(t_data *data)
 	int			i;
 
 	split_cmds(&data);
+	printf("		cmd[0]: %s\n", (data)->cmd[0]);
+	printf("		token[0]: %s\n", (data)->token[0]);
 	cmd_table = new_cmd(data->cmd[0], data->token[0]);
 	i = 1;
 	while (data->cmd[i] != NULL)
@@ -189,7 +192,7 @@ void	parser(t_data **data)
 	cmd_table = initialize_cmd_table(*data);
 	while (cmd_table != NULL)
 	{
-		printf("command %s\n", cmd_table->cmd);
+		printf("command %s and token %s\n", cmd_table->cmd, cmd_table->token);
 		cmd_table = cmd_table->next;
 	}
 }

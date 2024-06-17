@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/10 13:11:43 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/17 17:01:19 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ typedef enum s_token
 {
 	PIPE,
 	WORDS,
-	LESS,
-	LESSLESS,
-	GREAT,
-	GREATGREAT,
+	IN,
+	HEREDOC,
+	OUT,
+	APPEND,
 	AND,
-} t_token;
+}		t_token;
 
 typedef struct s_command
 {

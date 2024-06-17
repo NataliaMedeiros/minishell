@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/17 11:54:21 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/06/17 17:32:14 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		data->command_line = readline("[minishell]: "); //testar usando point
+		printf("---%s---\n", data->command_line);
+		printf("---ls > \n---\n");
 		data->envp = envp;
 		add_history(data->command_line);
 		parser(&data);
