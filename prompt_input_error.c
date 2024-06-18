@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/18 11:23:06 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/06/18 14:56:08 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/06/18 16:26:31 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,22 @@ bool	input_checker(char *prompt)
 	{
 		if (prompt[i + 1] == '\0' && (prompt[i] == '|'
 				|| prompt[i] == '<' || prompt[i] == '>'))
-		{
-			ft_putendl_fd(2, "Syntax Error");
-			return (false);
-		}
-		if (prompt[i] == '|') // add |> case because doenst work >> if i put the > and  < here too
-		{
-			if (prompt[i + 1] == '|' || prompt[i + 1] == '<'
-				|| prompt[i + 1] == '>')
-			{
-				ft_putendl_fd(2, "Syntax Error");
-				return (false);
-			}
-		}
-		if (prompt[i] == ';' || prompt[i] == '\\')
 			return (ft_putendl_fd(2, "Syntax Error"), false);
+		if (prompt[i] == '<' || prompt[i] == '>')
+		{
+			if (prompt[i + 1] == '|' || prompt[i + 2] == '|'
+				|| prompt[i + 2] == '<' || prompt[i + 2] == '>') // only take care of one space!
+				return (ft_putendl_fd(2, "Syntax Error"), false);
+		}
+		if (prompt[i] == '|')
+		{
+			if ((prompt[i + 1] == '|' || prompt[i + 1] == '<'
+				|| prompt[i + 1] == '>') || (prompt[i + 2] == '|'
+				|| prompt[i + 2] == '<' || prompt[i + 2] == '>'))
+				return (ft_putendl_fd(2, "Syntax Error"), false);
+		}
+		// if (prompt[i] == ';' || prompt[i] == '\\')
+		// 	return (ft_putendl_fd(2, "Syntax Error"), false);
 		i++;
 	}
 	return (true);
