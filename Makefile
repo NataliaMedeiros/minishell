@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/06/10 11:47:50 by eduarda       ########   odam.nl          #
+#    Updated: 2024/06/18 14:30:58 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
 SOURCE = main.c \
+		prompt_input_error.c \
+		# parser.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 

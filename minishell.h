@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/07 10:47:19 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/06/10 15:15:55 by eduarda       ########   odam.nl         */
+/*   Updated: 2024/06/18 14:53:38 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,27 @@
 # include <signal.h>
 # include <unistd.h>
 
-typedef struct s_data
-{
-	char *path_env;
-	char *prompt_entry;
+// typedef struct s_pipe
+// {
+// 	char *child2;
+// 	// char **path_env;
+// 	// char **cmd_array;
+// 	// char *outfile;
+// 	// char *infile;
+// 	// char *heredoc;
+// 	t_data child2;
+// } t_pipe;
 
-} t_data;
+// typedef struct s_data
+// {
+// 	char **path_env;
+// 	char **cmd_array;
+// 	char *outfile;
+// 	char *infile;
+// 	char *heredoc;
+// 	t_pipe pipe;
+// } t_data;
+
+bool	input_checker(char *prompt);
 
 #endif
