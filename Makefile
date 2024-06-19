@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/06/17 11:34:39 by edribeir      ########   odam.nl          #
+#    Updated: 2024/06/18 17:15:45 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
 SOURCE = main.c \
-		parser.c \
+		parser/parser.c \
+		parser/tokenizer.c \
 		check_path.c \
 		ft_adapted_split.c \
-		t_command_utils.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 

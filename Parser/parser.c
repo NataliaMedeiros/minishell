@@ -6,30 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/17 17:21:28 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/06/18 17:14:58 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-t_token	check_token(char *argv)
-{
-	if (argv[0] == '|')
-		return (PIPE);
-	if (argv[0] == '<')
-	{
-		if (argv[1] == '<')
-			return (HEREDOC);
-		return (IN);
-	}
-	if (argv[0] == '>')
-	{
-		if (argv[1] == '>')
-			return (APPEND);
-		return (OUT);
-	}
-	return (WORDS);
-}
+#include "../minishell.h"
 
 int	nb_commands(char *cmd_line)
 {
@@ -87,7 +68,7 @@ char *fill_token(char *cmd_line, int i)
 	{
 		return (NULL);
 	}
-	
+
 	if ((cmd_line[i] == '>' && cmd_line[i + 1] == '>') ||
 		(cmd_line[i] == '<' && cmd_line[i + 1] == '<'))
 		len = 2;

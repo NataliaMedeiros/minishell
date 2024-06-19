@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/17 17:01:19 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/06/19 14:01:31 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <stdbool.h>
 
 typedef enum s_token
 {
@@ -58,12 +59,9 @@ char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
 /*t_command*/
-t_command	*new_command(char *command);
 void		add_command_back(t_command **head, char *content);
 int			has_quotes(char *argv);
 char		*remove_spaces(char *argv);
-t_command	*initialize_commands(char *argv);
-t_command	*last_node(t_command *lst);
 
 /* ft_adapted_split */
 char	**ft_split_adp(char const *s, char const *separators);
