@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/21 20:03:24 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/21 11:18:50 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdbool.h> //boolean
-# include <fcntl.h> //function open
+# include <stdbool.h>
 
 typedef enum s_token
 {
@@ -31,15 +30,19 @@ typedef enum s_token
 	AND,
 }		t_token;
 
-typedef struct s_mini
+typedef struct s_command
 {
-	char	**cmd;
-	int		fd_outfile;
-	char	*outfile;
-	int		fd_infile;
-	char	*infile;
-	struct s_mini	*pipe;
-}			t_mini;
+	char			*command;
+	t_token			token;
+	struct s_command	*next;
+}					t_command;
+
+typedef struct s_cmd_table
+{
+	char				*cmd;
+	char				*token;
+	struct s_cmd_table	*next;
+}						t_cmd_table;
 
 typedef struct s_data
 {
@@ -56,6 +59,7 @@ char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
 /*t_command*/
+void		add_command_back(t_command **head, char *content);
 int			has_quotes(char *argv);
 char		*remove_spaces(char *argv);
 
