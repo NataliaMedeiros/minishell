@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/21 20:10:40 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/24 14:38:54 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,21 @@ int	nb_commands(char *cmd_line)
 
 void	free_array(int	counter, char **cmd)
 {
-	while (counter > 0)
+	if (counter == 0)
 	{
-		free(cmd[counter]);
-		counter--;
+		while (cmd[counter] != NULL)
+		{
+			free(cmd[counter]);
+			counter++;
+		}
+	}
+	else
+	{
+		while (counter > 0)
+		{
+			free(cmd[counter]);
+			counter--;
+		}
 	}
 	free(cmd);
 }
@@ -140,60 +151,90 @@ void	print_array(char **array)
 	}
 }
 
-void	parser(t_data data)
+void	print_struct(t_parser	*head)
+{
+	printf("printing mini:\n");
+	while (head != NULL)
+	{
+		if (head->cmd != NULL)
+			print_array(head->cmd);
+		printf("outfile: %s\n", head->outfile ? head->outfile : "None");
+		printf("infile: %s\n", head->infile ? head->infile : "None");
+		head = head->pipe;
+	}
+}
+
+t_parser	*new_struct()
+{
+	t_parser	*new_element;
+
+	new_element = malloc(sizeof(t_parser));
+	if (new_element == NULL)
+		return (NULL);
+	new_element->infile = NULL;
+	new_element->outfile = NULL;
+	new_element->pipe = NULL;
+	return (new_element);
+}
+
+int	parser(t_data data)
 {
 	int i;
-	t_mini	*mini_data;
+	t_parser	*mini_data;
+	t_parser	*head;
 
-	data.cmd = split_cmds(data);
+	data.cmd_lst = split_cmds(data);
+	if (data.cmd_lst == NULL)
+		return (1);
 	i = 0;
-	mini_data = malloc(sizeof(t_mini));
+	mini_data = new_struct();
 	if (mini_data == NULL)
-		return ; //acho que tenho que fazer free do data.cmd
-	//mini_data->ft_infile = NULL;
-	//mini_data->ft_outfile = NULL;
-	mini_data->infile = NULL;
-	mini_data->outfile = NULL;
-	while (data.cmd[i] != NULL)
 	{
-		printf("[data]: %s\n", data.cmd[i]);
-		if (data.cmd[i][0] == '>')
+		free_array(0, data.cmd_lst);
+		printf("Failure to malloc struct");
+		return (1);
+	}
+	head = mini_data;
+	while (data.cmd_lst[i] != NULL)
+	{
+		printf("[data]: %s\n", data.cmd_lst[i]);
+		if (data.cmd_lst[i][0] == '|')
+		{
+			mini_data->pipe = new_struct();
+			mini_data = mini_data->pipe;
+		}
+		else if (data.cmd_lst[i][0] == '>')
 		{
 			i++;
-			mini_data->outfile = ft_strdup(data.cmd[i]);
-			if (data.cmd[i][1] == '>')
-				mini_data->fd_outfile = open(mini_data->outfile, O_CREAT |  O_APPEND);
+			mini_data->outfile = ft_strdup(data.cmd_lst[i]);
+			if (data.cmd_lst[i][1] == '>')
+				mini_data->fd_outfile = open(mini_data->outfile, O_WRONLY | O_CREAT | O_APPEND, NULL);
 			else
-				mini_data->fd_outfile = open(mini_data->outfile, O_CREAT |  O_WRONLY);
+				mini_data->fd_outfile = open(mini_data->outfile, O_WRONLY | O_CREAT | O_TRUNC, NULL);
+			if (mini_data->fd_outfile == -1)
+				printf("Failure to open file\n"); //tem free e return to add;
 			printf("outfile: %s and fd: %d\n", mini_data->outfile, mini_data->fd_outfile);
 		}
-		else if(data.cmd[i][0] == '<')
+		else if(data.cmd_lst[i][0] == '<')
 		{
 			i++;
-			mini_data->infile = ft_strdup(data.cmd[i]);
-			//if (data.cmd[i][1] == '>')
-				//I don't know what to put here
-			//else
-				mini_data->fd_infile = open(mini_data->infile, O_RDONLY);
+			mini_data->infile = ft_strdup(data.cmd_lst[i]);
+			if (data.cmd_lst[i][1] == '<')
+				mini_data->fd_infile = open(mini_data->infile, O_CREAT | O_WRONLY | O_TRUNC, 0644); //revisar flags e permissoes. Pensar na parte do terminal
+			else
+				mini_data->fd_infile = open(mini_data->infile, O_CREAT | O_RDONLY, 0644);
+			if (mini_data->fd_outfile == -1)
+				printf("Failure to open file\n"); //tem free e return to add;
 			printf("infile: %s and fd: %d\n", mini_data->infile, mini_data->fd_infile);
 		}
 		else
 		{
-			mini_data->cmd = ft_split(data.cmd[i], ' ');
+			mini_data->cmd = ft_split(data.cmd_lst[i], ' ');
 			print_array(mini_data->cmd);
 		}
 		i++;
 	}
+	print_struct(head); //a linha será removida, pois está aqui somente para imprimir e conferir struct
+	return (0);
 }
 
-t_list	*ft_lstnew(void *content)
-{
-	t_list	*new_element;
-
-	new_element = malloc(sizeof(t_list));
-	if (new_element == NULL)
-		return (NULL);
-	new_element->content = content;
-	new_element->next = NULL;
-	return (new_element);
-}
