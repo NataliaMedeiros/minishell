@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/24 14:38:00 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/24 17:02:47 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/history.h>
 # include <stdbool.h> //boolean
 # include <fcntl.h> //function open
+# include <string.h>
 
 typedef enum s_token
 {
@@ -60,6 +61,6 @@ int			has_quotes(char *argv);
 char		*remove_spaces(char *argv);
 
 /* ft_adapted_split */
-char	**ft_split_adp(char const *s, char const *separators);
+char		**ft_split_adp(char const *s, char const *separators);
 
 #endif
