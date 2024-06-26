@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/06/24 17:02:41 by natalia       ########   odam.nl          #
+#    Updated: 2024/06/25 14:55:13 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,12 @@ RESET = \033[0m
 
 SOURCE = main.c \
 		parser/parser.c \
+		parser/parser_heredoc.c \
+		parser/parser_utils.c \
+		parser/temporary_functions.c \
+		parser/struct_utils.c \
 		check_path.c \
-		ft_adapted_split.c \
+		free_utils.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 

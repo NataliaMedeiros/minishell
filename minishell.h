@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/24 17:02:47 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 13:03:27 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,28 @@ char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
 /*t_command*/
-int			has_quotes(char *argv);
+bool			has_quotes(char *argv);
 char		*remove_spaces(char *argv);
 
 /* ft_adapted_split */
 char		**ft_split_adp(char const *s, char const *separators);
+
+/* parser_heredoc */
+int	handle_heredoc(t_parser **parser);
+
+/* parser utils */
+int	nb_commands(char *cmd_line);
+char	**split_cmds(t_data data);
+char	*ft_substr_modified(char const *s, unsigned int start, size_t len);
+
+/* free_utils */
+void	free_array(int	counter, char **cmd);
+
+/* temporary_functions*/
+void	print_struct(t_parser	*head);
+void	print_array(char **array);
+
+/* struct_utils */
+t_parser	*new_struct();
 
 #endif

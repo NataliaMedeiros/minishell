@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/06/06 14:44:28 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/19 14:33:03 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 13:03:18 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,6 @@ void	add_command_back(t_command **head, char *content)
 		printf("Fail to include philo\n");
 	current_command->next = command;
 	//incluir link pra head
-}
-
-int	has_quotes(char *argv)
-{
-	int	i;
-
-	i = 0;
-	while (argv[i] != '\0')
-	{
-		if (argv[i] == '"')
-			return (1);
-		i++;
-	}
-	return (0);
 }
 
 char	*remove_spaces(char *argv)
