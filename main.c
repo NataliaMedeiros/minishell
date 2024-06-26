@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/24 14:30:03 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 13:13:50 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ bool	is_input_valid(char *cmd)
 				return (ft_putendl_fd(2, "Syntax Error"), false);
 			else if (cmd[i] =='>' || cmd[i] == '<')
 				i++;
-			while (cmd[i] == ' ' && cmd[i + 1] != '\0')
+			while (cmd[i] == ' ' && cmd[i] != '\0')
 				i++;
-			if (cmd[i + 1] == '\0')
+			if (cmd[i] == '\0')
 				return (ft_putendl_fd(2, "Syntax Error"), false);
 			if (cmd[i] == '|' || cmd[i] =='>' || cmd[i] == '<')
 				return (ft_putendl_fd(2, "Syntax Error"), false);
