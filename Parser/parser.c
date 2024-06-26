@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/26 13:08:21 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 13:43:42 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,77 +57,6 @@ int	handle_infile(t_parser	**parser, char **cmd_lst, int i)
 	return (0);
 }
 
-char	*remove_quotes(char *limiter)
-{
-	char	*new_limiter;
-	int		i;
-	int		j;
-
-	new_limiter = ft_calloc(sizeof(char), ft_strlen(limiter) - 1);
-	if (new_limiter == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (limiter[i] != '\0')
-	{
-		if (limiter[i] != '"' && limiter[i] != '\'')
-		{
-			new_limiter[j] = limiter[i];
-			j++;
-		}
-		i++;
-	}
-	return (new_limiter);
-}
-
-bool	has_quotes(char *arg)
-{
-	int	i;
-
-	i = 0;
-	while (arg[i] != '\0')
-	{
-		if (arg[i] == '"' || arg[i] == '\'')
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
-{
-	char	*temp;
-
-	printf("received cmd: %s\n", cmd);
-	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
-	if ((*parser)->cmd == NULL)
-		return (1);
-	(*parser)->cmd[0] = ft_strdup("echo");
-	if ((*parser)->cmd[0] == NULL)
-		return (1);
-	temp = ft_strtrim(cmd, "echo ");
-	if (temp == NULL)
-		return (1);
-	printf("temp ->%s\n", temp);
-	if (has_quotes(temp) == true)
-		(*parser)->cmd[1] = remove_quotes(temp);
-	else
-		(*parser)->cmd[1] = ft_strdup(temp);
-	if ((*parser)->cmd[1] == NULL)
-		return (1);
-	free(temp);
-	return (0);
-}
-
-int	fill_cmd(t_parser **parser, char *cmd)
-{
-	if (ft_strncmp(cmd, "echo", 4) == 0)
-		fill_cmd_mode_echo(parser, cmd);
-	else
-		(*parser)->cmd = ft_split(cmd, ' '); //esse split nao funciona quando é passado um texto como parametro (echo "hello word")
-	return (0);
-}
-
 int	fill_parser(t_data	data, t_parser	**parser)
 {
 	int i;
@@ -167,10 +96,10 @@ int	parser(t_data data)
 
 	data.cmd_lst = split_cmds(data);
 	if (data.cmd_lst == NULL)
-		return (1);
+		return (error_msg("Failure on parsing\n", NULL), 1);
 	parser = new_struct();
 	if (parser == NULL)
-		return (free_array(0, data.cmd_lst), 1); //free because split allocate memory
+		return (error_msg("Failure on parsing\n", data.cmd_lst), 1); //free because split allocate memory
 	head_parser = parser;
 	if (fill_parser(data, &parser) != 0)
 		return (1); //incluir free do parser

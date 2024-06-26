@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/26 13:03:27 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 13:42:29 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
 /*t_command*/
-bool			has_quotes(char *argv);
+//bool			has_quotes(char *argv);
 char		*remove_spaces(char *argv);
 
 /* ft_adapted_split */
@@ -80,5 +80,11 @@ void	print_array(char **array);
 
 /* struct_utils */
 t_parser	*new_struct();
+
+/* parser_fill_cmd */
+int	fill_cmd(t_parser **parser, char *cmd);
+
+/* utils */
+void	error_msg(char *msg, char **array);
 
 #endif
