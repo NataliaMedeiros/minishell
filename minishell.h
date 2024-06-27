@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/26 13:42:29 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 14:17:00 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <fcntl.h> //function open
 # include <string.h>
 
-typedef enum s_token
+typedef enum s_token //nao usado
 {
 	PIPE,
 	WORDS,
@@ -86,5 +86,8 @@ int	fill_cmd(t_parser **parser, char *cmd);
 
 /* utils */
 void	error_msg(char *msg, char **array);
+
+/* env */
+char	**parsing_env_path(char **envp);
 
 #endif

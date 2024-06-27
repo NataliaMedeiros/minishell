@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/26 13:43:11 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/26 14:17:29 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1 && argv)
 		return (error_msg("Too much argments", NULL), 1); //Maybe think in a better message
+	data.envp = parsing_env_path(envp);
 	while (1)
 	{
 		data.command_line = readline("[minishell]: ");
