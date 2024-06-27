@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 static char	*remove_quotes(char *limiter)
 {
 	char	*new_limiter;
@@ -42,7 +41,6 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 {
 	char	*temp;
 
-	printf("received cmd: %s\n", cmd);
 	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
 	if ((*parser)->cmd == NULL)
 		return (1);
@@ -52,7 +50,6 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 	temp = ft_strtrim(cmd, "echo ");
 	if (temp == NULL)
 		return (1);
-	printf("temp ->%s\n", temp);
 	if (has_quotes(temp) == true)
 		(*parser)->cmd[1] = remove_quotes(temp);
 	else
@@ -66,8 +63,13 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 int	fill_cmd(t_parser **parser, char *cmd)
 {
 	if (ft_strncmp(cmd, "echo", 4) == 0)
-		fill_cmd_mode_echo(parser, cmd);
+	{
+		if (fill_cmd_mode_echo(parser, cmd) == 1)
+			return(error_msg("Failure to fill cmd\n"), 1);
+	}
 	else
-		(*parser)->cmd = ft_split(cmd, ' '); //esse split nao funciona quando é passado um texto como parametro (echo "hello word")
+		(*parser)->cmd = ft_split(cmd, ' ');
+	if ((*parser)->cmd == NULL)
+		return(error_msg("Failure to fill cmd\n"), 1);
 	return (0);
 }

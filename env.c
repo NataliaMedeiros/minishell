@@ -20,6 +20,6 @@ char	**parsing_env_path(char **envp) //Part of Duda's function
 
 	path = ft_split(ft_find_path(envp), ':');
 	if (path == NULL)
-		return(error_msg("Unexpected error\n", NULL), NULL);
+		return(error_msg("Unexpected error\n"), NULL);
 	return (path);
 }

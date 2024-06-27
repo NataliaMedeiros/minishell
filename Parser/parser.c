@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/26 13:43:42 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/27 15:18:35 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ int handle_pipe(t_parser **parser)
 {
 	(*parser)->pipe = new_struct();
 	if ((*parser)->pipe == NULL)
-	{
-		printf("Failed to allocate memory for pipe\n");
-		return (1);
-	}
+		return(error_msg("Failed to allocate memory for pipe\n"), 1);
 	(*parser) = (*parser)->pipe;
 	return (0);
 }
@@ -35,25 +32,25 @@ int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
 	else
 		(*parser)->fd_outfile = open((*parser)->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if ((*parser)->fd_outfile == -1)
-		return(printf("Failure to open outfile\n"), free((*parser)->outfile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
-	printf("outfile: %s and fd: %d\n", (*parser)->outfile, (*parser)->fd_outfile);
+		return(error_msg("Failure to open outfile\n"), free((*parser)->outfile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
 	return (0);
 }
 
 /*function to handle input redirection (<) and heredoc (<<). However the heredod still neds some implementation*/
-int	handle_infile(t_parser	**parser, char **cmd_lst, int i)
+int	handle_infile(t_parser	**parser, t_data data, int i)
 {
-	(*parser)->infile = ft_strdup(cmd_lst[i + 1]);
+	(*parser)->infile = ft_strdup(data.cmd_lst[i + 1]);
 	if ((*parser)->infile == NULL)
 		return (1);
-	if (cmd_lst[i][1] == '<')
+	if (data.cmd_lst[i][1] == '<')
 	{
-		handle_heredoc(parser);
+		if (handle_heredoc(parser, data) != 0)
+			return (1);
 	}
 	else
 		(*parser)->fd_infile = open((*parser)->infile, O_CREAT | O_RDONLY, 0644);
 	if ((*parser)->fd_outfile == -1)
-		return(printf("Failure to open infile\n"), free((*parser)->infile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
+		return(error_msg("Failure to open infile\n"), free((*parser)->infile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
 	return (0);
 }
 
@@ -77,34 +74,37 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		}
 		else if(data.cmd_lst[i][0] == '<')
 		{
-			if (handle_infile(parser, data.cmd_lst, i) != 0)
+			if (handle_infile(parser, data, i) != 0)
 				return (1);
 			i++;
 		}
 		else
-			fill_cmd(parser, data.cmd_lst[i]);
+			if (fill_cmd(parser, data.cmd_lst[i]) != 0)
+				return (1);
 		i++;
 	}
 	return (0);
 }
 
-/*Function that creates the parser struct*/
+/*Function that creates the parser struct
+head is used to not lose the reference to the first node
+print_struct será removido, pois está aqui somente para imprimir e conferir struct*/
 int	parser(t_data data)
 {
 	t_parser	*parser;
-	t_parser	*head_parser; //head is used to not lose the reference to the first node
+	t_parser	*head_parser;
 
 	data.cmd_lst = split_cmds(data);
 	if (data.cmd_lst == NULL)
-		return (error_msg("Failure on parsing\n", NULL), 1);
+		return (error_msg("Failure on parsing\n"), 1);
 	parser = new_struct();
 	if (parser == NULL)
-		return (error_msg("Failure on parsing\n", data.cmd_lst), 1); //free because split allocate memory
+		return (error_msg_with_free("Failure on parsing\n", data.cmd_lst), 1);
 	head_parser = parser;
 	if (fill_parser(data, &parser) != 0)
-		return (1); //incluir free do parser
-	print_struct(head_parser); //a linha será removida, pois está aqui somente para imprimir e conferir struct
-	//implementar free struct when finish to use a cmd line and before return to prompt
+		return (free_parsing(&parser), 1);
+	print_struct(head_parser);
+	//ver se é o lugar certo paraimplementar free struct when finish to use a cmd line and before return to prompt
 	return (0);
 }
 

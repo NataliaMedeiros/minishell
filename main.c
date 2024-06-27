@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/26 14:17:29 by natalia       ########   odam.nl         */
+/*   Updated: 2024/06/27 14:24:16 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ bool	is_input_valid(char *cmd)
 		if(cmd[i] == '|' || cmd[i] =='>' || cmd[i] == '<')
 		{
 			if(cmd[i + 1] == '\0')
-				return (error_msg("Syntax Error", NULL), false);
+				return (error_msg("Syntax Error"), false);
 			i++;
 			if (cmd[i] == '|')
-				return (error_msg("Syntax Error", NULL), false);
+				return (error_msg("Syntax Error"), false);
 			else if ((cmd[i] == '>' && cmd[i - 1] == '<') || (cmd[i] == '<' && cmd[i - 1] == '>'))
-				return (error_msg("Syntax Error", NULL), false);
+				return (error_msg("Syntax Error"), false);
 			else if (cmd[i] =='>' || cmd[i] == '<')
 				i++;
 			while (cmd[i] == ' ' && cmd[i] != '\0')
 				i++;
 			if (cmd[i] == '\0')
-				return (error_msg("Syntax Error", NULL), false);
+				return (error_msg("Syntax Error"), false);
 			if (cmd[i] == '|' || cmd[i] =='>' || cmd[i] == '<')
-				return (error_msg("Syntax Error", NULL), false);
+				return (error_msg("Syntax Error"), false);
 		}
 		i++;
 	}
@@ -47,8 +47,9 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	if (argc != 1 && argv)
-		return (error_msg("Too much argments", NULL), 1); //Maybe think in a better message
-	data.envp = parsing_env_path(envp);
+		return (error_msg("Too much argments"), 1); //Maybe think in a better message
+	data.envp = envp;
+	data.path = parsing_env_path(envp);
 	while (1)
 	{
 		data.command_line = readline("[minishell]: ");
