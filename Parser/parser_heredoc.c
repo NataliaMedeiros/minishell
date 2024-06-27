@@ -49,69 +49,6 @@ static char	*remove_lim_backslash(char *limiter)
 	return (new_limiter);
 }
 
-char	*var_replace(char *line, char *var_exp, int start, int end)
-{
-	char	*sub;
-	char	*sub2;
-	char	*join;
-	char	*newline;
-
-	sub = ft_substr(line, 0, start - 1);
-	join = ft_strjoin(sub, var_exp);
-	sub2 = ft_substr(line, end, ft_strlen(line));
-	newline = ft_strjoin(join, sub2);
-	free(sub);
-	free(join);
-	free(sub2);
-	return (newline);
-}
-
-void	get_var(char *line, int i, t_data data)
-{
-	int	start;
-	int	len;
-	char *var;
-	int	j;
-	char	*var_value;
-	// char *new_line;
-
-	start = i;
-	while (line[i] != ' ' && line[i] != '"' && line[i] != '\0')
-		i++;
-	len = i - start;
-	var = ft_substr(line, start, len);
-	printf("var = %s\n", var);
-	j = 0;
-	while (data.envp[j])
-	{
-		if (ft_strncmp(data.envp[j], var, len) == 0)
-		{
-			var_value = ft_strdup(data.envp[j] + (len + 1));
-			printf("%s\n", var_value);
-			break;
-		}
-		j++;
-	}
-	// new_line = var_replace(line, var_value, start, i);
-	// printf("new_line = %s\n", new_line);
-}
-
-void	handle_dollar_sign(char *line, t_data data)
-{
-	int		i;
-
-	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
-	{
-		i = 0;
-		while (line[i] != '\0')
-		{
-			if (line[i] == '$')
-				get_var(line, i + 1, data);
-			i++;
-		}
-	}
-}
-
 /* This functions create the space op terminal to receive the heredoc input, reads this imput,
 checks delimiter (remover quotes and backslash if necessary) and closing the typing space on
 terminal when limiter is placed as input */
@@ -141,10 +78,10 @@ int	handle_heredoc(t_parser **parser, t_data data)
 			ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			break;
 		//implementar dollar sign
-		if (ft_strchr(line, '$') != NULL)
+		while (ft_strchr(line, '$') != NULL)
 		{
-			handle_dollar_sign(line, data);
-			printf("Handle dollar sign\n");
+			line = handle_dollar_sign(line, data);
+			printf("line = %s\n", line);
 		}
 		write((*parser)->fd_infile, line, strlen(line));
 		write((*parser)->fd_infile, "\n", 1);
