@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   minishell.h                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/06/07 10:47:19 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/06/18 14:53:38 by edribeir      ########   odam.nl         */
+/*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
+/*   Updated: 2024/07/05 17:44:10 by eduarda       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,87 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <stdbool.h>
-# include <signal.h>
-# include <unistd.h>
+# include <stdbool.h> //boolean
+# include <fcntl.h> //function open
+# include <string.h>
 
-// typedef struct s_pipe
-// {
-// 	char *child2;
-// 	// char **path_env;
-// 	// char **cmd_array;
-// 	// char *outfile;
-// 	// char *infile;
-// 	// char *heredoc;
-// 	t_data child2;
-// } t_pipe;
+typedef enum s_token //nao usado
+{
+	PIPE,
+	WORDS,
+	IN,
+	HEREDOC,
+	OUT,
+	APPEND,
+	AND,
+}		t_token;
 
-// typedef struct s_data
-// {
-// 	char **path_env;
-// 	char **cmd_array;
-// 	char *outfile;
-// 	char *infile;
-// 	char *heredoc;
-// 	t_pipe pipe;
-// } t_data;
+typedef struct s_parser
+{
+	char	**cmd;
+	int		fd_outfile;
+	char	*outfile;
+	int		fd_infile;
+	char	*infile;
+	struct s_parser	*pipe;
+}			t_parser;
 
-bool	input_checker(char *prompt);
+typedef struct s_data
+{
+	char	*command_line;
+	char	**cmd_lst;
+	char	**token;
+	char	**envp;
+	char	**path;
+}			t_data;
+
+/* parser */
+t_token		check_token(char *argv);
+int			parser(t_data data);
+char		*check_path(char *cmd, char **envp);
+int			nb_commands(char *cmd_line);
+
+/*t_command*/
+//bool			has_quotes(char *argv);
+char		*remove_spaces(char *argv);
+
+/* ft_adapted_split */
+char		**ft_split_adp(char const *s, char const *separators);
+
+/* parser_heredoc */
+int			handle_heredoc(t_parser **parser, t_data data);
+
+/* parser utils */
+int		nb_commands(char *cmd_line);
+char	**split_cmds(t_data data);
+char	*ft_substr_modified(char const *s, unsigned int start, size_t len);
+
+/* free_utils */
+void	free_array(int	counter, char **cmd);
+
+/* temporary_functions*/
+void	print_struct(t_parser	*head);
+void	print_array(char **array);
+
+/* struct_utils */
+t_parser	*new_struct();
+void		free_parsing(t_parser **parser);
+
+/* parser_fill_cmd */
+int			fill_cmd(t_parser **parser, char *cmd);
+
+/* utils */
+void	error_msg(char *msg);
+void	error_msg_with_free(char *msg, char **array);
+
+/* env */
+char	**parsing_env_path(char **envp);
+
+/* heredoc_dollarsign*/
+char	*handle_dollar_sign(char *line, t_data data);
+
+// Build in Functions
+void manager_functions(t_parser *data);
+void echo_n(t_parser *data);
 
 #endif

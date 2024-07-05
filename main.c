@@ -6,35 +6,68 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/18 13:53:29 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/05 17:34:38 by eduarda       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main (int argc, char **argv)
+bool	is_input_valid(char *cmd)
 {
-	char	*prompt_entry;
-	
-	(void)argv;
-	if (argc != 1)
+	int	i;
+
+	i = 0;
+	while (cmd[i] != '\0')
 	{
-		ft_putendl_fd(2, "There is too much arguments");
-		ft_putendl_fd(2, "\tExecute only \033[31m./minishell\033[0m");
+		if(cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
+		{
+			if(cmd[i + 1] == '\0')
+				return (error_msg("Syntax Error"), false);
+			i++;
+			if (cmd[i] == '|')
+				return (error_msg("Syntax Error"), false);
+			else if ((cmd[i] == '>' && cmd[i - 1] == '<') || (cmd[i] == '<' && cmd[i - 1] == '>'))
+				return (error_msg("Syntax Error"), false);
+			else if (cmd[i] =='>' || cmd[i] == '<')
+				i++;
+			while (cmd[i] == ' ' && cmd[i] != '\0')
+				i++;
+			if (cmd[i] == '\0')
+				return (error_msg("Syntax Error"), false);
+			if (cmd[i] == '|' || cmd[i] =='>' || cmd[i] == '<')
+				return (error_msg("Syntax Error"), false);
+		}
+		i++;
+	}
+	return (true);
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_data	data;
+
+	if (argc != 1 && argv)
+	{
+		error_msg(" Wrong amount of args");
+		error_msg("\tExecute only \033[31m./minishell\033[0m");
 		exit (EXIT_FAILURE);
 	}
-	// if (signal(SIGINT, &sighandler) == SIG_ERR) // sighangler eh uma outra funcao que vai modificar o valor de uma variavel de true pra false
-	// { // como testar se for um SIG_ERR?
-	// 	return (EXIT_FAILURE);
-	// }
-	while (1) // nao funciona encerrar com um sinal... precisa ser infinito
+	// data.envp = envp;
+	// data.path = parsing_env_path(envp);
+	while (1)
 	{
-		prompt_entry = readline("[minishell]> ");
-		add_history(prompt_entry);
-		if (input_checker(prompt_entry) == true)
-		//lexing ou parsing
-			printf("data: %s\n", prompt_entry);
+		data.command_line = readline("[minishell]: ");
+		data.envp = envp;
+		add_history(data.command_line);
+		if (is_input_valid(data.command_line) == true)
+		{
+			parser(data);
+			// {
+			// 	add_history(data.command_line);
+			// 	// rl_on_new_line();
+			// }
+		}
 	}
 	rl_clear_history();
-	return (EXIT_SUCCESS);
+	return (0);
 }
