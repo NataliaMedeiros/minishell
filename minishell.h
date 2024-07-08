@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/05 17:44:10 by eduarda       ########   odam.nl         */
+/*   Updated: 2024/07/08 16:49:04 by eduarda       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h> //boolean
 # include <fcntl.h> //function open
 # include <string.h>
+# include <unistd.h> // getcwd
 
 typedef enum s_token //nao usado
 {
@@ -97,7 +98,11 @@ char	**parsing_env_path(char **envp);
 char	*handle_dollar_sign(char *line, t_data data);
 
 // Build in Functions
-void manager_functions(t_parser *data);
-void echo_n(t_parser *data);
+void	manager_functions(t_parser *data, char **env);
+void	echo_n(t_parser *data, char **env);
+void	pwd(t_parser *data);
+
+// Test
+char	*ft_find_path(char **envp, char *str);
 
 #endif

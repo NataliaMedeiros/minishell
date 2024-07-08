@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/05 17:34:38 by eduarda       ########   odam.nl         */
+/*   Updated: 2024/07/08 16:45:42 by eduarda       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **envp)
 		error_msg("\tExecute only \033[31m./minishell\033[0m");
 		exit (EXIT_FAILURE);
 	}
-	// data.envp = envp;
+	data.envp = envp;
 	// data.path = parsing_env_path(envp);
 	while (1)
 	{

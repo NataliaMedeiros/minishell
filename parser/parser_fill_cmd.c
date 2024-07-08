@@ -47,7 +47,7 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 	(*parser)->cmd[0] = ft_strdup("echo");
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
-	temp = ft_strtrim(cmd, "echo ");
+	temp = ft_strtrim(cmd, "echo "); // o espaco esta fazendo a primeira letra da palavra sumir mas sem ele, fica um espaco quando eh copiado
 	if (temp == NULL)
 		return (1);
 	if (has_quotes(temp) == true)

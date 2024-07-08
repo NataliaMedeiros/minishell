@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/23 10:17:43 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/05/28 11:26:40 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/08 12:39:13 by eduarda       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	int		new_len;
 
 	start = 0;
-	end = ft_strlen(s1) -1;
+	end = ft_strlen(s1) - 1;
 	while (s1[start] != '\0' && ft_strchr(set, s1[start]) != NULL)
 		start++;
 	while (end > start && ft_strrchr(set, s1[end]) != NULL)
