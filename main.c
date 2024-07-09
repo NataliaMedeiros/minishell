@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/27 17:06:53 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/09 12:57:28 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,10 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.command_line = readline("[minishell]: ");
 		data.envp = envp;
+		add_history(data.command_line);
 		if (is_input_valid(data.command_line) == true)
 		{
-			if (parser(data) == 0)
-			{
-				add_history(data.command_line);
-				// rl_on_new_line();
-			}
+			parser(data);
 		}
 		// printf("---%s---\n", data->command_line);
 		// printf("---ls > \n---\n")ls > ;
