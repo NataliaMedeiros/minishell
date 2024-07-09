@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/27 16:28:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/09 15:49:16 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_parser	*new_struct();
 void		free_parsing(t_parser **parser);
 
 /* parser_fill_cmd */
-int			fill_cmd(t_parser **parser, char *cmd);
+int			fill_cmd(t_parser **parser, t_data data, int i);
 
 /* utils */
 void	error_msg(char *msg);

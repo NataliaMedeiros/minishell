@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/27 15:18:35 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/09 15:48:59 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 			i++;
 		}
 		else
-			if (fill_cmd(parser, data.cmd_lst[i]) != 0)
+			if (fill_cmd(parser, data, i) != 0)
 				return (1);
 		i++;
 	}
