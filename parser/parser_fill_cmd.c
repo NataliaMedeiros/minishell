@@ -94,7 +94,7 @@ bool	has_flags(char *arg)
 	return (false);
 }
 
-static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd, t_data data)
+static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 {
 	char	*temp;
 	char	*new_cmd;
@@ -105,10 +105,10 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd, t_data data)
 	(*parser)->cmd[0] = ft_strdup("echo");
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
-	temp = ft_strtrim_adapted(cmd, "echo ");
+	temp = ft_strtrim_adapted(data.cmd_lst[i], "echo ");
 	if (temp == NULL)
 		return (1);
-	temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
+	// temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
 	if (has_flags(temp) == true)
 		new_cmd = remove_flags(temp);
 	else
@@ -128,7 +128,7 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 {
 	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
 	{
-		if (fill_cmd_mode_echo(parser, data.cmd_lst[i], data) == 1)
+		if (fill_cmd_mode_echo(parser, data, i) == 1)
 			return(error_msg("Failure to fill cmd\n"), 1);
 	}
 	else
