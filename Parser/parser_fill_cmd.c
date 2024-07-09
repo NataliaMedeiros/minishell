@@ -37,6 +37,25 @@ static bool	has_quotes(char *arg)
 	return (false);
 }
 
+char	*ft_strtrim_adapted(char const *s1, char const *set)
+{
+	char	*new_s1;
+	int		start;
+	int		end;
+	int		new_len;
+
+	start = 0;
+	end = ft_strlen(s1) -1;
+	while (s1[start] != '\0' && s1[start] == set[start])
+		start++;
+	new_len = end - start + 2;
+	new_s1 = (char *)malloc(sizeof(char) * new_len);
+	if (new_s1 == NULL)
+		return (NULL);
+	ft_strlcpy(new_s1, s1 + start, new_len);
+	return (new_s1);
+}
+
 static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 {
 	char	*temp;
@@ -47,7 +66,7 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 	(*parser)->cmd[0] = ft_strdup("echo");
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
-	temp = ft_strtrim(cmd, "echo ");
+	temp = ft_strtrim_adapted(cmd, "echo ");
 	if (temp == NULL)
 		return (1);
 	if (has_quotes(temp) == true)
