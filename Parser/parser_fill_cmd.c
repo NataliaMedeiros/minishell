@@ -23,6 +23,28 @@ static char	*remove_quotes(char *limiter)
 	return (new_limiter);
 }
 
+static char	*remove_flags(char *arg)
+{
+	char	*new_arg;
+	int		i;
+	int		len;
+	int		new_len;
+
+	i = 0;
+	len = ft_strlen(arg);
+	printf("arg[%d]: %c\n", i, arg[i]);
+	while (arg[i] != ' ' && arg[i] != '\0')
+		i++;
+	i++;
+	new_len = len - i + 1;
+	new_arg = (char *)malloc(sizeof(char) * new_len);
+	if (new_arg == NULL)
+		return (NULL);
+	ft_strlcpy(new_arg, arg + i, new_len);
+	// printf("new arg: %s\n", new_arg);
+	return (new_arg);
+}
+
 static bool	has_quotes(char *arg)
 {
 	int	i;
@@ -56,9 +78,26 @@ char	*ft_strtrim_adapted(char const *s1, char const *set)
 	return (new_s1);
 }
 
+bool	has_flags(char *arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i] != '\0')
+	{
+		if (arg[i] == '-')
+			return (true);
+		if (arg[i] == '"' || arg[i] == '\'')
+			break;
+		i++;
+	}
+	return (false);
+}
+
 static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 {
 	char	*temp;
+	char	*new_cmd;
 
 	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
 	if ((*parser)->cmd == NULL)
@@ -69,13 +108,18 @@ static int	fill_cmd_mode_echo(t_parser	**parser, char *cmd)
 	temp = ft_strtrim_adapted(cmd, "echo ");
 	if (temp == NULL)
 		return (1);
-	if (has_quotes(temp) == true)
-		(*parser)->cmd[1] = remove_quotes(temp);
+	if (has_flags(temp) == true)
+		new_cmd = remove_flags(temp);
 	else
-		(*parser)->cmd[1] = ft_strdup(temp);
-	if ((*parser)->cmd[1] == NULL)
-		return (1);
+		new_cmd = strdup(temp);
 	free(temp);
+	if (has_quotes(new_cmd) == true)
+		(*parser)->cmd[1] = remove_quotes(new_cmd);
+	else
+		(*parser)->cmd[1] = ft_strdup(new_cmd);
+	if ((*parser)->cmd[1] == NULL)
+			return (1);
+	free(new_cmd);
 	return (0);
 }
 
