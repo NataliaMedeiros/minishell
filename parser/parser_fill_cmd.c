@@ -88,7 +88,7 @@ bool	has_flags(char *arg)
 		if (arg[i] == '-')
 			return (true);
 		if (arg[i] == '"' || arg[i] == '\'')
-			break;
+			break ;
 		i++;
 	}
 	return (false);
@@ -108,14 +108,17 @@ static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 	temp = ft_strtrim_adapted(data.cmd_lst[i], "echo ");
 	if (temp == NULL)
 		return (1);
-	// temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
-	if (has_flags(temp) == true)
+	//temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
+	if (has_flags(temp) == true) //checar espacos // elimiar erro de flag
+	{
 		new_cmd = remove_flags(temp);
+		(*parser)->flag = true;
+	}
 	else
 		new_cmd = strdup(temp);
 	free(temp);
 	if (has_quotes(new_cmd) == true)
-		(*parser)->cmd[1] = remove_quotes(new_cmd);
+		(*parser)->cmd[1] = remove_quotes(new_cmd); //mecher aqui para a questao do dollar sign
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
 	if ((*parser)->cmd[1] == NULL)
@@ -130,6 +133,7 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 	{
 		if (fill_cmd_mode_echo(parser, data, i) == 1)
 			return(error_msg("Failure to fill cmd\n"), 1);
+		printf("flag %d\n", (*parser)->flag);
 	}
 	else
 		(*parser)->cmd = ft_split(data.cmd_lst[i], ' ');

@@ -7,6 +7,7 @@ t_parser	*new_struct()
 	new_element = malloc(sizeof(t_parser));
 	if (new_element == NULL)
 		return (NULL);
+	new_element->flag = false;
 	new_element->infile = NULL;
 	new_element->outfile = NULL;
 	new_element->pipe = NULL;

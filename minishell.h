@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/09 15:49:16 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/10 11:46:11 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ typedef enum s_token //nao usado
 
 typedef struct s_parser
 {
-	char	**cmd;
-	int		fd_outfile;
-	char	*outfile;
-	int		fd_infile;
-	char	*infile;
+	char			**cmd;
+	bool			flag;
+	int				fd_outfile;
+	char			*outfile;
+	int				fd_infile;
+	char			*infile;
 	struct s_parser	*pipe;
 }			t_parser;
 
