@@ -50,6 +50,7 @@ FILES =	ft_adapted_atoi.c \
 		ft_lstlast.c \
 		ft_strrchr.c \
 		ft_strncmp.c \
+		ft_strtrim_adapted.c \
 
 OFILES = $(FILES:%.c=%.o)
 

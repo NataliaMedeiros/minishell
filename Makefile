@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/10 15:19:06 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/07/10 20:35:08 by nmedeiro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SOURCE = main.c \
 		parser/struct_utils.c \
 		parser/parser_fill_cmd.c \
 		parser/heredoc_dollarsign.c \
+		parser/parser_remove_utils.c \
 		free_utils.c \
 		utils.c \
 		env.c \

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/10 20:10:07 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/10 20:36:27 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,9 @@ char	**parsing_env_path(char **envp); //Part of Duda's function;
 char	*ft_find_path(char **envp, char *str);
 
 bool	has_flags(char *arg);
+
+/*parser_remove utils.c*/
+char	*remove_quotes(char *limiter);
+char	*remove_flags(char *arg);
 
 #endif
