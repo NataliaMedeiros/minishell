@@ -4,6 +4,8 @@ https://github.com/appinha/42cursus-03-minishell
 
 https://www.youtube.com/playlist?list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY
 
+test
+
 What our program should have:
 - Display a Prompt:
 	Your shell should show a prompt (e.g., $ or myshell>) when it is ready to receive a new command from the user.
@@ -48,35 +50,77 @@ Allowed external functs:
 		- kill;
 	-> New functions:
 		- readline;
+			get a line from a user with editing - readline will read a line from the terminal and return it, using prompt as a prompt.  If prompt is NULL or the empty string, no prompt is issued.  The line returned is allocated with malloc(3); the caller must free it when finished.  The line returned has the final newline removed, so only the text of the line remains. readline offers editing capabilities while the user is entering the line.  By default, the line editing commands are similar to those of emacs.  A vi-style line editing interface is also available.
+			#include <stdio.h>
+			#include <readline/readline.h>
+			#include <readline/history.h>
+			char *
+			readline (const char *prompt);
 		- rl_clear_history;
-		- rl_on_new_line;
+		- rl_on_new_line; - Typically, rl_on_new_line is used when a program needs to reset the input state because the cursor has moved to a new line.
 		- rl_replace_line;
 		- rl_redisplay;
 		- add_history;
-		- access;
-	Functions I am in doubt
-	- wait3;
-	- wait4;
-	- getcwd;
-	- chdir;
-	- stat;
-	- lstat;
-	- fstat;
-	- unlink;
-	- dup;
-	- opendir;
-	- readdir;
-	- closedir;
-	- strerror;
-	- isatty;
-	- ttyname;
-	- ttyslot;
-	- ioctl;
-	- tcsetattr;
-	- tcgetattr;
-	- tgetent;
-	- tgetflag;
-	- tgetnum;
-	- tgetstr;
-	- tgoto;
-	- tputs;
+		- wait3;
+		- wait4;
+		- getcwd;
+		- chdir;
+		- stat;
+		- lstat;
+		- fstat;
+		- unlink;
+		- dup;
+		- opendir;
+		- readdir;
+		- closedir;
+		- strerror;
+		- isatty;
+		- ttyname;
+		- ttyslot;
+		- ioctl;
+		- tcsetattr;
+		- tcgetattr;
+		- tgetent;
+		- tgetflag;
+		- tgetnum;
+		- tgetstr;
+		- tgoto;
+		- tputs;
+
+
+List with some commands sample (not necessary we should implement all):
+	ls
+	ls -l
+	echo  "hello" >> infile
+	cd /path/to/directory
+	cd /path
+	mkdir new_directory
+	rmdir directory_to_remove
+	cp file1 file2
+	mv old_file new_file
+	rm file_to_remove
+	pwd
+	touch new_file.txt
+	cat file.txt
+	nano file.txt
+	less file.txt
+	find /path/to/search -name "filename"
+	./program_name
+	ping example.com
+	ifconfig
+	ps aux
+	kill PID
+	echo "Hello, World!"
+	touch "my file.txt"
+	ls -l "my file.txt"
+	rm "my file.txt"
+	echo 'Hello, $USER!'
+	grep "Hello, World!" file.txt
+	find . -name "*.txt" -exec grep "search string" '{}' \;
+
+	//TO DO - entender melhor a funcao access
+	//TO DO - entender melhor as funcao de check path da DUDA
+	//TO DO - verificar qual melhor lugar para colocar o check_path
+	//TO DO - entender mais conceitos do Pipex (fork, process, etc)
+
+
