@@ -58,18 +58,18 @@ static bool	is_home(char *cmd, char **env)
 
 void	echo_n(t_parser *data, char **env)
 {
-		if (ft_strncmp(data->cmd[0], "echo", 4) == 0)
+	if (ft_strncmp(data->cmd[0], "echo", 4) == 0)
+	{
+		if (ft_strncmp(data->cmd[1], "-n", 2) == 0) // criar com multiplos -n (-nnnnnnnn pq funciona na bash)
 		{
-			if (ft_strncmp(data->cmd[1], "-n", 2) == 0) // criar com multiplos -n (-nnnnnnnn pq funciona na bash)
-			{
-				if (is_home(data->cmd[1], env) == false)
-					ft_putstr_fd(data->cmd[1] + 3, 1);
-			}
-			else
-			{
-				if (is_home(data->cmd[1], env) == false)
-					ft_putendl_fd(1, data->cmd[1]);
-			}
+			if (is_home(data->cmd[1], env) == false)
+				ft_putstr_fd(data->cmd[1] + 3, 1);
 		}
-		// adicionar free para armazenamento da estrutura ?
+		else
+		{
+			if (is_home(data->cmd[1], env) == false)
+				ft_putendl_fd(1, data->cmd[1]);
+		}
+	}
+	// adicionar free para armazenamento da estrutura ?
 }

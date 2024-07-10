@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   heredoc_dollarsign.c                               :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
+/*   Updated: 2024/07/10 15:06:38 by nmedeiro      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 static char	*replace_var(char *line, char *var_exp, int start, int end)
@@ -23,7 +35,7 @@ static int	var_end(char *line, int i)
 	{
 		i++;
 		if (line[i] == ' ')
-			break;
+			break ;
 	}
 	return (i);
 }
@@ -37,8 +49,8 @@ static char	*search_envp(t_data data, char *var, int len)
 	{
 		if (ft_strncmp(data.envp[j], var, len) == 0)
 		{
-			return(ft_strdup(data.envp[j] + (len + 1)));
-			break;
+			return (ft_strdup(data.envp[j] + (len + 1)));
+			break ;
 		}
 		j++;
 	}
@@ -47,10 +59,10 @@ static char	*search_envp(t_data data, char *var, int len)
 
 static char	*get_var(char *line, int start, t_data data)
 {
-	char 	*var_name;
+	char	*var_name;
 	char	*var_value;
 	int		end;
-	char 	*new_line;
+	char	*new_line;
 
 	end = var_end(line, start);
 	var_name = ft_substr(line, start, start - end);
@@ -75,7 +87,7 @@ char	*handle_dollar_sign(char *line, t_data data)
 		{
 			if (line[i] == '$')
 			{
-				new_line= get_var(line, i + 1, data);
+				new_line = get_var(line, i + 1, data);
 				i += 2;
 			}
 			i++;

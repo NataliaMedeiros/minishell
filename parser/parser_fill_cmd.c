@@ -122,7 +122,7 @@ static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
 	if ((*parser)->cmd[1] == NULL)
-			return (1);
+		return (1);
 	free(new_cmd);
 	return (0);
 }
@@ -132,12 +132,12 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
 	{
 		if (fill_cmd_mode_echo(parser, data, i) == 1)
-			return(error_msg("Failure to fill cmd\n"), 1);
+			return (error_msg("Failure to fill cmd\n"), 1);
 		printf("flag %d\n", (*parser)->flag);
 	}
 	else
 		(*parser)->cmd = ft_split(data.cmd_lst[i], ' ');
 	if ((*parser)->cmd == NULL)
-		return(error_msg("Failure to fill cmd\n"), 1);
+		return (error_msg("Failure to fill cmd\n"), 1);
 	return (0);
 }

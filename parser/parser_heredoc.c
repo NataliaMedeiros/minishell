@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parser_heredoc.c                                   :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
+/*   Updated: 2024/07/10 15:23:22 by nmedeiro      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 /*This functions remove quotes (simple or double) of the heredoc limiter*/
@@ -76,7 +88,7 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	{
 		if (ft_strlen(line) == ft_strlen(limiter) &&
 			ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-			break;
+			break ;
 		//implementar dollar sign
 		while (ft_strchr(line, '$') != NULL)
 		{
