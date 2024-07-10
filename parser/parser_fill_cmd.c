@@ -100,11 +100,10 @@ bool	has_flags(char *arg)
 	return (false);
 }
 
-static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
+static int fill_valid_echo(t_parser	**parser, t_data data, int i)
 {
 	char	*temp;
 	char	*new_cmd;
-
 	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
 	if ((*parser)->cmd == NULL)
 		return (1);
@@ -131,6 +130,24 @@ static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 	if ((*parser)->cmd[1] == NULL)
 		return (1);
 	free(new_cmd);
+	return (0);
+}
+
+static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
+{
+	if (ft_strncmp(data.cmd_lst[i], "echo ", 5) == 0)
+	{
+		if (fill_valid_echo(parser, data, i) == 1)
+			return (1);
+	}
+	else
+	{
+		(*parser)->cmd = ft_calloc(sizeof(char *), 2);
+		if ((*parser)->cmd == NULL)
+			return (1);
+		(*parser)->cmd[0] = ft_strdup(data.cmd_lst[i]);
+		error_msg("Invalid command\n");
+	}
 	return (0);
 }
 
