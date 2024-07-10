@@ -13,6 +13,9 @@ static char	*remove_quotes(char *limiter)
 	j = 0;
 	while (limiter[i] != '\0')
 	{
+		if ((limiter[i] == '$' && limiter[i + 1] == '"')
+			|| (limiter[i] == '$' && limiter[i + 1] == '\''))
+			i++;
 		if (limiter[i] != '"' && limiter[i] != '\'')
 		{
 			new_limiter[j] = limiter[i];
@@ -108,7 +111,8 @@ static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 	temp = ft_strtrim_adapted(data.cmd_lst[i], "echo ");
 	if (temp == NULL)
 		return (1);
-	//temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
+	temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
+	printf("temp: %s\n", temp);
 	if (has_flags(temp) == true) //checar espacos // elimiar erro de flag
 	{
 		new_cmd = remove_flags(temp);

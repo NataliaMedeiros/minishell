@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 15:06:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/10 16:22:35 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*handle_dollar_sign(char *line, t_data data)
 		i = 0;
 		while (line[i] != '\0')
 		{
-			if (line[i] == '$')
+			if (line[i] == '$' && line[i + 1] != '"')
 			{
 				new_line = get_var(line, i + 1, data);
 				i += 2;
