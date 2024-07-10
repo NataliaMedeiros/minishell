@@ -35,15 +35,24 @@ static char	*remove_flags(char *arg)
 
 	i = 0;
 	len = ft_strlen(arg);
-	while (arg[i] != ' ' && arg[i] != '\0')
+
+	if (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == 'n'))
+	{
+		i += 2;
+		while (arg[i] == 'n')
+			i++;
+	}
+	if (arg[i] == ' ')
 		i++;
-	i++;
+	while (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == ' '))
+	{
+		i += 3;
+	}
 	new_len = len - i + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);
 	if (new_arg == NULL)
 		return (NULL);
 	ft_strlcpy(new_arg, arg + i, new_len);
-	// printf("new arg: %s\n", new_arg);
 	return (new_arg);
 }
 
