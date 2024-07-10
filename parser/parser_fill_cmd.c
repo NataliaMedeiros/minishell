@@ -35,7 +35,6 @@ static char	*remove_flags(char *arg)
 
 	i = 0;
 	len = ft_strlen(arg);
-	printf("arg[%d]: %c\n", i, arg[i]);
 	while (arg[i] != ' ' && arg[i] != '\0')
 		i++;
 	i++;
@@ -71,7 +70,8 @@ char	*ft_strtrim_adapted(char const *s1, char const *set)
 
 	start = 0;
 	end = ft_strlen(s1) -1;
-	while (s1[start] != '\0' && s1[start] == set[start])
+	while ((s1[start] != '\0' && s1[start] == set[start])
+		|| s1[start] == ' ')
 		start++;
 	new_len = end - start + 2;
 	new_s1 = (char *)malloc(sizeof(char) * new_len);
@@ -89,7 +89,10 @@ bool	has_flags(char *arg)
 	while (arg[i] != '\0')
 	{
 		if (arg[i] == '-')
-			return (true);
+		{
+			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n' || arg[i + 2] == ' '))
+				return (true);
+		}
 		if (arg[i] == '"' || arg[i] == '\'')
 			break ;
 		i++;
