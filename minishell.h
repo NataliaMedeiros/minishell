@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/10 14:41:02 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/10 14:51:14 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,7 @@ char	*handle_dollar_sign(char *line, t_data data);
 
 void	echo_n(t_parser *data, char **env);
 void	pwd(t_parser *data);
+
+char	**parsing_env_path(char **envp); //Part of Duda's function;
 
 #endif
