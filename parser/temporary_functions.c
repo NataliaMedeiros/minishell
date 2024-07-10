@@ -12,19 +12,19 @@ void	print_array(char **array)
 	}
 }
 
-void	print_struct(t_parser	*head)
+void	print_struct(t_parser *head)
 {
 	int	i;
 
 	i = 1;
-	printf("printing mini:\n");
+	// printf("printing mini:\n");
 	while (head != NULL)
 	{
-		printf("struct[%d]:\n", i);
+		printf("\033[31mstruct[%d]:\n\033[0m", i);
 		if (head->cmd != NULL)
 			print_array(head->cmd);
-		printf("outfile: %s\n", head->outfile ? head->outfile : "None");
-		printf("infile: %s\n", head->infile ? head->infile : "None");
+		printf("\033[31moutfile: \033[0m%s\n", head->outfile ? head->outfile : "None");
+		printf("\033[31minfile: \033[0m%s\n", head->infile ? head->infile : "None" );
 		head = head->pipe;
 		i++;
 	}

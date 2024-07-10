@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	free_array(int	counter, char **cmd)
+void	free_array(int counter, char **cmd)
 {
 	if (counter == 0)
 	{

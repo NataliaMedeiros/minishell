@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/09 12:57:28 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/10 13:29:36 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_input_valid(char *cmd)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (cmd[i] != '\0')
@@ -47,7 +47,11 @@ int	main(int argc, char **argv, char **envp)
 	t_data	data;
 
 	if (argc != 1 && argv)
-		return (error_msg("Too much argments"), 1); //Maybe think in a better message
+	{
+		error_msg(" Wrong amount of args");
+		error_msg("\tExecute only \033[31m./minishell\033[0m");
+		return (EXIT_FAILURE);
+	}
 	data.envp = envp;
 	data.path = parsing_env_path(envp);
 	while (1)
@@ -59,9 +63,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			parser(data);
 		}
-		// printf("---%s---\n", data->command_line);
-		// printf("---ls > \n---\n")ls > ;
-		// check_path(data->command_line, data->envp);
 	}
+	rl_clear_history();
 	return (0);
 }
