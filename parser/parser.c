@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/10 20:56:17 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/11 14:30:53 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,6 @@ int	parser(t_data data)
 		return (free_parsing(&parser), 1);
 	print_struct(head_parser);
 	//ver se é o lugar certo paraimplementar free struct when finish to use a cmd line and before return to prompt
+	manager_functions(head_parser);
 	return (0);
 }

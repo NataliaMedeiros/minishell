@@ -6,15 +6,15 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 15:04:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/11 14:27:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	manager_functions(t_parser *data, char **env)
+void	manager_functions(t_parser *data)
 {
-	echo_n(data, env);
+	echo_n(data);
 	pwd(data);
 	// pode retornar (true or false) e limpar o data aqui para todas as funcoes
 }
