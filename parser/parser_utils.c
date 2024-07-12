@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:54:47 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/12 12:43:27 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ char	**split_cmds(t_data data)
 	{
 		start = i;
 		while (data.command_line[i] != '\0' && data.command_line[i] != '|'
-				&& data.command_line[i] != '>' && data.command_line[i] != '<')
+			&& data.command_line[i] != '>' && data.command_line[i] != '<')
 			i++;
-		cmd[counter] = ft_substr_modified(data.command_line, start, (i - start));
+		cmd[counter] = ft_substr_modified(data.command_line,
+				start, (i - start));
 		if (cmd[counter] == NULL)
 			return (free_array(counter, cmd), NULL);
 		counter++;

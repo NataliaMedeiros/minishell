@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/11 14:30:53 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 12:45:58 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if ((*parser)->fd_outfile == -1)
 		return (error_msg("Failure to open outfile\n"),
-			free((*parser)->outfile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
+			free((*parser)->outfile), 1);
+			//testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
 	return (0);
 }
 
@@ -56,7 +57,8 @@ int	handle_infile(t_parser	**parser, t_data data, int i)
 				O_CREAT | O_RDONLY, 0644);
 	if ((*parser)->fd_outfile == -1)
 		return (error_msg("Failure to open infile\n"),
-			free((*parser)->infile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
+			free ((*parser)->infile), 1);
+			//testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
 	return (0);
 }
 
@@ -111,7 +113,7 @@ int	parser(t_data data)
 	if (fill_parser(data, &parser) != 0)
 		return (free_parsing(&parser), 1);
 	print_struct(head_parser);
-	//ver se é o lugar certo paraimplementar free struct when finish to use a cmd line and before return to prompt
+	//ver se é o lugar certo para implementar free struct when finish to use a cmd line and before return to prompt
 	manager_functions(head_parser);
 	return (0);
 }

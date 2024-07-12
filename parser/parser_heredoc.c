@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:54:15 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/12 12:38:52 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,3 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	}
 	return (0);
 }
-

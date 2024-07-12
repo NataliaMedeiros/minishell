@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   env.c                                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/12 12:26:38 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/07/12 12:57:13 by edribeir      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*ft_find_path(char **envp, char *str) //find path -> Duda's function
@@ -20,6 +32,6 @@ char	**parsing_env_path(char **envp) //Part of Duda's function
 
 	path = ft_split(ft_find_path(envp, "PATH="), ':');
 	if (path == NULL)
-		return(error_msg("Unexpected error\n"), NULL);
+		return (error_msg("Unexpected error\n"), NULL);
 	return (path);
 }
