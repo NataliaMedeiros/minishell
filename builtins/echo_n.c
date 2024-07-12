@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:27:23 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/12 12:49:58 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 16:28:34 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 void	echo_n(t_parser *data)
 {
-	if (ft_strncmp(data->cmd[0], "echo", 4) == 0)
+	if (ft_strncmp(data->cmd[0], "echo", 4) == 0 && data->cmd[1] != NULL)
 	{
 		if (data->flag == true)
 			ft_putstr_fd(data->cmd[1], 1);
 		else
 			ft_putendl_fd(1, data->cmd[1]);
 	}
-	// adicionar free?
+	else if ((ft_strncmp(data->cmd[0], "echo", 4) == 0 && data->cmd[1] == NULL))
+		printf("\n");
 }

@@ -6,11 +6,11 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:38 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/12 12:57:13 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 14:25:12 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*ft_find_path(char **envp, char *str) //find path -> Duda's function
 {

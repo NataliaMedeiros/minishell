@@ -6,11 +6,11 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/12 12:26:44 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 16:29:37 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_array(int counter, char **cmd)
 {
@@ -31,4 +31,9 @@ void	free_array(int counter, char **cmd)
 		}
 	}
 	free(cmd);
+}
+void	ft_free(t_parser *parser)
+{
+	if (parser->cmd != NULL)
+		free_array(0, parser->cmd);
 }

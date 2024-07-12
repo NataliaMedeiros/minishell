@@ -6,11 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/12 12:56:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 16:33:35 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 bool	is_input_valid(char *cmd)
 {
@@ -64,6 +64,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			parser(data);
 		}
+		// a funcao free pode ser colocada aqui para toda a vez que o programa volta do looping ele eh limpo?
 	}
 	rl_clear_history();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/12 13:02:05 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 16:29:29 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char		*ft_substr_modified(char const *s, unsigned int start, size_t len);
 
 /* free_utils */
 void		free_array(int counter, char **cmd);
+void		ft_free(t_parser *parser);
 
 /* temporary_functions*/
 void		print_struct(t_parser	*head);

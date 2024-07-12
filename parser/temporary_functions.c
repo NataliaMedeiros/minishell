@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:10 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/12 12:30:30 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/12 15:19:34 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	print_struct(t_parser *head)
 	i = 1;
 	while (head != NULL)
 	{
+		printf("flag %d\n", head->flag);
 		printf("\033[31mstruct[%d]:\n\033[0m", i);
 		if (head->cmd != NULL)
 			print_array(head->cmd);
