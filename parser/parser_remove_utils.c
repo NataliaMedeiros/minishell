@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:36:18 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 16:41:38 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,23 @@ char	*remove_flags(char *arg)
 
 	i = 0;
 	len = ft_strlen(arg);
-	if (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == 'n'))
+	printf("arg: %s\n", arg);
+	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n'))
 	{
-		i += 2;
-		while (arg[i] == 'n')
+		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == 'n')) //maybe while
+		{
+			i += 2;
+			while (arg[i] == 'n')
+				i++;
+		}
+		if (arg[i] == ' ')
 			i++;
-	}
-	if (arg[i] == ' ')
+		else
+			break ;
+		while (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == ' '))
+			i += 3;
 		i++;
-	while (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == ' '))
-		i += 3;
+	}
 	new_len = len - i + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);
 	if (new_arg == NULL)
