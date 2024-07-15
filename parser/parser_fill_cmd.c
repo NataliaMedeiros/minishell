@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 16:03:41 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 16:45:21 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,20 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 	j = 0;
 	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
 	len_arg = arg - data.cmd_lst[i];
+	printf("arg: %s and %d\n", arg, len_arg);
 	(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
 	ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
-	temp = handle_dollar_sign(arg, data);
-	if (temp == NULL)
-		return (1);
+	if (ft_strchr(arg, '$') != NULL)
+	{
+		temp = handle_dollar_sign(arg, data);
+		if (temp == NULL)
+			return (1);
+		printf("handle dollar sign: %s\n", temp);
+	}
+	else
+		temp = arg;
 	if (has_flags(temp) == true)
 	{
 		new_cmd = remove_flags(temp);
