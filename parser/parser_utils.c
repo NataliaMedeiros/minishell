@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parser_utils.c                                     :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
+/*   Updated: 2024/07/10 20:54:47 by nmedeiro      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 int	nb_commands(char *cmd_line)
@@ -46,7 +58,7 @@ char	**split_cmds(t_data data)
 		counter++;
 		start = i;
 		if (counter == nb_args)
-			break;
+			break ;
 		if (data.command_line[i] == '>' || data.command_line[i] == '<')
 			i++;
 		cmd[counter] = ft_substr(data.command_line, start, (i + 1 - start));

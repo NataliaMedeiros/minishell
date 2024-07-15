@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/10 11:46:11 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/11 14:28:55 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +88,24 @@ void		free_parsing(t_parser **parser);
 int			fill_cmd(t_parser **parser, t_data data, int i);
 
 /* utils */
-void	error_msg(char *msg);
-void	error_msg_with_free(char *msg, char **array);
+void		error_msg(char *msg);
+void		error_msg_with_free(char *msg, char **array);
 
 /* env */
-char	**parsing_env_path(char **envp);
+char		**parsing_env_path(char **envp);
 
 /* heredoc_dollarsign*/
-char	*handle_dollar_sign(char *line, t_data data);
+char		*handle_dollar_sign(char *line, t_data data);
+
+// Builtin functions
+void	manager_functions(t_parser *data);
+void	echo_n(t_parser *data);
+void	pwd(t_parser *data);
+
+bool	has_flags(char *arg);
+
+/*parser_remove utils.c*/
+char	*remove_quotes(char *limiter);
+char	*remove_flags(char *arg);
 
 #endif

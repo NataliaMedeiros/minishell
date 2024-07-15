@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/10 20:35:08 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/06/18 14:30:58 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,30 +25,16 @@ RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
 SOURCE = main.c \
-		parser/parser.c \
-		parser/parser_heredoc.c \
-		parser/parser_utils.c \
-		parser/temporary_functions.c \
-		parser/struct_utils.c \
-		parser/parser_fill_cmd.c \
-		parser/heredoc_dollarsign.c \
-		parser/parser_remove_utils.c \
-		free_utils.c \
-		utils.c \
-		env.c \
-		builtins/manager_builtin.c \
-		builtins/echo_n.c \
-		builtins/pwd.c \
+		prompt_input_error.c \
+		# parser.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 
 CC = cc
+
 CFLAGS = -Wall -Werror -Wextra -g
-#CFLAGS += -fsanitize=address
-LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib -lreadline #MAC M1
-#LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
-#LFLAGS = -L/usr/lib/x86_64-linux-gnu -lreadline #linux
-#LFLAGS = -lreadline
+
+LIBS = -L/usr/lib/x86_64-linux-gnu -lreadline
 
 LIBFTDIR = libft
 
@@ -60,10 +46,8 @@ $(LIBFT):
 	@echo "Compiled ✅ $(LIBFT)"
 
 $(NAME): $(LIBFT) $(OBJECTS)
-	@cc $(CFLAGS) $(OBJECTS) $(LFLAGS) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)$(BOLD)\n--------------------------------------$(RESET)"
-	@echo "$(PINK)$(BOLD)\n\t Minishell ready! $(RESET)🎉\n"
-	@echo "$(GREEN)$(BOLD)--------------------------------------\n$(RESET)"
+	@cc $(CFLAGS) $(OBJECTS) $(LIBFT) $(LIBS) -o $(NAME)
+	@echo "$(PINK)$(BOLD)\n\t Ready! $(RESET)🎉\n"
 
 %.o:%.c
 	@cc $(CFLAGS) -c -o $@ $^
@@ -71,7 +55,7 @@ $(NAME): $(LIBFT) $(OBJECTS)
 clean:
 	@$(MAKE) clean -C ./libft
 	@rm -f $(OBJECTS)
-	@echo "$(GREEN)$(BOLD)\t OFILES Cleansed! $(RESET)🆗"
+	@echo "$(GREEN)\t OFILES Cleansed! $(RESET)🆗"
 
 fclean:
 	@$(MAKE) fclean -C ./libft

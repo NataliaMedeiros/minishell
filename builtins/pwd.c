@@ -1,40 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   struct_utils.c                                     :+:    :+:            */
+/*   pwd.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/07/10 20:56:25 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:56:40 by nmedeiro      ########   odam.nl         */
+/*   Created: 2024/07/10 15:04:45 by nmedeiro      #+#    #+#                 */
+/*   Updated: 2024/07/10 15:04:46 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_parser	*new_struct()
+void	pwd(t_parser *data)
 {
-	t_parser	*new_element;
+	char	*path;
 
-	new_element = malloc(sizeof(t_parser));
-	if (new_element == NULL)
-		return (NULL);
-	new_element->flag = false;
-	new_element->infile = NULL;
-	new_element->outfile = NULL;
-	new_element->pipe = NULL;
-	return (new_element);
-}
-
-void	free_parsing(t_parser **parser)
-{
-	t_parser	*temp;
-
-	while (*parser)
+	if(ft_strncmp(data->cmd[0], "pwd", 3) == 0)
 	{
-		temp = *parser;
-		*parser = (*parser)->pipe;
-		free(temp);
+		path = getcwd(NULL, 0);
+		if (path != NULL)
+		{
+			ft_putendl_fd(1, path);
+			free(path);
+		}
 	}
-	*parser = NULL;
 }

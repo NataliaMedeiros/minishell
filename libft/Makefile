@@ -22,6 +22,7 @@ FILES =	ft_adapted_atoi.c \
 		ft_strjoin.c \
 		ft_strlcat.c \
 		ft_strlcpy.c \
+		ft_strncmp.c \
 		ft_strlen_nl.c \
 		get_next_line_utils.c \
 		get_next_line.c \
@@ -49,6 +50,7 @@ FILES =	ft_adapted_atoi.c \
 		ft_lstlast.c \
 		ft_strrchr.c \
 		ft_strncmp.c \
+		ft_strtrim_adapted.c \
 
 OFILES = $(FILES:%.c=%.o)
 

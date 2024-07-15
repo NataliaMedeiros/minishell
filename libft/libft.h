@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:03:51 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/03 15:40:33 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/10 20:37:24 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ char	*ft_strcharjoin(char *s1, char s2);
 char	*ft_strchr(const char *s, int c);
 int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strcpy(char *dst, const char *src);
+int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strdup(const char *s);
 void	ft_striteri(char *s, void (*f)(unsigned int, char*));
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
@@ -73,6 +74,7 @@ size_t	ft_strlen(const char *s);
 char	*get_next_line(int fd);
 size_t	find_nl(char *text);
 char	*ft_join_str(char *prev_line, char *text);
+char	*ft_strtrim_adapted(char const *s1, char const *set);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
