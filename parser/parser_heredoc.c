@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:54:15 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 13:18:24 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,20 @@ static char	*remove_lim_backslash(char *limiter)
 	return (new_limiter);
 }
 
+char	*find_limiter(t_parser **parser)
+{
+	char	*limiter;
+
+	if (ft_strchr((*parser)->infile, '"') != NULL
+		|| ft_strchr((*parser)->infile, '\'') != NULL)
+		limiter = remove_lim_quotes((*parser)->infile);
+	else if (ft_strchr((*parser)->infile, '\\') != NULL)
+		limiter = remove_lim_backslash((*parser)->infile);
+	else
+		limiter = (*parser)->infile;
+	return (limiter);
+}
+
 /* This functions create the space op terminal to receive the heredoc
 input, reads this imput,checks delimiter (remover quotes and backslash
 if necessary) and closing the typing space on terminal when limiter is
@@ -80,13 +94,7 @@ int	handle_heredoc(t_parser **parser, t_data data)
 			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if ((*parser)->fd_infile == -1)
 		return (printf("Fail to open infile\n"), 1);
-	if (ft_strchr((*parser)->infile, '"') != NULL
-		|| ft_strchr((*parser)->infile, '\'') != NULL)
-		limiter = remove_lim_quotes((*parser)->infile);
-	else if (ft_strchr((*parser)->infile, '\\') != NULL)
-		limiter = remove_lim_backslash((*parser)->infile);
-	else
-		limiter = (*parser)->infile;
+	limiter = find_limiter(parser);
 	line = readline(">");
 	while (line != NULL)
 	{
