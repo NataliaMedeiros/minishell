@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 13:18:24 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 13:28:08 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,13 @@ int	handle_heredoc(t_parser **parser, t_data data)
 			&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			break ;
 		while (ft_strchr(line, '$') != NULL)
-		{
 			line = handle_dollar_sign(line, data);
-			printf("line = %s\n", line);
-		}
 		write((*parser)->fd_infile, line, strlen(line));
 		write((*parser)->fd_infile, "\n", 1);
-		free(line); //checkar if it is needed
+		free(line);
 		line = readline(">");
 	}
+	free(line);
 	return (0);
 }
 

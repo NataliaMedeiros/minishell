@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:33:30 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 16:02:06 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*handle_dollar_sign(char *line, t_data data)
 	int		i;
 	char	*new_line;
 
-	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
+	if (ft_strchr(line, '"') != NULL && ft_strchr(line, '\'') == NULL)
 	{
 		i = 0;
 		while (line[i] != '\0')

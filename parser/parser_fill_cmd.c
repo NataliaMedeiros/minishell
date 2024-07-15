@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 11:51:48 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 16:03:41 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,19 @@ bool	has_flags(char *arg)
 static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 {
 	char	*temp;
+	char	*arg;
 	char	*new_cmd;
+	int		j;
+	int		len_arg;
 
-	(*parser)->cmd[0] = ft_strdup("echo");
+	j = 0;
+	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
+	len_arg = arg - data.cmd_lst[i];
+	(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
-	temp = handle_dollar_sign(
-			ft_strtrim_adapted(data.cmd_lst[i], "echo "), data);
+	ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
+	temp = handle_dollar_sign(arg, data);
 	if (temp == NULL)
 		return (1);
 	if (has_flags(temp) == true)
@@ -70,27 +76,16 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
 	if ((*parser)->cmd[1] == NULL)
 		return (1);
-	return (free(temp), free(new_cmd), 0);
+	return (free(new_cmd), 0);
 }
 
 static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 {
-	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
-	{
-		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
-		if ((*parser)->cmd == NULL)
-			return (1);
-		if (fill_valid_echo(parser, data, i) == 1)
-			return (1);
-	}
-	else
-	{
-		(*parser)->cmd = ft_calloc(sizeof(char *), 2);
-		if ((*parser)->cmd == NULL)
-			return (1);
-		(*parser)->cmd[0] = ft_strdup(data.cmd_lst[i]);
-		error_msg("Invalid command\n");
-	}
+	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
+	if ((*parser)->cmd == NULL)
+		return (1);
+	if (fill_valid_echo(parser, data, i) == 1)
+		return (1);
 	return (0);
 }
 
@@ -108,3 +103,10 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 		return (error_msg("Failure to fill cmd\n"), 1);
 	return (0);
 }
+
+// TODO
+//echo             eduarda
+// echoooooooo eduarda
+// echo-nnnnnn edu
+// echo -nnnnnn -n -n -nnnnn edu
+//colocar espaco depois do heredoc prompt

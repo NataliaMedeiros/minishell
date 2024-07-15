@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/11 14:28:55 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/15 14:39:50 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ typedef enum s_token //nao usado
 	AND,
 }		t_token;
 
+typedef struct s_env
+{
+	char			*key_word;
+	char			*info;
+	struct s_env	*next;
+}					t_env;
+
+
 typedef struct s_parser
 {
 	char			**cmd;
@@ -41,16 +49,17 @@ typedef struct s_parser
 	int				fd_infile;
 	char			*infile;
 	struct s_parser	*pipe;
-}			t_parser;
+}					t_parser;
 
 typedef struct s_data
 {
-	char	*command_line;
-	char	**cmd_lst;
-	char	**token;
-	char	**envp;
-	char	**path;
-}			t_data;
+	char			*command_line;
+	char			**cmd_lst;
+	char			**token;
+	char			**envp;
+	char			**path;
+	struct s_env	*env;
+}					t_data;
 
 /* parser */
 t_token		check_token(char *argv);

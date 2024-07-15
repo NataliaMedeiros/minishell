@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:03:51 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/10 20:37:24 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 15:59:34 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 char	*ft_strrchr(const char *str, int c);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
+char	*ft_strchr_adp(const char *s, int c);
 
 #endif
