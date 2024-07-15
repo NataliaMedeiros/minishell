@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:52:02 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/15 11:51:48 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 
 static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 {
-	if (ft_strncmp(data.cmd_lst[i], "echo ", 5) == 0)
+	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
 	{
 		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
 		if ((*parser)->cmd == NULL)
