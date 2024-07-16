@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_fill_cmd.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 16:45:21 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/16 13:07:14 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 	char	*temp;
 	char	*arg;
 	char	*new_cmd;
-	int		j;
+	// int		j;
 	int		len_arg;
 
-	j = 0;
+	// j = 0;
 	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
 	len_arg = arg - data.cmd_lst[i];
 	printf("arg: %s and %d\n", arg, len_arg);

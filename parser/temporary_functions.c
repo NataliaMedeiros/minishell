@@ -29,3 +29,12 @@ void	print_struct(t_parser *head)
 		i++;
 	}
 }
+
+void	print_env(t_env *env)
+{
+	while (env->next != NULL)
+	{
+		printf("key word: %s\nInfo:%s\n", env->key_word, env->info);
+		env = env->next;
+	}
+}
