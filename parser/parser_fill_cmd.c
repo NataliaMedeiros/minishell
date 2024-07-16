@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_fill_cmd.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 17:28:31 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/16 15:23:06 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,26 +50,27 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 	char	*temp;
 	char	*arg;
 	char	*new_cmd;
-	int		j;
 	int		len_arg;
+	int		j;
 
 	j = 0;
 	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
+	while (arg[j] == ' ')
+		j++;
 	len_arg = arg - data.cmd_lst[i];
-	printf("arg: %s and %d\n", arg, len_arg);
 	(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
 	ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
 	if (ft_strchr(arg, '$') != NULL)
 	{
-		temp = handle_dollar_sign(arg, data);
+		temp = handle_dollar_sign(arg + j, data);
 		if (temp == NULL)
 			return (1);
 		printf("handle dollar sign: %s\n", temp);
 	}
 	else
-		temp = arg;
+		temp = arg + j;
 	if (has_flags(temp) == true)
 	{
 		new_cmd = remove_flags(temp);

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/15 17:27:57 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/16 15:22:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ void		free_array(int counter, char **cmd);
 void		ft_free(t_parser *parser);
 
 /* temporary_functions*/
-void		print_struct(t_parser	*head);
-void		print_array(char **array);
+void	print_struct(t_parser	*head);
+void	print_array(char **array);
+void	print_env(t_env *env);
 
 /* struct_utils */
 t_parser	*new_struct(void);
@@ -103,6 +104,8 @@ void		error_msg_with_free(char *msg, char **array);
 
 /* env */
 char		**parsing_env_path(char **envp);
+t_env		*parsing_env(char **env);
+
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
