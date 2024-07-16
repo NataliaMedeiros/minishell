@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/12 14:26:56 by edribeir      ########   odam.nl          #
+#    Updated: 2024/07/16 15:35:50 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SOURCE = source/main.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \
 		builtins/pwd.c \
+		builtins/env.c
 
 OBJECTS = $(SOURCE:%.c=%.o)
 

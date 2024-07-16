@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/16 15:24:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/16 18:15:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	data.env = parsing_env(envp);
-	// print_env(data.env);
-	data.path = parsing_env_path(envp);
+	// data.path = parsing_env_path(envp);
 	while (1)
 	{
 		data.command_line = readline("[minishell]: ");

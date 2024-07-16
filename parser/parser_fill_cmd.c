@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 15:23:06 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/16 18:41:57 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
-	if ((*parser)->cmd[1] == NULL)
-		return (1);
+	// if ((*parser)->cmd[1] == NULL)
+	// 	return (free(new_cmd), 1);
 	return (free(new_cmd), 0);
 }
 
@@ -117,3 +117,5 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 // echo-nnnnnn edu
 // echo -nnnnnn -n -n -nnnnn edu
 //colocar espaco depois do heredoc prompt
+// echo -n   -n eduarsa
+// echo (seg fault)

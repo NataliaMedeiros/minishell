@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/16 15:22:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/16 15:35:28 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,10 @@ t_env		*parsing_env(char **env);
 char		*handle_dollar_sign(char *line, t_data data);
 
 // Builtin functions
-void		manager_functions(t_parser *data);
+void		manager_functions(t_parser *parse_data, t_data *data);
 void		echo_n(t_parser *data);
 void		pwd(t_parser *data);
+void		env_print(t_data *data);
 
 bool		has_flags(char *arg);
 
