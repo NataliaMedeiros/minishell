@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/16 13:15:17 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/16 13:16:38 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	data.env = parsing_env(envp);
-	print_env(data.env);
+	// print_env(data.env);
 	data.path = parsing_env_path(envp);
 	while (1)
 	{

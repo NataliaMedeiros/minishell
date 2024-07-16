@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_remove_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 16:41:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/16 13:37:00 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,32 @@ char	*remove_flags(char *arg)
 	int		i;
 	int		len;
 	int		new_len;
+	int		prev_i;
 
 	i = 0;
 	len = ft_strlen(arg);
 	printf("arg: %s\n", arg);
-	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n'))
+	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n' || arg[i] == ' '))
 	{
-		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == 'n')) //maybe while
+		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n')) //maybe while
 		{
-			i += 2;
+			prev_i = i;
+			i++;
 			while (arg[i] == 'n')
 				i++;
+			if (arg[i] != ' ')
+			{
+				i = prev_i;
+				break ;
+			}
 		}
-		if (arg[i] == ' ')
-			i++;
 		else
-			break ;
-		while (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == ' '))
-			i += 3;
+			break;
 		i++;
+		// if (arg[i] == ' ')
+		// 	i++;
+		// else
+		// 	i = prev_i;
 	}
 	new_len = len - i + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);
