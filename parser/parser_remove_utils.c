@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 13:37:00 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/17 13:57:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ char	*remove_flags(char *arg)
 
 	i = 0;
 	len = ft_strlen(arg);
-	printf("arg: %s\n", arg);
 	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n' || arg[i] == ' '))
 	{
 		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n')) //maybe while

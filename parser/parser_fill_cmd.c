@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 18:41:57 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/17 13:52:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 		temp = handle_dollar_sign(arg + j, data);
 		if (temp == NULL)
 			return (1);
-		printf("handle dollar sign: %s\n", temp);
+		// printf("handle dollar sign: %s\n", temp);
 	}
 	else
 		temp = arg + j;
@@ -82,8 +82,8 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
-	// if ((*parser)->cmd[1] == NULL)
-	// 	return (free(new_cmd), 1);
+	if ((*parser)->cmd[1] == NULL)
+		return (1);
 	return (free(new_cmd), 0);
 }
 

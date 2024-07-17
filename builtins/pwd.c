@@ -6,23 +6,20 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:45 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/12 12:49:44 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/17 14:13:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pwd(t_parser *data)
+void	pwd(void)
 {
 	char	*path;
 
-	if (ft_strncmp(data->cmd[0], "pwd", 3) == 0)
+	path = getcwd(NULL, 0);
+	if (path != NULL)
 	{
-		path = getcwd(NULL, 0);
-		if (path != NULL)
-		{
-			ft_putendl_fd(1, path);
-			free(path);
-		}
+		ft_putendl_fd(1, path);
+		free(path);
 	}
 }
