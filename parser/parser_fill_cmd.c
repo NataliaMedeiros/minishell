@@ -3,14 +3,59 @@
 /*                                                        ::::::::            */
 /*   parser_fill_cmd.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: natalia <natalia@student.42.fr>              +#+                     */
+/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 13:46:05 by natalia       ########   odam.nl         */
+/*   Created: 2024/07/17 13:57:08 by nmedeiro      #+#    #+#                 */
+/*   Updated: 2024/07/17 14:04:23 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+char	*remove_quotes(char *limiter)
+{
+	char	*new_limiter;
+	int		i;
+	int		j;
+
+	new_limiter = ft_calloc(sizeof(char), ft_strlen(limiter) - 1);
+	if (new_limiter == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (limiter[i] != '\0')
+	{
+		if (limiter[i] != '"' && limiter[i] != '\'')
+		{
+			new_limiter[j] = limiter[i];
+			j++;
+		}
+		i++;
+	}
+	return (new_limiter);
+}
+
+char	*remove_spaces(char *arg)
+{
+	char	*new_arg;
+	int		i;
+	int		len;
+	int		new_len;
+
+	i = 0;
+	len = ft_strlen(arg);
+	printf("arg[%d]: %c\n", i, arg[i]);
+	while (arg[i] != ' ' && arg[i] != '\0')
+		i++;
+	i++;
+	new_len = len - i + 1;
+	new_arg = (char *)malloc(sizeof(char) * new_len);
+	if (new_arg == NULL)
+		return (NULL);
+	ft_strlcpy(new_arg, arg + i, new_len);
+	// printf("new arg: %s\n", new_arg);
+	return (new_arg);
+}
 
 static bool	has_quotes(char *arg)
 {
@@ -26,6 +71,25 @@ static bool	has_quotes(char *arg)
 	return (false);
 }
 
+char	*ft_strtrim_adapted(char const *s1, char const *set)
+{
+	char	*new_s1;
+	int		start;
+	int		end;
+	int		new_len;
+
+	start = 0;
+	end = ft_strlen(s1) -1;
+	while (s1[start] != '\0' && s1[start] == set[start])
+		start++;
+	new_len = end - start + 2;
+	new_s1 = (char *)malloc(sizeof(char) * new_len);
+	if (new_s1 == NULL)
+		return (NULL);
+	ft_strlcpy(new_s1, s1 + start, new_len);
+	return (new_s1);
+}
+
 bool	has_flags(char *arg)
 {
 	int	i;
@@ -34,66 +98,41 @@ bool	has_flags(char *arg)
 	while (arg[i] != '\0')
 	{
 		if (arg[i] == '-')
-		{
-			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n' || arg[i + 2] == ' '))
-				return (true);
-		}
+			return (true);
 		if (arg[i] == '"' || arg[i] == '\'')
-			break ;
+			break;
 		i++;
 	}
 	return (false);
 }
 
-static int	fill_valid_echo(t_parser **parser, t_data data, int i)
+static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
 {
 	char	*temp;
-	char	*arg;
 	char	*new_cmd;
-	int		len_arg;
-	int		j;
 
-	j = 0;
-	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
-	while (arg[j] == ' ')
-		j++;
-	len_arg = arg - data.cmd_lst[i];
-	(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
+	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
+	if ((*parser)->cmd == NULL)
+		return (1);
+	(*parser)->cmd[0] = ft_strdup("echo");
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
-	ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
-	if (ft_strchr(arg, '$') != NULL)
-	{
-		temp = handle_dollar_sign(arg + j, data);
-		if (temp == NULL)
-			return (1);
-		printf("handle dollar sign: %s\n", temp);
-	}
-	else
-		temp = arg + j;
+	temp = ft_strtrim_adapted(data.cmd_lst[i], "echo ");
+	if (temp == NULL)
+		return (1);
+	// temp = handle_dollar_sign(temp, data); //comfirmar se tenho que ter essa parte no echo e se esta implementado da maneira correta
 	if (has_flags(temp) == true)
-	{
 		new_cmd = remove_flags(temp);
-		(*parser)->flag = true;
-	}
 	else
 		new_cmd = strdup(temp);
+	free(temp);
 	if (has_quotes(new_cmd) == true)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
 	if ((*parser)->cmd[1] == NULL)
-		return (1);
-	return (free(new_cmd), 0);
-}
-
-static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
-{
-	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
-	if ((*parser)->cmd == NULL)
-		return (1);
-	if (fill_valid_echo(parser, data, i) == 1)
-		return (1);
+			return (1);
+	free(new_cmd);
 	return (0);
 }
 
@@ -102,19 +141,11 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
 	{
 		if (fill_cmd_mode_echo(parser, data, i) == 1)
-			return (error_msg("Failure to fill cmd\n"), 1);
-		printf("flag %d\n", (*parser)->flag);
+			return(error_msg("Failure to fill cmd\n"), 1);
 	}
 	else
 		(*parser)->cmd = ft_split(data.cmd_lst[i], ' ');
 	if ((*parser)->cmd == NULL)
-		return (error_msg("Failure to fill cmd\n"), 1);
+		return(error_msg("Failure to fill cmd\n"), 1);
 	return (0);
 }
-
-// TODO
-//echo             eduarda
-// echoooooooo eduarda
-// echo-nnnnnn edu
-// echo -nnnnnn -n -n -nnnnn edu
-//colocar espaco depois do heredoc prompt
