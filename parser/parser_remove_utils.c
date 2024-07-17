@@ -6,37 +6,37 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/17 14:03:49 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/16 13:37:00 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// char	*remove_quotes(char *limiter)
-// {
-// 	char	*new_limiter;
-// 	int		i;
-// 	int		j;
+char	*remove_quotes(char *limiter)
+{
+	char	*new_limiter;
+	int		i;
+	int		j;
 
-// 	new_limiter = ft_calloc(sizeof(char), ft_strlen(limiter) - 1);
-// 	if (new_limiter == NULL)
-// 		return (NULL);
-// 	i = 0;
-// 	j = 0;
-// 	while (limiter[i] != '\0')
-// 	{
-// 		if ((limiter[i] == '$' && limiter[i + 1] == '"')
-// 			|| (limiter[i] == '$' && limiter[i + 1] == '\''))
-// 			i++;
-// 		if (limiter[i] != '"' && limiter[i] != '\'')
-// 		{
-// 			new_limiter[j] = limiter[i];
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	return (new_limiter);
-// }
+	new_limiter = ft_calloc(sizeof(char), ft_strlen(limiter) - 1);
+	if (new_limiter == NULL)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (limiter[i] != '\0')
+	{
+		if ((limiter[i] == '$' && limiter[i + 1] == '"')
+			|| (limiter[i] == '$' && limiter[i + 1] == '\''))
+			i++;
+		if (limiter[i] != '"' && limiter[i] != '\'')
+		{
+			new_limiter[j] = limiter[i];
+			j++;
+		}
+		i++;
+	}
+	return (new_limiter);
+}
 
 char	*remove_flags(char *arg)
 {
@@ -64,8 +64,12 @@ char	*remove_flags(char *arg)
 			}
 		}
 		else
-			break ;
+			break;
 		i++;
+		// if (arg[i] == ' ')
+		// 	i++;
+		// else
+		// 	i = prev_i;
 	}
 	new_len = len - i + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);
