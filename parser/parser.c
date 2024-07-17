@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/17 14:43:37 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/17 16:15:31 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ int	handle_infile(t_parser	**parser, t_data data, int i)
 			return (1);
 	}
 	else
-		(*parser)->fd_infile = open((*parser)->infile,
-				O_CREAT | O_RDONLY, 0644);
-	if ((*parser)->fd_outfile == -1)
+		(*parser)->fd_infile = open((*parser)->infile, O_RDONLY, 0644);
+	printf("%d\n\n", (*parser)->fd_infile);
+	if ((*parser)->fd_infile == -1)
 		return (error_msg("Failure to open infile\n"),
 			free ((*parser)->infile), 1);
 			//testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free

@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:10 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/12 15:19:34 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/17 15:39:14 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	print_array(char **array)
 	i = 0;
 	while (array[i] != NULL)
 	{
-		printf("%s\n", array[i]);
+		printf("%s<-\n", array[i]);
 		i++;
 	}
 }
