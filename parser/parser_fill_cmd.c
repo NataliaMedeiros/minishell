@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 14:28:18 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/18 16:11:36 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,23 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 
 	j = 0;
 	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
-	while (arg[j] == ' ')
-		j++;
-	len_arg = arg - data.cmd_lst[i];
-	(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
-	if ((*parser)->cmd[0] == NULL)
-		return (1);
-	ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
-	if (fill_echo_argument(parser, data, arg, j) == 1)
-		return (1);
+	if (arg != NULL)
+	{
+		while (arg[j] == ' ')
+			j++;
+		len_arg = arg - data.cmd_lst[i];
+	// }
+	// else
+	// 	len_arg = ft_strlen(data.cmd_lst[i]);
+		(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
+		if ((*parser)->cmd[0] == NULL)
+			return (1);
+		ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
+		if (fill_echo_argument(parser, data, arg, j) == 1)
+			return (1);
+	}
+	else
+		(*parser)->cmd[0] = ft_strdup("echo");
 	return (0);
 }
 
