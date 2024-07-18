@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/04 14:43:39 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/10 19:59:18 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/18 17:21:47 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,3 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	}
 	return (0);
 }
-
-// int main()
-// {
-//     char a[] = "world";
-//     char b[] = "hello";
-//     char result = strncmp(a, b, 2);
-//     printf("%d original function", result);
-//     char result2 = ft_strncmp(a, b, 2);
-//     printf("\n%d", result2);
-//     return (0);
-// }

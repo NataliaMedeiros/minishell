@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/18 16:23:41 by natalia       ########   odam.nl          #
+#    Updated: 2024/07/18 17:19:02 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,11 @@ SOURCE = main.c \
 		parser/temporary_functions.c \
 		parser/struct_utils.c \
 		parser/parser_fill_cmd.c \
-		parser/heredoc_dollarsign.c \
 		parser/parser_remove_utils.c \
 		free_utils.c \
 		utils.c \
 		env.c \
+		expander/dollarsign.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \
 		builtins/pwd.c \
