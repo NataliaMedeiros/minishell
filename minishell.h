@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/16 13:15:06 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/16 14:27:33 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	manager_functions(t_parser *data);
 void	echo_n(t_parser *data);
 void	pwd(t_parser *data);
 
-bool	has_flags(char *arg);
+bool	has_flags(char *arg, t_parser **parser);
 
 /*parser_remove utils.c*/
 char	*remove_quotes(char *limiter);

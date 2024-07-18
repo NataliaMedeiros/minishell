@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/15 14:08:06 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/16 14:53:57 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,18 @@ int	fill_parser(t_data	data, t_parser	**parser)
 				return (1);
 			i++;
 		}
-		else if (data.cmd_lst[i][0] == '<')
+		else if (data.cmd_lst[i][0] == '<'/*&& data.cmd_lst[i][1] != '<'*/)
 		{
 			if (handle_infile(parser, data, i) != 0)
 				return (1);
 			i++;
 		}
+		// else if (data.cmd_lst[i][0] == '<' && data.cmd_lst[i][1] == '<')
+		// {
+		// 	printf("implemente tests to heredoc\n");
+		// 	printf("%s\n", data.cmd_lst[i + 1]);
+		// 	printf("%s\n", data.cmd_lst[i + 2]);
+		// }
 		else
 			if (fill_cmd(parser, data, i) != 0)
 				return (1);
@@ -94,7 +100,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 
 /*Function that creates the parser struct
 head is used to not lose the reference to the first node
-print_struct será removido, pois está aqui somente para 
+print_struct será removido, pois está aqui somente para
 imprimir e conferir struct*/
 int	parser(t_data data)
 {

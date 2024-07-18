@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_heredoc.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 13:28:08 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/16 14:32:46 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*remove_lim_quotes(char *limiter)
 }
 
 /*This functions remove backslash of the heredoc limiter
-- Check if we should handle this, because I checked on 
+- Check if we should handle this, because I checked on
 bash and it removes the backslash*/
 static char	*remove_lim_backslash(char *limiter)
 {
@@ -81,7 +81,7 @@ input, reads this imput,checks delimiter (remover quotes and backslash
 if necessary) and closing the typing space on terminal when limiter is
 placed as input */
 /* PS: bash behavio: if the limiter is typed followed by more text it
-not works as limiter,if limiter is typed between quotes (simple os 
+not works as limiter,if limiter is typed between quotes (simple os
 double), the quotes should be removed and the same happens with backslash*/
 /* PS2: In this function I copied the limiter from the parser->imput
 checar se compensa deixar assim ou usar o strdup(cmd_lst[i+1])*/

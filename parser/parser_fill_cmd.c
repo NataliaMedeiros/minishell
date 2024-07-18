@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 13:46:05 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/16 14:28:18 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static bool	has_quotes(char *arg)
 	return (false);
 }
 
-bool	has_flags(char *arg)
+bool	has_flags(char *arg, t_parser	**parser)
 {
 	int	i;
 
@@ -36,7 +36,10 @@ bool	has_flags(char *arg)
 		if (arg[i] == '-')
 		{
 			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n' || arg[i + 2] == ' '))
+			{
+				(*parser)->flag = true;
 				return (true);
+			}
 		}
 		if (arg[i] == '"' || arg[i] == '\'')
 			break ;
@@ -45,11 +48,35 @@ bool	has_flags(char *arg)
 	return (false);
 }
 
-static int	fill_valid_echo(t_parser **parser, t_data data, int i)
+static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 {
 	char	*temp;
-	char	*arg;
 	char	*new_cmd;
+
+	if (ft_strchr(arg, '$') != NULL)
+	{
+		temp = handle_dollar_sign(arg + j, data);
+		if (temp == NULL)
+			return (1);
+	}
+	else
+		temp = arg + j;
+	if (has_flags(temp, parser) == true)
+		new_cmd = remove_flags(temp);
+	else
+		new_cmd = temp;
+	if (has_quotes(new_cmd) == true)
+		(*parser)->cmd[1] = remove_quotes(new_cmd);
+	else
+		(*parser)->cmd[1] = ft_strdup(new_cmd);
+	if ((*parser)->cmd[1] == NULL)
+		return (1);
+	return (0);
+}
+
+static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
+{
+	char	*arg;
 	int		len_arg;
 	int		j;
 
@@ -62,37 +89,7 @@ static int	fill_valid_echo(t_parser **parser, t_data data, int i)
 	if ((*parser)->cmd[0] == NULL)
 		return (1);
 	ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
-	if (ft_strchr(arg, '$') != NULL)
-	{
-		temp = handle_dollar_sign(arg + j, data);
-		if (temp == NULL)
-			return (1);
-		printf("handle dollar sign: %s\n", temp);
-	}
-	else
-		temp = arg + j;
-	if (has_flags(temp) == true)
-	{
-		new_cmd = remove_flags(temp);
-		(*parser)->flag = true;
-	}
-	else
-		new_cmd = strdup(temp);
-	if (has_quotes(new_cmd) == true)
-		(*parser)->cmd[1] = remove_quotes(new_cmd);
-	else
-		(*parser)->cmd[1] = ft_strdup(new_cmd);
-	if ((*parser)->cmd[1] == NULL)
-		return (1);
-	return (free(new_cmd), 0);
-}
-
-static int	fill_cmd_mode_echo(t_parser	**parser, t_data data, int i)
-{
-	(*parser)->cmd = ft_calloc(sizeof(char *), 3);
-	if ((*parser)->cmd == NULL)
-		return (1);
-	if (fill_valid_echo(parser, data, i) == 1)
+	if (fill_echo_argument(parser, data, arg, j) == 1)
 		return (1);
 	return (0);
 }
@@ -101,7 +98,10 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 {
 	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
 	{
-		if (fill_cmd_mode_echo(parser, data, i) == 1)
+		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
+		if ((*parser)->cmd == NULL)
+			return (1);
+		if (fill_echo_cmd(parser, data, i) == 1)
 			return (error_msg("Failure to fill cmd\n"), 1);
 		printf("flag %d\n", (*parser)->flag);
 	}
