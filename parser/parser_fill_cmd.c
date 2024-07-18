@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/18 16:33:17 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/18 16:45:37 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	{
 		while (arg[j] == ' ')
 			j++;
-		len_arg = arg - data.cmd_lst[i];
+		len_arg = arg - data.cmd_lst[i] - 1; //1 refers to space
 	// }
 	// else
 	// 	len_arg = ft_strlen(data.cmd_lst[i]);
