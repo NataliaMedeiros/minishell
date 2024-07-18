@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/16 13:37:00 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/18 16:37:30 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*remove_flags(char *arg)
 			i++;
 			while (arg[i] == 'n')
 				i++;
-			if (arg[i] != ' ')
+			if (arg[i] != ' ' && arg[i] != '\0')
 			{
 				i = prev_i;
 				break ;

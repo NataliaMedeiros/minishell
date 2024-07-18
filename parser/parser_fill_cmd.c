@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/18 16:11:36 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/18 16:33:17 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	has_flags(char *arg, t_parser	**parser)
 	{
 		if (arg[i] == '-')
 		{
-			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n' || arg[i + 2] == ' '))
+			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n' || arg[i + 2] == ' ' || arg[i + 2] == '\0'))
 			{
 				(*parser)->flag = true;
 				return (true);
@@ -61,6 +61,7 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	}
 	else
 		temp = arg + j;
+	printf("--->%d\n", has_flags(temp, parser));
 	if (has_flags(temp, parser) == true)
 		new_cmd = remove_flags(temp);
 	else
