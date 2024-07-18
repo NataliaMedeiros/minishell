@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   heredoc_dollarsign.c                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/15 16:17:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/18 17:11:31 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ static char	*get_var(char *line, int start, t_data data)
 	return (new_line);
 }
 
-/* This function replaces the env variable to it's value and return the line 
+/* This function replaces the env variable to it's value and return the line
 with ALL env variable replaced on the right place when we are working with
-heredoc NOTE: On the subject is specified that the env variable just be 
-replaced ONLY when we have DOUBLE quotes or NO quotes (if we have single 
+heredoc NOTE: On the subject is specified that the env variable just be
+replaced ONLY when we have DOUBLE quotes or NO quotes (if we have single
 quotes it should NOT be replaced)*/
 char	*handle_dollar_sign(char *line, t_data data)
 {
@@ -87,14 +87,21 @@ char	*handle_dollar_sign(char *line, t_data data)
 		i = 0;
 		while (line[i] != '\0')
 		{
-			if (line[i] == '$' && line[i + 1] != '"')
+			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0')
 			{
 				new_line = get_var(line, i + 1, data);
+				line = new_line;
 				i += 2;
+			}
+			else if (line[i] == '$' && line [i + 1] == '\0')
+			{
+				new_line = line;
+				break ;
 			}
 			i++;
 		}
-		return (new_line);
+		if (new_line != NULL)
+			return (new_line);
 	}
 	return (line);
 }
