@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   free_utils.c                                       :+:    :+:            */
+/*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/07/12 12:26:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/18 11:37:43 by edribeir      ########   odam.nl         */
+/*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/07/18 16:48:57 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_array(int counter, char **cmd)
-{
-	if (counter == 0)
-	{
-		while (cmd[counter] != NULL)
-		{
-			free(cmd[counter]);
-			counter++;
-		}
-	}
-	else
-	{
-		while (counter > 0)
-		{
-			free(cmd[counter]);
-			counter--;
-		}
-	}
-	free(cmd);
-}
-
-void	ft_free(t_parser *parser)
-{
-	if (parser->cmd != NULL)
-		free_array(0, parser->cmd);
-}
+// cria uma nova variavel dentro do ambiente, se tiver um = adiciona um valor pra essa variavel
+// sem o = seta o valor da variavel pra null
+// coloca o env em ordem albetica se for escrito so export sem outro argumento
+// mas a variavel q eu criei por ultimo nao fica na ordem alfabetica, ela aparece no final

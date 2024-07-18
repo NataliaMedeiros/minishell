@@ -1,40 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   free_utils.c                                       :+:    :+:            */
+/*   unset.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/07/12 12:26:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/18 11:37:43 by edribeir      ########   odam.nl         */
+/*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/07/18 16:50:11 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	free_array(int counter, char **cmd)
-{
-	if (counter == 0)
-	{
-		while (cmd[counter] != NULL)
-		{
-			free(cmd[counter]);
-			counter++;
-		}
-	}
-	else
-	{
-		while (counter > 0)
-		{
-			free(cmd[counter]);
-			counter--;
-		}
-	}
-	free(cmd);
-}
-
-void	ft_free(t_parser *parser)
-{
-	if (parser->cmd != NULL)
-		free_array(0, parser->cmd);
-}
+// deleta a key relacionada dentro do ambiente, precisa de um argumento relacionado a uma key
+// sem a key/argumento valido, nao faz nada

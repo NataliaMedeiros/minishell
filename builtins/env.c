@@ -6,20 +6,29 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 14:16:18 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/16 18:03:39 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/18 12:01:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	env_print(t_data *data)
+void	env_print(t_data *data, t_parser *parse)
 {
 	t_env	*head;
+	int		fd;
 
-	head = data->env->next;
-	while(head != NULL)
+	if (ft_strncmp(parse->cmd[0], "env\0", 4) == 0
+		&& parse->cmd[1] != NULL)
 	{
-		printf("%s%s\n", head->key_word, head->info);
+		error_msg("Not such a file or directory");
+		// exit (127);
+	}
+	fd = change_fd(parse);
+	head = data->env->next;
+	while (head != NULL)
+	{
+		ft_putstr_fd(head->key_word, fd);
+		ft_putendl_fd(fd, head->info);
 		head = head->next;
 	}
 }
