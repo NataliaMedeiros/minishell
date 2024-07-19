@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/18 16:45:37 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/19 13:07:41 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ bool	has_flags(char *arg, t_parser	**parser)
 	{
 		if (arg[i] == '-')
 		{
-			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n' || arg[i + 2] == ' ' || arg[i + 2] == '\0'))
+			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
+				|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
 			{
 				(*parser)->flag = true;
 				return (true);
@@ -61,7 +62,6 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	}
 	else
 		temp = arg + j;
-	printf("--->%d\n", has_flags(temp, parser));
 	if (has_flags(temp, parser) == true)
 		new_cmd = remove_flags(temp);
 	else
@@ -87,10 +87,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	{
 		while (arg[j] == ' ')
 			j++;
-		len_arg = arg - data.cmd_lst[i] - 1; //1 refers to space
-	// }
-	// else
-	// 	len_arg = ft_strlen(data.cmd_lst[i]);
+		len_arg = arg - data.cmd_lst[i] - 1;
 		(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
 		if ((*parser)->cmd[0] == NULL)
 			return (1);
@@ -120,10 +117,3 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 		return (error_msg("Failure to fill cmd\n"), 1);
 	return (0);
 }
-
-// TODO
-//echo             eduarda
-// echoooooooo eduarda
-// echo-nnnnnn edu
-// echo -nnnnnn -n -n -nnnnn edu
-//colocar espaco depois do heredoc prompt

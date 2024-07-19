@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/18 16:37:30 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/19 13:12:19 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*remove_quotes(char *limiter)
 {
 	char	*new_limiter;
+	bool	double_quotes;
 	int		i;
 	int		j;
 
@@ -23,12 +24,16 @@ char	*remove_quotes(char *limiter)
 		return (NULL);
 	i = 0;
 	j = 0;
+	double_quotes = false;
 	while (limiter[i] != '\0')
 	{
+		if (limiter[i] == '"')
+			double_quotes = true;
 		if ((limiter[i] == '$' && limiter[i + 1] == '"')
 			|| (limiter[i] == '$' && limiter[i + 1] == '\''))
 			i++;
-		if (limiter[i] != '"' && limiter[i] != '\'')
+		if ((limiter[i] != '"' && limiter[i] != '\'')
+			||(limiter[i] == '\'' && double_quotes == true))
 		{
 			new_limiter[j] = limiter[i];
 			j++;
@@ -48,10 +53,9 @@ char	*remove_flags(char *arg)
 
 	i = 0;
 	len = ft_strlen(arg);
-	printf("arg: %s\n", arg);
 	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n' || arg[i] == ' '))
 	{
-		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n')) //maybe while
+		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n'))
 		{
 			prev_i = i;
 			i++;
@@ -66,10 +70,6 @@ char	*remove_flags(char *arg)
 		else
 			break;
 		i++;
-		// if (arg[i] == ' ')
-		// 	i++;
-		// else
-		// 	i = prev_i;
 	}
 	new_len = len - i + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);

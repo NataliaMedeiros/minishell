@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/18 16:16:46 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/19 13:15:17 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,6 @@ int	fill_parser(t_data	data, t_parser	**parser)
 				return (1);
 			i++;
 		}
-		// else if (data.cmd_lst[i][0] == '<' && data.cmd_lst[i][1] == '<')
-		// {
-		// 	printf("implemente tests to heredoc\n");
-		// 	printf("%s\n", data.cmd_lst[i + 1]);
-		// 	printf("%s\n", data.cmd_lst[i + 2]);
-		// }
 		else
 			if (fill_cmd(parser, data, i) != 0)
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/18 16:21:09 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/19 13:14:23 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,14 @@ typedef struct s_parser
 
 typedef struct s_data
 {
-	char			*command_line;
+	char			*cmd_line;
 	char			**cmd_lst;
-	char			**token;
 	char			**envp;
 	char			**path;
 	struct s_env	*env;
 }					t_data;
 
 /* parser */
-t_token		check_token(char *argv);
 int			parser(t_data data);
 char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
