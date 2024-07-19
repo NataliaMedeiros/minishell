@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/19 13:14:23 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/19 13:31:42 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_infile
+{
+	char			*name;
+	char			*type;
+	struct s_infile	*next;
+}				t_infile;
 
 typedef struct s_parser
 {
@@ -47,7 +53,8 @@ typedef struct s_parser
 	int				fd_outfile;
 	char			*outfile;
 	int				fd_infile;
-	char			*infile;
+	// char			*infile;
+	t_infile		*infile;
 	struct s_parser	*pipe;
 }					t_parser;
 

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/19 13:15:17 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/19 14:28:16 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,97 @@ int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
 	return (0);
 }
 
+t_infile	*new_infile(char *name, char *type)
+{
+	t_infile	*new_element;
+
+	new_element = malloc(sizeof(t_list));
+	if (new_element == NULL)
+		return (NULL);
+	new_element->name = name;
+	new_element->type = type;
+	new_element->next = NULL;
+
+	return (new_element);
+}
+
+void	add_infile_back(t_infile **head, char *name, char *type)
+{
+	t_infile	*current_node;
+	t_infile	*new_node;
+
+	current_node = *head;
+	int i = 0;
+	while (current_node->next != NULL)
+	{
+		i++;
+		printf("%s and %d\n", current_node->type ,i);
+		current_node = current_node->next;
+	}
+	while (current_node->next != NULL)
+	{
+		current_node = current_node->next;
+	}
+	new_node = new_infile(name, type);
+	current_node->next = new_node;
+}
+
 /*function to handle input redirection (<) and heredoc (<<).
 However the heredod still neds some implementation*/
 int	handle_infile(t_parser	**parser, t_data data, int i)
 {
-	(*parser)->infile = ft_strdup(data.cmd_lst[i + 1]);
-	if ((*parser)->infile == NULL)
-		return (1);
+	char		*type;
+	t_infile	*node;
+
+	int j = 0;
 	if (data.cmd_lst[i][1] == '<')
-	{
-		if (handle_heredoc(parser, data) != 0)
-			return (1);
-	}
+		type = "heredoc";
 	else
-		(*parser)->fd_infile = open((*parser)->infile,
-				O_CREAT | O_RDONLY, 0644);
-	if ((*parser)->fd_outfile == -1)
-		return (error_msg("Failure to open infile\n"),
-			free((*parser)->infile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
+		type = "infile";
+	node = new_infile(data.cmd_lst[i + 1], type);
+	while (node != NULL)
+	{
+		j++;
+		printf("%s and %d\n", node->type ,j);
+		node = node->next;
+	}
+
+	printf("Adding type: %s ", node->type);
+	printf("with string: %s\n", node->name);
+
+	if ((*parser)->infile == NULL)
+		(*parser)->infile = node;
+	else
+	{
+		int i = 0;
+		while ((*parser)->infile->next != NULL)
+		{
+			i++;
+			printf("%s and %d\n", (*parser)->infile->type ,i);
+			(*parser)->infile = (*parser)->infile->next;
+		}
+		(*parser)->infile = node;
+	}
+
+	// else
+	// 	add_infile_back(&(*parser)->infile, data.cmd_lst[i + 1], type);
+
+	printf("Added type: %s ", node->type);
+	printf("with string: %s\n", node->name);
+	// (*parser)->infile = ft_strdup(data.cmd_lst[i + 1]);
+	// if ((*parser)->infile == NULL)
+	// 	return (1);
+	// if (data.cmd_lst[i][1] == '<')
+	// {
+	// 	if (handle_heredoc(parser, data) != 0)
+	// 		return (1);
+	// }
+	// else
+	// 	(*parser)->fd_infile = open((*parser)->infile,
+	// 			O_CREAT | O_RDONLY, 0644);
+	// if ((*parser)->fd_outfile == -1)
+	// 	return (error_msg("Failure to open infile\n"),
+	// 		free((*parser)->infile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
 	return (0);
 }
 
