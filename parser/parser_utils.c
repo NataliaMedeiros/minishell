@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/22 15:13:39 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/22 16:56:08 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	**split_cmds(t_data data)
 				&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
 			i++;
 		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
+		printf("cmd[%d]: %s\n", counter, cmd[counter]);
 		if (cmd[counter] == NULL)
 			return (free_array(counter, cmd), NULL);
 		counter++;
@@ -76,6 +77,7 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 {
 	char	*substring;
 	size_t	i;
+	size_t	j;
 
 	i = 0;
 	if (!s)
@@ -88,18 +90,20 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 		len = 0;
 	else if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	substring = malloc(len + 1);
+	j = start;
+	substring = ft_calloc(len + 1, sizeof(char));
 	if (substring == NULL)
 		return (NULL);
 	while (i < len && start < ft_strlen(s))
 	{
-		// if (s[start + 1] != '\0' && s[start] != ' ' )
-		// {
-			substring[i] = s[start];
-			i++;
-		// }
+		if (s[start] == ' ' && s[start + 1] == '\0')
+			return (substring);
+		else if (s[start] == ' ' && (s[start + 1] == '>'
+				|| s[start + 1] == '<' || s[start + 1] == '|'))
+			return (substring);
+		substring[i] = s[start];
+		i++;
 		start++;
 	}
-	substring[i] = '\0';
 	return (substring);
 }

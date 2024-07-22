@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/22 15:00:37 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/22 17:41:47 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,60 +79,21 @@ However the heredod still neds some implementation*/
 int	handle_infile(t_parser	**parser, t_data data, int i)
 {
 	char		*type;
-	// t_infile	*node;
+	t_infile	*temp;
 
-	// int j = 0;
 	if (data.cmd_lst[i][1] == '<')
 		type = "heredoc";
 	else
 		type = "infile";
 	if ((*parser)->infile == NULL)
-	{
 		(*parser)->infile = new_infile(data.cmd_lst[i + 1], type);
-		printf("Added type: %s ", (*parser)->infile->type);
-		printf("with string: %s\n", (*parser)->infile->name);
-	}
 	else
 	{
-		while ((*parser)->infile->next != NULL)
-		{
-			i++;
-			// printf("%s and %d\n", (*parser)->infile->type ,i);
-			(*parser)->infile = (*parser)->infile->next;
-		}
-		(*parser)->infile->next = new_infile(data.cmd_lst[i + 1], type);
-		printf("Added type: %s ", (*parser)->infile->next->type);
-		printf("with string: %s\n", (*parser)->infile->next->name);
+		temp = (*parser)->infile;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = new_infile(data.cmd_lst[i + 1], type);
 	}
-	// node = new_infile(data.cmd_lst[i + 1], type);
-	// while (node != NULL)
-	// {
-	// 	j++;
-	// 	printf("%s and %d\n", node->type ,j);
-	// 	node = node->next;
-	// }
-
-	// printf("Adding type: %s ", node->type);
-	// printf("with string: %s\n", node->name);
-
-
-	// else
-	// 	add_infile_back(&(*parser)->infile, data.cmd_lst[i + 1], type);
-
-	// (*parser)->infile = ft_strdup(data.cmd_lst[i + 1]);
-	// if ((*parser)->infile == NULL)
-	// 	return (1);
-	// if (data.cmd_lst[i][1] == '<')
-	// {
-	// 	if (handle_heredoc(parser, data) != 0)
-	// 		return (1);
-	// }
-	// else
-	// 	(*parser)->fd_infile = open((*parser)->infile,
-	// 			O_CREAT | O_RDONLY, 0644);
-	// if ((*parser)->fd_outfile == -1)
-	// 	return (error_msg("Failure to open infile\n"),
-	// 		free((*parser)->infile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
 	return (0);
 }
 
@@ -180,6 +141,7 @@ int	parser(t_data data)
 	data.cmd_lst = split_cmds(data);
 	if (data.cmd_lst == NULL)
 		return (error_msg("Failure on parsing\n"), 1);
+	print_array(data.cmd_lst);
 	parser = new_struct();
 	if (parser == NULL)
 		return (error_msg_with_free("Failure on parsing\n", data.cmd_lst), 1);
