@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/18 12:00:06 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/22 12:17:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	manager_functions(t_parser *parse_data, t_data *data)
 	else if (ft_strncmp(parse_data->cmd[0], "pwd", 4) == 0)
 		pwd(parse_data);
 	else if (ft_strncmp(parse_data->cmd[0], "cd", 2) == 0)
-		ft_cd(parse_data);
+		ft_cd(parse_data, data);
 	else if (ft_strncmp(parse_data->cmd[0], "env\0", 4) == 0
 		&& parse_data->cmd[1] == NULL)
 		env_print(data, parse_data);
