@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/22 16:56:08 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/22 17:58:47 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	**split_cmds(t_data data)
 	{
 		start = i;
 		while (data.cmd_line[i] != '\0' && data.cmd_line[i] != '|'
-				&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
+			&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
 			i++;
 		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
 		printf("cmd[%d]: %s\n", counter, cmd[counter]);

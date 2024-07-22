@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/22 17:41:47 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/22 17:58:29 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,8 @@ void	add_infile_back(t_infile **head, char *name, char *type)
 	t_infile	*new_node;
 
 	current_node = *head;
-	int i = 0;
 	while (current_node->next != NULL)
-	{
-		i++;
-		printf("%s and %d\n", current_node->type ,i);
 		current_node = current_node->next;
-	}
 	while (current_node->next != NULL)
 	{
 		current_node = current_node->next;
@@ -115,7 +110,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 				return (1);
 			i++;
 		}
-		else if (data.cmd_lst[i][0] == '<'/*&& data.cmd_lst[i][1] != '<'*/)
+		else if (data.cmd_lst[i][0] == '<')
 		{
 			if (handle_infile(parser, data, i) != 0)
 				return (1);
