@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/22 18:15:15 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/22 18:50:09 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,12 @@ bool	change_value_env(t_env *env, char *oldpwd, char *pwd)
 {
 	while (env)
 	{
-		if (strncmp(env->key_word, "OLDPWD", 6) != 0
-			|| strncmp(env->key_word, "PWD", 3) != 0)
-			return (false);
-		if (strncmp(env->key_word, "OLDPWD", 6) == 0)
+		if (ft_strncmp(env->key_word, "OLDPWD", 6) == 0)
 		{
 			free(env->info);
 			env->info = ft_strdup(oldpwd);
 		}
-		if (strncmp(env->key_word, "PWD", 3) == 0)
+		else if (ft_strncmp(env->key_word, "PWD", 3) == 0)
 		{
 			free(env->info);
 			env->info = ft_strdup(pwd);
@@ -38,7 +35,7 @@ char	*get_env_node(t_env *env, char *str)
 {
 	while (env)
 	{
-		if (strncmp(str, env->key_word, strlen(str)) == 0)
+		if (ft_strncmp(str, env->key_word, strlen(str)) == 0)
 			return (env->info);
 		env = env->next;
 	}
@@ -108,7 +105,7 @@ void	ft_cd(t_parser *data, t_data *info)
 		home_dir(info->env, old_pwd);
 		return ;
 	}
-	if (data->cmd[1][0] == '-')
+	else if (data->cmd[1][0] == '-')
 	{
 		home_dir(info->env, old_pwd);
 		pwd(data);
