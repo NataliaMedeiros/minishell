@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/19 13:46:55 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/22 15:13:39 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,12 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	while (i < len && start < ft_strlen(s))
 	{
-		substring[i] = s[start];
+		// if (s[start + 1] != '\0' && s[start] != ' ' )
+		// {
+			substring[i] = s[start];
+			i++;
+		// }
 		start++;
-		i++;
 	}
 	substring[i] = '\0';
 	return (substring);

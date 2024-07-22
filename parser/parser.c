@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/19 14:28:16 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/22 15:00:37 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,43 +79,46 @@ However the heredod still neds some implementation*/
 int	handle_infile(t_parser	**parser, t_data data, int i)
 {
 	char		*type;
-	t_infile	*node;
+	// t_infile	*node;
 
-	int j = 0;
+	// int j = 0;
 	if (data.cmd_lst[i][1] == '<')
 		type = "heredoc";
 	else
 		type = "infile";
-	node = new_infile(data.cmd_lst[i + 1], type);
-	while (node != NULL)
-	{
-		j++;
-		printf("%s and %d\n", node->type ,j);
-		node = node->next;
-	}
-
-	printf("Adding type: %s ", node->type);
-	printf("with string: %s\n", node->name);
-
 	if ((*parser)->infile == NULL)
-		(*parser)->infile = node;
+	{
+		(*parser)->infile = new_infile(data.cmd_lst[i + 1], type);
+		printf("Added type: %s ", (*parser)->infile->type);
+		printf("with string: %s\n", (*parser)->infile->name);
+	}
 	else
 	{
-		int i = 0;
 		while ((*parser)->infile->next != NULL)
 		{
 			i++;
-			printf("%s and %d\n", (*parser)->infile->type ,i);
+			// printf("%s and %d\n", (*parser)->infile->type ,i);
 			(*parser)->infile = (*parser)->infile->next;
 		}
-		(*parser)->infile = node;
+		(*parser)->infile->next = new_infile(data.cmd_lst[i + 1], type);
+		printf("Added type: %s ", (*parser)->infile->next->type);
+		printf("with string: %s\n", (*parser)->infile->next->name);
 	}
+	// node = new_infile(data.cmd_lst[i + 1], type);
+	// while (node != NULL)
+	// {
+	// 	j++;
+	// 	printf("%s and %d\n", node->type ,j);
+	// 	node = node->next;
+	// }
+
+	// printf("Adding type: %s ", node->type);
+	// printf("with string: %s\n", node->name);
+
 
 	// else
 	// 	add_infile_back(&(*parser)->infile, data.cmd_lst[i + 1], type);
 
-	printf("Added type: %s ", node->type);
-	printf("with string: %s\n", node->name);
 	// (*parser)->infile = ft_strdup(data.cmd_lst[i + 1]);
 	// if ((*parser)->infile == NULL)
 	// 	return (1);
