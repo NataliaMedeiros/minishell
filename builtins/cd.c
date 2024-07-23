@@ -6,13 +6,14 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/22 18:50:09 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/23 14:09:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	change_value_env(t_env *env, char *oldpwd, char *pwd)
+// um retorno falso se a variavel na existir, no caso do unset eliminar o PWD ou OLDPWD
+bool	change_PWD_value(t_env *env, char *oldpwd, char *pwd)
 {
 	while (env)
 	{
@@ -54,7 +55,7 @@ bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 			return (false);
 		}
 		new_pwd = getcwd(NULL, 0);
-		if (change_value_env(info->env, old_pwd, new_pwd) == false)
+		if (change_PWD_value(info->env, old_pwd, new_pwd) == false)
 		{
 			error_msg("NOT Such directory");
 			return (false);
@@ -83,7 +84,7 @@ void	home_dir(t_env *env, char *old_pwd)
 		error_msg("HOME NOT FOUND");
 		exit (EXIT_FAILURE);
 	}
-	if (change_value_env(env, old_pwd, home) == false)
+	if (change_PWD_value(env, old_pwd, home) == false)
 	{
 		error_msg("NOT Such directory");
 		exit (EXIT_FAILURE);

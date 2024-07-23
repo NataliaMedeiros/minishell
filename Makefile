@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/22 12:30:20 by edribeir      ########   odam.nl          #
+#    Updated: 2024/07/23 14:25:13 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SOURCE = source/main.c \
 		builtins/pwd.c \
 		builtins/env.c \
 		builtins/cd.c \
+		builtins/unset.c
 
 OBJECTS = $(SOURCE:%.c=%.o)
 
