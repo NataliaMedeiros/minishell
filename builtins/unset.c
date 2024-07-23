@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/23 16:43:35 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/23 20:24:55 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,33 @@
 // 	return (false);
 // }
 
+void	delete_node(t_env *env, t_env *next_node)
+{
+	env->next = next_node->next;
+	free(next_node->key_word);
+	free(next_node->info);
+	free(next_node);
+}
+
 int	ft_unset(t_env *env, t_parser *parser)
 {
 	char	*str;
-	t_env	*exc_node;
-	t_env	*temp;
 
-	temp = env;
 	str = parser->cmd[1];
 	if (str == NULL)
 	{
 		printf("FIZ ND\n");
 		return (0);
 	}
-	while (temp)
+	while (env->next != NULL)
 	{
-		if (ft_strncmp(temp->key_word, str, ft_strlen(str)) == 0)
+		if (ft_strncmp(env->next->key_word, str, ft_strlen(str)) == 0)
 		{
-			exc_node = temp->next;
-			temp->next = temp->next->next;
-			printf("deleting: %s\n", exc_node->key_word);
-			// free(exc_node->key_word);
-			// free(exc_node->info);
-			// free(exc_node);
+			delete_node(env, env->next);
+			printf("deleting: %s\n", env->key_word);
 			return (0);
 		}
-		temp = temp->next;
+		env = env->next;
 	}
 	printf("Nao achei ngm\n");
 	return (0);
