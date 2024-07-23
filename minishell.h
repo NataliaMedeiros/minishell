@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/19 13:31:42 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/23 15:12:28 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,8 @@ bool	has_flags(char *arg, t_parser **parser);
 /*parser_remove utils.c*/
 char	*remove_quotes(char *limiter);
 char	*remove_flags(char *arg);
+
+/*handle file*/
+int	handle_files(t_parser	**parser, t_data data, int i);
 
 #endif

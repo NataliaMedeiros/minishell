@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/22 17:58:29 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/23 15:15:10 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,77 +18,6 @@ int	handle_pipe(t_parser **parser)
 	if ((*parser)->pipe == NULL)
 		return (error_msg("Failed to allocate memory for pipe\n"), 1);
 	(*parser) = (*parser)->pipe;
-	return (0);
-}
-
-/*function to handle output redirection (>) and append (>>)*/
-int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
-{
-	(*parser)->outfile = ft_strdup(cmd_lst[i + 1]);
-	if ((*parser)->outfile == NULL)
-		return (1);
-	if (cmd_lst[i][1] == '>')
-		(*parser)->fd_outfile = open((*parser)->outfile,
-				O_CREAT | O_WRONLY | O_APPEND, 0664);
-	else
-		(*parser)->fd_outfile = open((*parser)->outfile,
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if ((*parser)->fd_outfile == -1)
-		return (error_msg("Failure to open outfile\n"),
-			free((*parser)->outfile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
-	return (0);
-}
-
-t_infile	*new_infile(char *name, char *type)
-{
-	t_infile	*new_element;
-
-	new_element = malloc(sizeof(t_list));
-	if (new_element == NULL)
-		return (NULL);
-	new_element->name = name;
-	new_element->type = type;
-	new_element->next = NULL;
-
-	return (new_element);
-}
-
-void	add_infile_back(t_infile **head, char *name, char *type)
-{
-	t_infile	*current_node;
-	t_infile	*new_node;
-
-	current_node = *head;
-	while (current_node->next != NULL)
-		current_node = current_node->next;
-	while (current_node->next != NULL)
-	{
-		current_node = current_node->next;
-	}
-	new_node = new_infile(name, type);
-	current_node->next = new_node;
-}
-
-/*function to handle input redirection (<) and heredoc (<<).
-However the heredod still neds some implementation*/
-int	handle_infile(t_parser	**parser, t_data data, int i)
-{
-	char		*type;
-	t_infile	*temp;
-
-	if (data.cmd_lst[i][1] == '<')
-		type = "heredoc";
-	else
-		type = "infile";
-	if ((*parser)->infile == NULL)
-		(*parser)->infile = new_infile(data.cmd_lst[i + 1], type);
-	else
-	{
-		temp = (*parser)->infile;
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = new_infile(data.cmd_lst[i + 1], type);
-	}
 	return (0);
 }
 
@@ -104,15 +33,9 @@ int	fill_parser(t_data	data, t_parser	**parser)
 			if (handle_pipe(parser) != 0)
 				return (1);
 		}
-		else if (data.cmd_lst[i][0] == '>')
+		else if (data.cmd_lst[i][0] == '>' || data.cmd_lst[i][0] == '<')
 		{
-			if (handle_outfile(parser, data.cmd_lst, i) != 0)
-				return (1);
-			i++;
-		}
-		else if (data.cmd_lst[i][0] == '<')
-		{
-			if (handle_infile(parser, data, i) != 0)
+			if (handle_files(parser, data, i) != 0)
 				return (1);
 			i++;
 		}
@@ -122,6 +45,28 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		i++;
 	}
 	return (0);
+}
+
+void	exec_infile(t_parser **parser, t_data	data)
+{
+	printf("Entrei no exec infile\n");
+	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+	{
+		while((*parser)->infile->next != NULL)
+		{
+			(*parser)->infile = (*parser)->infile->next;
+		}
+		(*parser)->fd_infile = open((*parser)->infile->name,
+				O_RDONLY, 0644);
+	}
+	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
+	{
+		while((*parser)->infile != NULL)
+		{
+			handle_heredoc(parser, data);
+			(*parser)->infile = (*parser)->infile->next;
+		}
+	}
 }
 
 /*Function that creates the parser struct
@@ -143,6 +88,8 @@ int	parser(t_data data)
 	head_parser = parser;
 	if (fill_parser(data, &parser) != 0)
 		return (free_parsing(&parser), 1);
+	if (parser->infile != NULL)
+		exec_infile(&parser, data);
 	print_struct(head_parser);
 	//ver se é o lugar certo paraimplementar free struct when finish to use a cmd line and before return to prompt
 	manager_functions(head_parser, &data);

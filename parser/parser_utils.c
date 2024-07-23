@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/22 17:58:47 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/23 13:50:02 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 {
 	char	*substring;
 	size_t	i;
-	size_t	j;
 
 	i = 0;
 	if (!s)
@@ -90,7 +89,6 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 		len = 0;
 	else if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	j = start;
 	substring = ft_calloc(len + 1, sizeof(char));
 	if (substring == NULL)
 		return (NULL);
