@@ -23,9 +23,11 @@ void	print_struct(t_parser *head)
 		if (head->cmd != NULL)
 			print_array(head->cmd);
 		printf("\033[31moutfile: \033[0m->%s<-\n", head->outfile ? head->outfile : "None");
+		printf("\033[31mofd_utfile: \033[0m->%d<-\n", head->fd_outfile);
 		while (head->infile != NULL)
 		{
 			printf("\033[31minfile: \033[0m->%s<-\n", head->infile->name ? head->infile->name : "None" );
+			printf("\033[31minfile: \033[0m->%d<-\n", head->fd_infile);
 			head->infile = head->infile->next;
 		}
 		head = head->pipe;

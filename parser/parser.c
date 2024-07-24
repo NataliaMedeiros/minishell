@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/24 14:18:00 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/24 14:51:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,53 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	return (0);
 }
 
+// void	exec_infile(t_parser **parser, t_data	data)
+// {
+// 	printf("Entrei no exec infile\n");
+// 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+// 	{
+// 		while ((*parser)->infile->next != NULL)
+// 		{
+// 			(*parser)->infile = (*parser)->infile->next;
+// 		}
+// 		(*parser)->fd_infile = open((*parser)->infile->name,
+// 				O_RDONLY, 0644);
+// 	}
+// 	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
+// 	{
+// 		while ((*parser)->infile->next != NULL)
+// 		{
+// 			handle_heredoc(parser, data);
+// 			int i = close((*parser)->fd_infile);
+// 			printf("close return: %d\n", i);
+// 			(*parser)->infile = (*parser)->infile->next;
+// 		}
+// 		handle_heredoc(parser, data);
+// 	}
+// }
+
 void	exec_infile(t_parser **parser, t_data	data)
 {
-	printf("Entrei no exec infile\n");
-	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+	while ((*parser)->infile->next != NULL)
 	{
-		while ((*parser)->infile->next != NULL)
-		{
-			(*parser)->infile = (*parser)->infile->next;
-		}
-		(*parser)->fd_infile = open((*parser)->infile->name,
-				O_RDONLY, 0644);
-	}
-	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-	{
-		while ((*parser)->infile->next != NULL)
+		printf("infile type: %s\n", (*parser)->infile->type);
+		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+			(*parser)->fd_infile = open((*parser)->infile->name,
+					O_RDONLY, 0644);
+		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 		{
 			handle_heredoc(parser, data);
 			int i = close((*parser)->fd_infile);
 			printf("close return: %d\n", i);
-			(*parser)->infile = (*parser)->infile->next;
 		}
-		handle_heredoc(parser, data);
+		(*parser)->infile = (*parser)->infile->next;
 	}
+	printf("infile type: %s\n", (*parser)->infile->type);
+	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+		(*parser)->fd_infile = open((*parser)->infile->name,
+				O_RDONLY, 0644);
+	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
+		handle_heredoc(parser, data);
 }
 
 /*Function that creates the parser struct
@@ -84,7 +108,6 @@ int	parser(t_data data)
 	data.cmd_lst = split_cmds(data);
 	if (data.cmd_lst == NULL)
 		return (error_msg("Failure on parsing\n"), 1);
-	print_array(data.cmd_lst);
 	parser = new_struct();
 	if (parser == NULL)
 		return (error_msg_with_free("Failure on parsing\n", data.cmd_lst), 1);
@@ -93,7 +116,6 @@ int	parser(t_data data)
 		return (free_parsing(&parser), 1);
 	if (parser->infile != NULL)
 		exec_infile(&parser, data);
-	print_struct(head_parser);
 	//ver se é o lugar certo paraimplementar free struct when finish to use a cmd line and before return to prompt
 	manager_functions(head_parser, &data);
 	return (0);
