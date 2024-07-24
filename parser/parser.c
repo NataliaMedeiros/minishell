@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/23 15:15:10 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/24 14:18:00 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	exec_infile(t_parser **parser, t_data	data)
 	printf("Entrei no exec infile\n");
 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 	{
-		while((*parser)->infile->next != NULL)
+		while ((*parser)->infile->next != NULL)
 		{
 			(*parser)->infile = (*parser)->infile->next;
 		}
@@ -61,11 +61,14 @@ void	exec_infile(t_parser **parser, t_data	data)
 	}
 	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 	{
-		while((*parser)->infile != NULL)
+		while ((*parser)->infile->next != NULL)
 		{
 			handle_heredoc(parser, data);
+			int i = close((*parser)->fd_infile);
+			printf("close return: %d\n", i);
 			(*parser)->infile = (*parser)->infile->next;
 		}
+		handle_heredoc(parser, data);
 	}
 }
 
