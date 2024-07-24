@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 14:16:18 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/18 12:01:21 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/24 16:38:09 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	env_print(t_data *data, t_parser *parse)
 		// exit (127);
 	}
 	fd = change_fd(parse);
-	head = data->env->next;
+	head = data->env;
 	while (head != NULL)
 	{
 		ft_putstr_fd(head->key_word, fd);
