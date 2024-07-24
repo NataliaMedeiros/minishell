@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/23 15:17:25 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/24 14:25:59 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if ((*parser)->fd_outfile == -1)
 		return (error_msg("Failure to open outfile\n"),
-			free((*parser)->outfile),1); //testar o free aqui e dessa forma e escrever uma função para lhe dar com error e free
+			free((*parser)->outfile), 1);
 	return (0);
 }
 

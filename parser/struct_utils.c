@@ -6,13 +6,13 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:56:25 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:56:40 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/24 14:24:55 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-t_parser	*new_struct()
+t_parser	*new_struct(void)
 {
 	t_parser	*new_element;
 

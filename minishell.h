@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/23 15:12:28 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/24 14:25:06 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,20 +83,20 @@ char		**ft_split_adp(char const *s, char const *separators);
 int			handle_heredoc(t_parser **parser, t_data data);
 
 /* parser utils */
-int		nb_commands(char *cmd_line);
-char	**split_cmds(t_data data);
-char	*ft_substr_modified(char const *s, unsigned int start, size_t len);
+int			nb_commands(char *cmd_line);
+char		**split_cmds(t_data data);
+char		*ft_substr_modified(char const *s, unsigned int start, size_t len);
 
 /* free_utils */
-void	free_array(int	counter, char **cmd);
+void		free_array(int counter, char **cmd);
 
 /* temporary_functions*/
-void	print_struct(t_parser	*head);
-void	print_array(char **array);
-void	print_env(t_env *env);
+void		print_struct(t_parser	*head);
+void		print_array(char **array);
+void		print_env(t_env *env);
 
 /* struct_utils */
-t_parser	*new_struct();
+t_parser	*new_struct(void);
 void		free_parsing(t_parser **parser);
 
 /* parser_fill_cmd */
@@ -115,18 +115,18 @@ t_env		*parsing_env(char **env);
 char		*handle_dollar_sign(char *line, t_data data);
 
 // Builtin functions
-void	manager_functions(t_parser *parse_data, t_data *data);
-void	echo_n(t_parser *data);
-void	pwd(t_parser *data);
-void	env_print(t_data *data);
+void		manager_functions(t_parser *parse_data, t_data *data);
+void		echo_n(t_parser *data);
+void		pwd(t_parser *data);
+void		env_print(t_data *data);
 
-bool	has_flags(char *arg, t_parser **parser);
+bool		has_flags(char *arg, t_parser **parser);
 
 /*parser_remove utils.c*/
-char	*remove_quotes(char *limiter);
-char	*remove_flags(char *arg);
+char		*remove_quotes(char *limiter);
+char		*remove_flags(char *arg);
 
 /*handle file*/
-int	handle_files(t_parser	**parser, t_data data, int i);
+int			handle_files(t_parser	**parser, t_data data, int i);
 
 #endif

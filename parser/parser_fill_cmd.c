@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/19 13:07:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/24 14:26:16 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	has_flags(char *arg, t_parser	**parser)
 		if (arg[i] == '-')
 		{
 			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
-				|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
+					|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
 			{
 				(*parser)->flag = true;
 				return (true);
