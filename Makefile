@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/23 15:10:24 by natalia       ########   odam.nl          #
+#    Updated: 2024/07/25 14:00:42 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ OBJECTS = $(SOURCE:%.c=%.o)
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-#CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
 #LFLAGS = -L/usr/lib/x86_64-linux-gnu -lreadline #linux
