@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/24 14:25:59 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 14:04:39 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_infile	*new_infile(char *name, char *type)
 {
 	t_infile	*new_element;
 
-	new_element = malloc(sizeof(t_list));
+	new_element = malloc(sizeof(t_infile));
 	if (new_element == NULL)
 		return (NULL);
 	new_element->name = name;
