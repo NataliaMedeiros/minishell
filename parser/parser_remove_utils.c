@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_remove_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:36:18 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 15:03:29 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 char	*remove_quotes(char *limiter)
 {
 	char	*new_limiter;
+	bool	double_quotes;
 	int		i;
 	int		j;
 
@@ -23,12 +24,15 @@ char	*remove_quotes(char *limiter)
 		return (NULL);
 	i = 0;
 	j = 0;
+	double_quotes = false;
 	while (limiter[i] != '\0')
 	{
-		if ((limiter[i] == '$' && limiter[i + 1] == '"')
-			|| (limiter[i] == '$' && limiter[i + 1] == '\''))
+		if (limiter[i] == '"')
+			double_quotes = true;
+		if (limiter[i] == '$' && limiter[i + 1] == '\'')
 			i++;
-		if (limiter[i] != '"' && limiter[i] != '\'')
+		if ((limiter[i] != '"' && limiter[i] != '\'')
+			|| (limiter[i] == '\'' && double_quotes == true))
 		{
 			new_limiter[j] = limiter[i];
 			j++;
@@ -44,19 +48,28 @@ char	*remove_flags(char *arg)
 	int		i;
 	int		len;
 	int		new_len;
+	int		prev_i;
 
 	i = 0;
 	len = ft_strlen(arg);
-	if (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == 'n'))
+	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n' || arg[i] == ' '))
 	{
-		i += 2;
-		while (arg[i] == 'n')
+		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n'))
+		{
+			prev_i = i;
 			i++;
-	}
-	if (arg[i] == ' ')
+			while (arg[i] == 'n')
+				i++;
+			if (arg[i] != ' ' && arg[i] != '\0')
+			{
+				i = prev_i;
+				break ;
+			}
+		}
+		else
+			break ;
 		i++;
-	while (i < len && (arg[i] == '-' && arg[i + 1] == 'n' && arg[i + 2] == ' '))
-		i += 3;
+	}
 	new_len = len - i + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);
 	if (new_arg == NULL)

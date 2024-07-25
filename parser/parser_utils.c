@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_utils.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:54:47 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/23 13:50:02 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**split_cmds(t_data data)
 	int		start;
 	char	**cmd;
 
-	nb_args = nb_commands(data.command_line);
+	nb_args = nb_commands(data.cmd_line);
 	cmd = ft_calloc((nb_args + 1), sizeof(char *));
 	if (cmd == NULL)
 		return (NULL);
@@ -49,19 +49,20 @@ char	**split_cmds(t_data data)
 	while (counter < nb_args)
 	{
 		start = i;
-		while (data.command_line[i] != '\0' && data.command_line[i] != '|'
-				&& data.command_line[i] != '>' && data.command_line[i] != '<')
+		while (data.cmd_line[i] != '\0' && data.cmd_line[i] != '|'
+			&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
 			i++;
-		cmd[counter] = ft_substr_modified(data.command_line, start, (i - start));
+		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
+		printf("cmd[%d]: %s\n", counter, cmd[counter]);
 		if (cmd[counter] == NULL)
 			return (free_array(counter, cmd), NULL);
 		counter++;
 		start = i;
 		if (counter == nb_args)
 			break ;
-		if (data.command_line[i] == '>' || data.command_line[i] == '<')
+		if (data.cmd_line[i] == '>' || data.cmd_line[i] == '<')
 			i++;
-		cmd[counter] = ft_substr(data.command_line, start, (i + 1 - start));
+		cmd[counter] = ft_substr(data.cmd_line, start, (i + 1 - start));
 		if (cmd[counter] == NULL)
 			return (free_array(counter, cmd), NULL);
 		counter++;
@@ -88,15 +89,19 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 		len = 0;
 	else if (ft_strlen(s) - start < len)
 		len = ft_strlen(s) - start;
-	substring = malloc(len + 1);
+	substring = ft_calloc(len + 1, sizeof(char));
 	if (substring == NULL)
 		return (NULL);
 	while (i < len && start < ft_strlen(s))
 	{
+		if (s[start] == ' ' && s[start + 1] == '\0')
+			return (substring);
+		else if (s[start] == ' ' && (s[start + 1] == '>'
+				|| s[start + 1] == '<' || s[start + 1] == '|'))
+			return (substring);
 		substring[i] = s[start];
-		start++;
 		i++;
+		start++;
 	}
-	substring[i] = '\0';
 	return (substring);
 }

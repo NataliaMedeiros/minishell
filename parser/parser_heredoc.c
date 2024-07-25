@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser_heredoc.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 20:54:15 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 13:44:22 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*remove_lim_quotes(char *limiter)
 }
 
 /*This functions remove backslash of the heredoc limiter
-- Check if we should handle this, because I checked on 
+- Check if we should handle this, because I checked on
 bash and it removes the backslash*/
 static char	*remove_lim_backslash(char *limiter)
 {
@@ -62,12 +62,26 @@ static char	*remove_lim_backslash(char *limiter)
 	return (new_limiter);
 }
 
+char	*find_limiter(t_parser **parser)
+{
+	char	*limiter;
+
+	if (ft_strchr((*parser)->infile->name, '"') != NULL
+		|| ft_strchr((*parser)->infile->name, '\'') != NULL)
+		limiter = remove_lim_quotes((*parser)->infile->name);
+	else if (ft_strchr((*parser)->infile->name, '\\') != NULL)
+		limiter = remove_lim_backslash((*parser)->infile->name);
+	else
+		limiter = (*parser)->infile->name;
+	return (limiter);
+}
+
 /* This functions create the space op terminal to receive the heredoc
 input, reads this imput,checks delimiter (remover quotes and backslash
 if necessary) and closing the typing space on terminal when limiter is
 placed as input */
 /* PS: bash behavio: if the limiter is typed followed by more text it
-not works as limiter,if limiter is typed between quotes (simple os 
+not works as limiter,if limiter is typed between quotes (simple os
 double), the quotes should be removed and the same happens with backslash*/
 /* PS2: In this function I copied the limiter from the parser->imput
 checar se compensa deixar assim ou usar o strdup(cmd_lst[i+1])*/
@@ -76,17 +90,17 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	char	*line;
 	char	*limiter;
 
-	(*parser)->fd_infile = open((*parser)->infile,
+	printf("Entrei no handle heredoc\n");
+	printf("name: %s\n", (*parser)->infile->name);
+	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if ((*parser)->fd_infile == -1)
+	{
+		perror("Erro ao abrir/criar o arquivo");
+        fprintf(stderr, "Erro: %s\n", strerror(errno));
 		return (printf("Fail to open infile\n"), 1);
-	if (ft_strchr((*parser)->infile, '"') != NULL
-		|| ft_strchr((*parser)->infile, '\'') != NULL)
-		limiter = remove_lim_quotes((*parser)->infile);
-	else if (ft_strchr((*parser)->infile, '\\') != NULL)
-		limiter = remove_lim_backslash((*parser)->infile);
-	else
-		limiter = (*parser)->infile;
+	}
+	limiter = find_limiter(parser);
 	line = readline(">");
 	while (line != NULL)
 	{
@@ -94,15 +108,13 @@ int	handle_heredoc(t_parser **parser, t_data data)
 			&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			break ;
 		while (ft_strchr(line, '$') != NULL)
-		{
 			line = handle_dollar_sign(line, data);
-			printf("line = %s\n", line);
-		}
 		write((*parser)->fd_infile, line, strlen(line));
 		write((*parser)->fd_infile, "\n", 1);
-		free(line); //checkar if it is needed
+		free(line);
 		line = readline(">");
 	}
+	free(line);
 	return (0);
 }
 

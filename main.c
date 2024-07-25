@@ -6,35 +6,33 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/15 12:04:54 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 14:40:12 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_input_valid(char *cmd)
+bool	is_input_valid(char *cmd) //testar bem essa funcao
 {
 	int	i;
 
 	i = 0;
 	while (cmd[i] != '\0')
 	{
-		if(cmd[i] == '|' || cmd[i] =='>' || cmd[i] == '<')
+		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
 		{
-			if(cmd[i + 1] == '\0')
+			if (cmd[i + 1] == '\0' || cmd[i + 1] == '|')
 				return (error_msg("Syntax Error"), false);
 			i++;
-			if (cmd[i] == '|')
+			if ((cmd[i] == '>' && cmd[i - 1] == '<')
+				|| (cmd[i] == '<' && cmd[i - 1] == '>'))
 				return (error_msg("Syntax Error"), false);
-			else if ((cmd[i] == '>' && cmd[i - 1] == '<') || (cmd[i] == '<' && cmd[i - 1] == '>'))
-				return (error_msg("Syntax Error"), false);
-			else if (cmd[i] =='>' || cmd[i] == '<')
+			else if (cmd[i] == '>' || cmd[i] == '<')
 				i++;
 			while (cmd[i] == ' ' && cmd[i] != '\0')
 				i++;
-			if (cmd[i] == '\0')
-				return (error_msg("Syntax Error"), false);
-			if (cmd[i] == '|' || cmd[i] =='>' || cmd[i] == '<')
+			if (cmd[i] == '\0' || cmd[i] == '|' || cmd[i] == '>'
+				|| cmd[i] == '<')
 				return (error_msg("Syntax Error"), false);
 		}
 		i++;
@@ -48,22 +46,20 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1 && argv)
 	{
-		error_msg(" Wrong amount of args");
-		error_msg("\tExecute only \033[31m./minishell\033[0m");
+		error_msg("Wrong amount of args\n\tExecute only " RED "./minishell");
 		return (EXIT_FAILURE);
 	}
-	data.envp = envp;
-	data.path = parsing_env_path(envp);
+	data.env = parsing_env(envp);
 	while (1)
 	{
-		data.command_line = readline("[minishell]: ");
-		data.envp = envp;
-		add_history(data.command_line);
-		if (is_input_valid(data.command_line) == true)
+		data.cmd_line = readline("[minishell]: ");
+		add_history(data.cmd_line);
+		if (is_input_valid(data.cmd_line) == true)
 		{
-			parser(data);
+			if (parser(data) == 1)
+				return (free_env(&data.env), -1);
 		}
 	}
-	rl_clear_history();
+	//rl_clear_history();
 	return (0);
 }

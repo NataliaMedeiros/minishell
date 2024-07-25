@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:03:51 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/10 20:37:24 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 14:28:02 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,13 @@ size_t	ft_strlen(const char *s);
 char	*get_next_line(int fd);
 size_t	find_nl(char *text);
 char	*ft_join_str(char *prev_line, char *text);
-char	*ft_strtrim_adapted(char const *s1, char const *set);
+char	*ft_strtrim_beginning(char const *s1, char const *set);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 char	*ft_strrchr(const char *str, int c);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
+char	*ft_strchr_adp(const char *s, int c);
 
 #endif

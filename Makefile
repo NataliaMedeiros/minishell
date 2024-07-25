@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/10 20:35:08 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/07/25 14:00:42 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,20 +31,22 @@ SOURCE = main.c \
 		parser/temporary_functions.c \
 		parser/struct_utils.c \
 		parser/parser_fill_cmd.c \
-		parser/heredoc_dollarsign.c \
 		parser/parser_remove_utils.c \
+		parser/handle_files.c \
 		free_utils.c \
 		utils.c \
 		env.c \
+		expander/dollarsign.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \
 		builtins/pwd.c \
+		builtins/env.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -g
-#CFLAGS += -fsanitize=address
+CFLAGS += -fsanitize=address
 LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
 #LFLAGS = -L/usr/lib/x86_64-linux-gnu -lreadline #linux
