@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:52:12 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/25 14:58:48 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ char	*handle_dollar_sign(char *line, t_data data)
 
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{
-		printf("hello\n");
 		i = 0;
 		while (line[i] != '\0')
 		{
@@ -90,7 +89,7 @@ char	*handle_dollar_sign(char *line, t_data data)
 				line = new_line;
 				i += 2;
 			}
-			else if (line[i] == '$' && line [i + 1] == '\0')
+			else if (line[i] == '$' && (line [i + 1] == '\0' || line [i + 1] == '"'))
 			{
 				new_line = line;
 				break ;

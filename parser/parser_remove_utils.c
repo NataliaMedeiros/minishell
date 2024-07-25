@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/24 14:26:32 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 15:03:29 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ char	*remove_quotes(char *limiter)
 	{
 		if (limiter[i] == '"')
 			double_quotes = true;
-		if ((limiter[i] == '$' && limiter[i + 1] == '"')
-			|| (limiter[i] == '$' && limiter[i + 1] == '\''))
+		if (limiter[i] == '$' && limiter[i + 1] == '\'')
 			i++;
 		if ((limiter[i] != '"' && limiter[i] != '\'')
 			|| (limiter[i] == '\'' && double_quotes == true))
