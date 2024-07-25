@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:05:10 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/25 14:31:05 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,7 @@ void	exec_infile(t_parser **parser, t_data	data)
 		handle_heredoc(parser, data);
 }
 
-/*Function that creates the parser struct
-head is used to not lose the reference to the first node
-print_struct será removido, pois está aqui somente para
-imprimir e conferir struct*/
+/*Function creates parser struct*/
 int	parser(t_data data)
 {
 	t_parser	*parser;
@@ -107,7 +104,7 @@ int	parser(t_data data)
 
 	data.cmd_lst = split_cmds(data);
 	if (data.cmd_lst == NULL)
-		return (error_msg("Failure on parsing\n"), 1);
+		return (error_msg("Failure on create cmd list\n"), 1);
 	parser = new_struct();
 	if (parser == NULL)
 		return (error_msg_with_free("Failure on parsing\n", data.cmd_lst), 1);
