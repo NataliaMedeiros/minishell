@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/24 16:39:46 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 13:50:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ void	manager_functions(t_parser *parse_data, t_data *data)
 		env_print(data, parse_data);
 	else if(ft_strncmp(parse_data->cmd[0], "unset", 5) == 0)
 	{
-		if (ft_unset(&data->env, parse_data) == -1)
+		if (ft_unset(&data->env, parse_data) != 0)
 			return ;
-		printf("data: %s", data->env->info);	
 	}
 	// ft_free(parse_data);
 	// o else vai pra execucao 
