@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   ft_strtrim_adapted.c                               :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:37:13 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/24 14:25:31 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 14:27:20 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strtrim_adapted(char const *s1, char const *set)
+char	*ft_strtrim_beginning(char const *s1, char const *set)
 {
 	char	*new_s1;
 	int		start;
