@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/24 16:41:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 13:30:34 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,96 @@
 // 	return (false);
 // }
 
+// t_env	*previous;
+// 	t_env	*current;
+// 	t_env	*tmp;
+
+// 	previous = NULL;
+// 	tmp = NULL;
+// 	current = *env;
+// 	while (current != NULL)
+// 	{
+// 		if (ft_strncmp(current->key_word, str, ft_strlen(str)) == 0)
+// 		{
+// 			if (previous == NULL)
+// 				*env = current->next;
+// 			else
+// 				previous->next = current->next;
+// 			tmp = current;
+// 			current = current->next;
+// 			free(tmp->key_word);
+// 			free(tmp->info);
+// 			free(tmp);
+// 		}
+// 		else
+// 		{
+// 			previous = current;
+// 			current = current->next;
+// 		}
+// 	}
 
 
+// void	delete_node(t_env *env, t_env *next_node)
+// {
+// 	env = next_node->next;
+// 	free(next_node->key_word);
+// 	free(next_node->info);
+// 	free(next_node);
+// }
 
-void	delete_node(t_env *env, t_env *next_node)
-{
-	env = next_node->next;
-	free(next_node->key_word);
-	free(next_node->info);
-	// free(next_node);
-}
-
-// void delete_node(t_env *env, t_env *delete) {
-//     if (env == NULL || delete == NULL) {
+// void delete_node(t_env **env, t_env *delete) {
+//     if (*env == NULL || delete == NULL) {
 //         return;
 //     }
 
-//     t_env *temp = env;
+//     t_env *temp = *env;
     
-//     if (env == delete) {
-//         env = delete->next; 
-//     } else {
-//         while (temp != NULL && temp->next != delete) {
-//             temp = temp->next;
-//         }
-//         if (temp != NULL) {
-//             temp->next = delete->next; 
-//         }
+//     if ((*env) == delete) {
+//         (*env) = delete->next; 
+//     // } else {
+//     //     while (temp != NULL && temp->next != delete) {
+//     //         temp = temp->next;
+//     //     }
+//     //     if (temp != NULL) {
+//     //         temp->next = delete->next; 
+//     //     }
 //     }
 
 //     free(delete->key_word);
 //     free(delete->info);
 	
-//     // free(delete);
+//     free(delete);
+// }
+
+// void delete_node(t_env **env, t_env *delete) {
+//     if ((*env) == NULL || delete == NULL) {
+//         return;
+//     }
+
+//     if (((*env)) == delete)
+//         ((*env)) = delete->next;
+// 	else
+// 	{
+// 		printf("VALUE ENV NEXT %s\n", (*env)->next->key_word);
+//         if ((*env)->next != NULL) 
+//             (*env)->next = delete->next;
+//     }
+
+//     free(delete->key_word);
+//     free(delete->info);
+//     free(delete);
 // }
 
 
-void test(t_env *env) {
+
+void test(t_env **env) {
 	if(env == NULL)
 		return;
-	t_env *tmp = env->next;
-	free(env->info);
-	free(env->key_word);
-	// free(env);
-	env = tmp;
+	t_env *tmp = (*env)->next;
+	free((*env)->info);
+	free((*env)->key_word);
+	free((*env));
+	*env = tmp;
 }
 
 void print_test(t_env *env) {
@@ -138,39 +184,61 @@ void print_test(t_env *env) {
 int	ft_unset(t_env **env, t_parser *parser)
 {
 	char	*str;
-	// t_env	*temp;
+	t_env	*previous;
+	t_env	*current;
+	t_env	*tmp;
 
+	previous = NULL;
+	tmp = NULL;
+	current = *env;
 	str = ft_strcharjoin(parser->cmd[1], '=');
 	if (str == NULL)
+		return (error_msg("UNEXPECT ERROR"), 1);
+	while (current != NULL)
 	{
-		error_msg("UNEXPECT ERROR");
-		return (1);
-	}
-	// t_env *delete = NULL;
-	t_env *current = *env;
-	
-	while (current)
-	{
-		// printf("---- AQUI:%s\n", current->key_word);
 		if (ft_strncmp(current->key_word, str, ft_strlen(str)) == 0)
 		{
-			*env = (*env)->next;
-			// print_test(env);
-			return 0;
+			if (previous == NULL)
+				*env = current->next;
+			else
+				previous->next = current->next;
+			tmp = current;
+			current = current->next;
+			free(tmp->key_word);
+			free(tmp->info);
+			free(tmp);
+			return (0);
 		}
-		// if (ft_strncmp(env->next->key_word, str, ft_strlen(str)) == 0)
-		// {
-		// 	printf("deleting: %s\n", env->next->key_word);
-		// 	delete = env;
-		// 	break;
-		// }
+		previous = current;
 		current = current->next;
 	}
-	// if (delete)
-	// 	delete_node(*env, delete);
-	// print_test(env);
-	// printf("-----------------------------------------------------------------\n");
-	// print_test(env);
-	// printf("Nao achei ngm\n");
+	printf("Nao achei ngm\n");
 	return (0);
 }
+
+
+
+	// while (current)
+	// {
+	// 	// printf("---- AQUI:%s\n", current->key_word);
+	// 	if (ft_strncmp(current->key_word, str, ft_strlen(str)) == 0)
+	// 	{
+	// 		// printf("test: %s\n", str);
+	// 		// *env = (*env)->next;
+	// 		// free((*env)->info);
+	// 		// free((*env)->key_word);
+	// 		// free(*env);
+	// 		delete_node(previous, current);
+	// 		printf("----------------------------------------------------------\n");
+	// 		// print_test(*env);
+	// 		return (0);
+	// 	}
+	// 	// if (ft_strncmp(current->next->key_word, str, ft_strlen(str)) == 0)
+	// 	// {
+	// 	// 	printf("deleting: %s\n", current->next->key_word);
+	// 	// 	delete_node(current, current->next);
+	// 	// 	return (0);
+	// 	// }
+	// 	*previous = current;
+	// 	current = current->next;
+	// }

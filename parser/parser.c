@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/22 17:49:45 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 11:19:33 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,22 +100,23 @@ int	fill_parser(t_data	data, t_parser	**parser)
 head is used to not lose the reference to the first node
 print_struct será removido, pois está aqui somente para 
 imprimir e conferir struct*/
-int	parser(t_data data)
+int	parser(t_data *data)
 {
 	t_parser	*parser;
 	t_parser	*head_parser;
 
-	data.cmd_lst = split_cmds(data);
-	if (data.cmd_lst == NULL)
+	data->cmd_lst = split_cmds(*data);
+	if (data->cmd_lst == NULL)
 		return (error_msg("Failure on parsing\n"), 1);
 	parser = new_struct();
 	if (parser == NULL)
-		return (error_msg_with_free("Failure on parsing\n", data.cmd_lst), 1);
+		return (error_msg_with_free("Failure on parsing\n", data->cmd_lst), 1);
 	head_parser = parser;
-	if (fill_parser(data, &parser) != 0)
+	if (fill_parser(*data, &parser) != 0)
 		return (free_parsing(&parser), 1);
-	print_struct(head_parser);
+	// print_struct(head_parser);
 	//ver se é o lugar certo para implementar free struct when finish to use a cmd line and before return to prompt
-	manager_functions(head_parser, &data);
+	manager_functions(head_parser, data);
+	printf("data PARSER: %s\n", data->env->key_word);
 	return (0);
 }

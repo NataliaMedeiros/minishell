@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/17 12:18:09 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 13:31:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	data.env = parsing_env(envp);
+	// print_env(data.env);
 	// data.path = parsing_env_path(envp);
 	while (1)
 	{
@@ -59,8 +60,9 @@ int	main(int argc, char **argv, char **envp)
 		add_history(data.command_line);
 		if (is_input_valid(data.command_line) == true)
 		{
-			parser(data);
+			parser(&data);
 		}
+		printf("data MAIN: %s\n", data.env->key_word);
 		// a funcao free pode ser colocada aqui para toda a vez que o programa volta do looping ele eh limpo?
 	}
 	// rl_clear_history();

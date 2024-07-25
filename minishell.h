@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/23 14:21:59 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 10:36:33 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_data
 
 /* parser */
 t_token		check_token(char *argv);
-int			parser(t_data data);
+int			parser(t_data *data);
 char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
@@ -116,7 +116,7 @@ void		pwd(t_parser *parser);
 void		env_print(t_data *data, t_parser *parse);
 void		ft_cd(t_parser *data, t_data *info);
 int			change_fd(t_parser *parser);
-int			ft_unset(t_env *env, t_parser *parser);
+int			ft_unset(t_env **env, t_parser *parser);
 
 bool		has_flags(char *arg);
 
