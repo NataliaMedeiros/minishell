@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:31:05 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/25 14:48:28 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,15 @@ int	parser(t_data data)
 		return (error_msg("Failure on create cmd list\n"), 1);
 	parser = new_struct();
 	if (parser == NULL)
-		return (error_msg_with_free("Failure on parsing\n", data.cmd_lst), 1);
+		return (error_msg_with_free("Failure on create parsing struct\n", data.cmd_lst), 1);
 	head_parser = parser;
 	if (fill_parser(data, &parser) != 0)
 		return (free_parsing(&parser), 1);
 	if (parser->infile != NULL)
 		exec_infile(&parser, data);
 	print_struct(parser);
-	//ver se é o lugar certo paraimplementar free struct when finish to use a cmd line and before return to prompt
 	manager_functions(head_parser, &data);
+	//free_array(0, &data.cmd_line);
+	//implement free parser
 	return (0);
 }

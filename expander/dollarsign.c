@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   heredoc_dollarsign.c                               :+:    :+:            */
+/*   dollarsign.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/18 17:11:31 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/25 14:52:12 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,14 @@ static int	var_end(char *line, int i)
 
 static char	*search_envp(t_data data, char *var, int len)
 {
-	int		j;
-
-	j = 0;
-	while (data.envp[j])
+	while (data.env->key_word)
 	{
-		if (ft_strncmp(data.envp[j], var, len) == 0)
+		if (ft_strncmp(data.env->key_word, var, len) == 0)
 		{
-			return (ft_strdup(data.envp[j] + (len + 1)));
+			return (ft_strdup(data.env->info));
 			break ;
 		}
-		j++;
+		data.env = data.env->next;
 	}
 	return ("");
 }
