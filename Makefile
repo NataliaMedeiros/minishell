@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/25 14:44:43 by edribeir      ########   odam.nl          #
+#    Updated: 2024/07/25 16:03:23 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SOURCE = source/main.c \
 		parser/parser_remove_utils.c \
 		source/free_utils.c \
 		source/utils.c \
-		source/env.c \
+		source/env_parser.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \
 		builtins/pwd.c \

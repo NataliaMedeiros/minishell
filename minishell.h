@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 10:36:33 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 15:58:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <stdbool.h> //boolean
 # include <fcntl.h> //function open
 # include <string.h>
+
+
+# define READ 0
+# define WRITE 1
 
 typedef enum s_token //nao usado
 {

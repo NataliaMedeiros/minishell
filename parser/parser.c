@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 11:19:33 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/25 17:04:40 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,6 @@ int	parser(t_data *data)
 	// print_struct(head_parser);
 	//ver se é o lugar certo para implementar free struct when finish to use a cmd line and before return to prompt
 	manager_functions(head_parser, data);
-	printf("data PARSER: %s\n", data->env->key_word);
+
 	return (0);
 }
