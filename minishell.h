@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/24 14:25:06 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 14:14:43 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <stdbool.h> //boolean
 # include <fcntl.h> //function open
 # include <string.h>
+# include <unistd.h>
+# include <errno.h>
+
+# define RED "\033[31m"
+# define RESET "\033[0m"
 
 typedef enum s_token //nao usado
 {
