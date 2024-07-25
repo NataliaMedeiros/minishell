@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/24 14:26:16 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/25 15:09:01 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	int		j;
 
 	j = 0;
-	arg = ft_strchr_adp(data.cmd_lst[i], ' ');
+	arg = ft_strchr_adp(data.cmd_lst[i], ' '); //alterar nome dessa variavel
 	if (arg != NULL)
 	{
 		while (arg[j] == ' ')
@@ -108,12 +108,11 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 		if ((*parser)->cmd == NULL)
 			return (1);
 		if (fill_echo_cmd(parser, data, i) == 1)
-			return (error_msg("Failure to fill cmd\n"), 1);
-		printf("flag %d\n", (*parser)->flag);
+			return (1);
 	}
 	else
 		(*parser)->cmd = ft_split(data.cmd_lst[i], ' ');
 	if ((*parser)->cmd == NULL)
-		return (error_msg("Failure to fill cmd\n"), 1);
+		return (1);
 	return (0);
 }
