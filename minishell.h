@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:37:15 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 12:08:06 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
+
+
+# define READ 0
+# define WRITE 1
 
 typedef enum s_token //nao usado
 {
@@ -73,7 +77,8 @@ typedef struct s_data
 }					t_data;
 
 /* parser */
-int			parser(t_data data);
+t_token		check_token(char *argv);
+int			parser(t_data *data);
 char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
@@ -95,6 +100,7 @@ char		*ft_substr_modified(char const *s, unsigned int start, size_t len);
 /* free_utils */
 void		free_array(int counter, char **cmd);
 void	free_env(t_env **env);
+void		ft_free(t_parser *parser);
 
 /* temporary_functions*/
 void		print_struct(t_parser	*head);
@@ -116,7 +122,6 @@ void		error_msg_with_free(char *msg, char **array);
 char		**parsing_env_path(char **envp);
 t_env		*parsing_env(char **env);
 
-
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
 
@@ -124,9 +129,13 @@ char		*handle_dollar_sign(char *line, t_data data);
 void		manager_functions(t_parser *parse_data, t_data *data);
 void		echo_n(t_parser *data);
 void		pwd(t_parser *data);
-void		env_print(t_data *data);
 
 bool		has_flags(char *arg, t_parser **parser);
+void		pwd(t_parser *parser);
+void		env_print(t_data *data, t_parser *parse);
+void		ft_cd(t_parser *data, t_data *info);
+int			change_fd(t_parser *parser);
+int			ft_unset(t_env **env, t_parser *parser);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);

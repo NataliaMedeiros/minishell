@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 15:07:54 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 12:18:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ int	fill_parser(t_data	data, t_parser	**parser)
 			i++;
 		}
 		else
+		{
 			if (fill_cmd(parser, data, i) != 0)
 				return (1);
+		}
 		i++;
 	}
 	return (0);
@@ -119,3 +121,4 @@ int	parser(t_data data)
 	//implement free parser
 	return (0);
 }
+

@@ -6,12 +6,13 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:56:25 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:09:33 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 12:19:08 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+t_parser	*new_struct(void)
 t_parser	*new_struct(void)
 {
 	t_parser	*new_element;

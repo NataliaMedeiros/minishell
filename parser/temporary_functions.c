@@ -3,8 +3,10 @@
 void	print_array(char **array)
 {
 	int	i;
+	int	i;
 
 	i = 0;
+	while (array[i] != NULL)
 	while (array[i] != NULL)
 	{
 		printf("->%s<-\n", array[i]);
@@ -19,6 +21,9 @@ void	print_struct(t_parser *head)
 	i = 1;
 	while (head != NULL)
 	{
+		printf("flag %d\n", head->flag);
+		printf("fd in%d\n", head->fd_infile);
+		printf("fd out%d\n", head->fd_outfile);
 		printf("\033[31mstruct[%d]:\n\033[0m", i);
 		if (head->cmd != NULL)
 			print_array(head->cmd);

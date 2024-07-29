@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:40:12 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 12:21:19 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,23 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc != 1 && argv)
 	{
-		error_msg("Wrong amount of args\n\tExecute only " RED "./minishell");
+		error_msg(" Wrong amount of args");
+		error_msg("\tExecute only \033[31m./minishell\033[0m");
 		return (EXIT_FAILURE);
 	}
 	data.env = parsing_env(envp);
+	// print_env(data.env);
+	data.path = parsing_env_path(envp);
 	while (1)
 	{
-		data.cmd_line = readline("[minishell]: ");
-		add_history(data.cmd_line);
-		if (is_input_valid(data.cmd_line) == true)
+		data.command_line = readline("[minishell]: ");
+		data.envp = envp;
+		add_history(data.command_line);
+		if (is_input_valid(data.command_line) == true)
 		{
-			if (parser(data) == 1)
-				return (free_env(&data.env), -1);
+			parser(data);
 		}
 	}
-	//rl_clear_history();
+	// rl_clear_history();
 	return (0);
 }

@@ -1,14 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pipex.c                                            :+:    :+:            */
+/*   utils.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: natalia <natalia@student.42.fr>              +#+                     */
+/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/06/03 17:06:03 by natalia       #+#    #+#                 */
-/*   Updated: 2024/06/06 15:14:22 by natalia       ########   odam.nl         */
+/*   Created: 2024/07/12 12:50:38 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/07/12 16:27:55 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
+void	error_msg(char *msg)
+{
+	ft_putendl_fd(2, msg);
+}
+
+void	error_msg_with_free(char *msg, char **array)
+{
+	ft_putendl_fd(2, msg);
+	if (array != NULL)
+		free_array(0, array);
+}

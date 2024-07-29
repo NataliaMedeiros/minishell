@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_strtrim_adapted.c                               :+:    :+:            */
+/*   ft_strtrim_beginning.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:37:13 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:27:20 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 12:14:19 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,3 +31,4 @@ char	*ft_strtrim_beginning(char const *s1, char const *set)
 	ft_strlcpy(new_s1, s1 + start, new_len);
 	return (new_s1);
 }
+
