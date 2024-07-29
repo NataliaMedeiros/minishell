@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 17:16:55 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/29 17:41:49 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,7 @@ static char	*search_envp(t_data data, char *var, int len)
 {
 	char *temp;
 
-	if (has_quotes(var) == false)
-	{
-		temp = ft_strjoin(var, "=");
-	}
-	else
-	{
-		int i = 0;
-		temp = ft_strdup(var);
-		while (temp[i] != '"')
-			i++;
-		temp[i] = '=';
-	}
+	temp = ft_strjoin(var, "=");
 	while (data.env)
 	{
 		if (ft_strncmp(data.env->key_word, temp, len + 1) == 0)
@@ -76,7 +65,7 @@ static char	*get_var(char *line, int start, t_data data)
 	char	*new_line;
 
 	end = var_end(line, start);
-	var_name = ft_substr(line, start, start - end);
+	var_name = ft_substr(line, start, end - start);
 	var_value = search_envp(data, var_name, end - start);
 	new_line = replace_var(line, var_value, start, end);
 	return (new_line);
@@ -95,10 +84,18 @@ char	*handle_dollar_sign(char *line, t_data data)
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{
 		i = 0;
+		int single_quote = 0;
 		while (line[i])
 		{
 			// printf("line[%d]: %c\n", i, line[i]);
-			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0')
+			if (line[i] == '\'')
+			{
+				if (single_quote == 0)
+					single_quote++;
+				else
+					single_quote = 0;
+			}
+			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0' && single_quote == 0)
 			{
 				new_line = get_var(line, i + 1, data);
 				line = new_line;
