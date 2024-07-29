@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   parser_env.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:29:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:29:04 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 13:50:39 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static t_env	*new_env(char	*env)
 {

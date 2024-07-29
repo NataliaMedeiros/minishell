@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:58:48 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 16:25:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	var_end(char *line, int i)
 
 static char	*search_envp(t_data data, char *var, int len)
 {
-	while (data.env->key_word)
+	while (data.env)
 	{
 		if (ft_strncmp(data.env->key_word, var, len) == 0)
 		{
@@ -81,13 +81,16 @@ char	*handle_dollar_sign(char *line, t_data data)
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{
 		i = 0;
-		while (line[i] != '\0')
+		while (line[i])
 		{
+			// printf("line[%d]: %c\n", i, line[i]);
 			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0')
 			{
 				new_line = get_var(line, i + 1, data);
 				line = new_line;
-				i += 2;
+				if (strcmp(new_line, "") == 0 || ft_strlen(new_line) <= 3)
+					return (new_line);
+				//i += 2;
 			}
 			else if (line[i] == '$' && (line [i + 1] == '\0' || line [i + 1] == '"'))
 			{
