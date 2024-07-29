@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/29 12:22:34 by edribeir      ########   odam.nl          #
+#    Updated: 2024/07/29 13:49:57 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,9 @@ BOLD = \033[1m
 RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
-SOURCE = main.c \
+SOURCE = source/main.c \
+		source/free_utils.c \
+		source/utils.c \
 		parser/parser.c \
 		parser/parser_heredoc.c \
 		parser/parser_utils.c \
@@ -42,9 +44,7 @@ SOURCE = main.c \
 		parser/parser_fill_cmd.c \
 		parser/parser_remove_utils.c \
 		parser/handle_files.c \
-		free_utils.c \
-		utils.c \
-		env.c \
+		parser/parser_env.c \
 		expander/dollarsign.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \

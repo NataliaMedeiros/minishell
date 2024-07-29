@@ -3,10 +3,8 @@
 void	print_array(char **array)
 {
 	int	i;
-	int	i;
 
 	i = 0;
-	while (array[i] != NULL)
 	while (array[i] != NULL)
 	{
 		printf("->%s<-\n", array[i]);

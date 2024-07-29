@@ -6,11 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 12:21:19 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/29 13:51:06 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 bool	is_input_valid(char *cmd) //testar bem essa funcao
 {
@@ -51,16 +51,14 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	}
 	data.env = parsing_env(envp);
-	// print_env(data.env);
-	data.path = parsing_env_path(envp);
 	while (1)
 	{
-		data.command_line = readline("[minishell]: ");
+		data.cmd_line = readline("[minishell]: ");
 		data.envp = envp;
-		add_history(data.command_line);
-		if (is_input_valid(data.command_line) == true)
+		add_history(data.cmd_line);
+		if (is_input_valid(data.cmd_line) == true)
 		{
-			parser(data);
+			parser(&data);
 		}
 	}
 	// rl_clear_history();
