@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:40:12 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 13:31:23 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		add_history(data.cmd_line);
 		if (is_input_valid(data.cmd_line) == true)
 		{
-			if (parser(data) == 1)
+			if (parser(&data) == 1)
 				return (free_env(&data.env), -1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:37:15 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/29 13:41:48 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_data
 }					t_data;
 
 /* parser */
-int			parser(t_data data);
+int			parser(t_data *data);
 char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
 
