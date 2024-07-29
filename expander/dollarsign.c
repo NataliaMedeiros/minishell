@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 16:25:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/29 17:16:55 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,30 @@ static int	var_end(char *line, int i)
 
 static char	*search_envp(t_data data, char *var, int len)
 {
+	char *temp;
+
+	if (has_quotes(var) == false)
+	{
+		temp = ft_strjoin(var, "=");
+	}
+	else
+	{
+		int i = 0;
+		temp = ft_strdup(var);
+		while (temp[i] != '"')
+			i++;
+		temp[i] = '=';
+	}
 	while (data.env)
 	{
-		if (ft_strncmp(data.env->key_word, var, len) == 0)
+		if (ft_strncmp(data.env->key_word, temp, len + 1) == 0)
 		{
-			return (ft_strdup(data.env->info));
+			return (free(temp), ft_strdup(data.env->info));
 			break ;
 		}
 		data.env = data.env->next;
 	}
-	return ("");
+	return (free(temp), "");
 }
 
 static char	*get_var(char *line, int start, t_data data)

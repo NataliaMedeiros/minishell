@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 13:41:48 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/29 16:59:30 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,7 @@ char		*remove_flags(char *arg);
 
 /*handle file*/
 int			handle_files(t_parser	**parser, t_data data, int i);
+
+bool	has_quotes(char *arg);
 
 #endif
