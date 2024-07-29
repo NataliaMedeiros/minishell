@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/29 13:49:57 by edribeir      ########   odam.nl          #
+#    Updated: 2024/07/29 14:04:07 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ BOLD = \033[1m
 RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
-SOURCE = source/main.c \
-		source/free_utils.c \
-		source/utils.c \
+SOURCE = main.c \
+		free_utils.c \
+		utils.c \
 		parser/parser.c \
 		parser/parser_heredoc.c \
 		parser/parser_utils.c \
@@ -52,11 +52,6 @@ SOURCE = source/main.c \
 		builtins/env.c \
 		builtins/cd.c \
 		builtins/unset.c
-
-OBJECTS = $(SOURCE:%.c=%.o)
-
-LIBFTDIR = libft
-
 
 OBJECTS = $(SOURCE:%.c=%.o)
 

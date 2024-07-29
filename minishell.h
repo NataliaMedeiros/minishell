@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 12:08:06 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/29 14:01:11 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,8 @@ typedef struct s_data
 }					t_data;
 
 /* parser */
-t_token		check_token(char *argv);
 int			parser(t_data *data);
-char		*check_path(char *cmd, char **envp);
 int			nb_commands(char *cmd_line);
-
-/*t_command*/
-//bool			has_quotes(char *argv);
-char		*remove_spaces(char *argv);
-
-/* ft_adapted_split */
-char		**ft_split_adp(char const *s, char const *separators);
 
 /* parser_heredoc */
 int			handle_heredoc(t_parser **parser, t_data data);
@@ -99,8 +90,7 @@ char		*ft_substr_modified(char const *s, unsigned int start, size_t len);
 
 /* free_utils */
 void		free_array(int counter, char **cmd);
-void	free_env(t_env **env);
-void		ft_free(t_parser *parser);
+void		free_env(t_env **env);
 
 /* temporary_functions*/
 void		print_struct(t_parser	*head);
