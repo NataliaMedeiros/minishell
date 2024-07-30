@@ -1,34 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env.c                                              :+:    :+:            */
+/*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/07/15 14:16:18 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/29 12:12:41 by edribeir      ########   odam.nl         */
+/*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/07/18 16:48:57 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	env_print(t_data *data, t_parser *parse)
-{
-	t_env	*head;
-	int		fd;
-
-	if (ft_strncmp(parse->cmd[0], "env\0", 4) == 0
-		&& parse->cmd[1] != NULL)
-	{
-		error_msg("Not such a file or directory");
-		// exit (127);
-	}
-	fd = change_fd(parse);
-	head = data->env;
-	while (head != NULL)
-	{
-		ft_putstr_fd(head->key_word, fd);
-		ft_putendl_fd(fd, head->info);
-		head = head->next;
-	}
-}
+// cria uma nova variavel dentro do ambiente, se tiver um = adiciona um valor pra essa variavel
+// sem o = seta o valor da variavel pra null
+// coloca o env em ordem albetica se for escrito so export sem outro argumento
+// mas a variavel q eu criei por ultimo nao fica na ordem alfabetica, ela aparece no final

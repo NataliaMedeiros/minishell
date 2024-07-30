@@ -6,23 +6,23 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:45 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/10 15:04:46 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/18 12:13:27 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pwd(t_parser *data)
+void	pwd(t_parser *parser)
 {
 	char	*path;
+	int		fd;
 
-	if(ft_strncmp(data->cmd[0], "pwd", 3) == 0)
+	fd = change_fd(parser);
+	path = getcwd(NULL, 0);
+	if (path != NULL)
 	{
-		path = getcwd(NULL, 0);
-		if (path != NULL)
-		{
-			ft_putendl_fd(1, path);
-			free(path);
-		}
+		ft_putendl_fd(fd, path);
+		free(path);
 	}
+	// pode ter um retorno qnd for unset? or um check?
 }

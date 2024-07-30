@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 13:56:55 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/30 15:16:20 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,3 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	free(line);
 	return (0);
 }
-
