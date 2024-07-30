@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 13:44:45 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/30 17:25:37 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,22 +101,22 @@ void	exec_infile(t_parser **parser, t_data	data)
 /*Function creates parser struct*/
 int	parser(t_data *data)
 {
-	t_parser	*parser;
+	// t_parser	*parser;
 	t_parser	*head_parser;
 
 	data->cmd_lst = split_cmds(*data);
 	if (data->cmd_lst == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1);
-	parser = new_struct();
-	if (parser == NULL)
+	data->parser = new_struct();
+	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n", data->cmd_lst), 1);
-	head_parser = parser;
-	if (fill_parser((*data), &parser) != 0)
-		return (free_parsing(&parser), error_msg("Failure on parsing\n"), 1);
-	if (parser->infile != NULL)
-		exec_infile(&parser, (*data));
-	print_struct(parser);
-	manager_functions(head_parser, data);
+	head_parser = data->parser;
+	if (fill_parser((*data), &data->parser) != 0)
+		return (free_parsing(&data->parser), error_msg("Failure on parsing\n"), 1);
+	if (data->parser->infile != NULL)
+		exec_infile(&data->parser, (*data));
+	print_struct(data->parser);
+	// manager_functions(head_parser, data);
 	//free_array(0, &data.cmd_line);
 	//implement free parser
 	return (0);

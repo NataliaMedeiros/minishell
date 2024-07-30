@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 14:04:24 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/30 12:00:27 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 		if (is_input_valid(data.cmd_line) == true)
 		{
 			parser(&data);
+			ft_execute(&data);
 		}
 	}
 	// rl_clear_history();

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 14:01:11 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/30 17:32:41 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define RED "\033[31m"
 # define RESET "\033[0m"
 
-
 # define READ 0
 # define WRITE 1
 
@@ -40,6 +39,14 @@ typedef enum s_token //nao usado
 	APPEND,
 	AND,
 }		t_token;
+
+typedef struct s_execute
+{
+	char	*path_cmd;
+	int		pipe_right[2];
+	int		pipe_left[2];
+	pid_t	fork_pid;
+}	t_exec;
 
 typedef struct s_env
 {
@@ -74,6 +81,7 @@ typedef struct s_data
 	char			**envp;
 	char			**path;
 	struct s_env	*env;
+	t_parser		*parser;
 }					t_data;
 
 /* parser */
@@ -109,23 +117,22 @@ void		error_msg(char *msg);
 void		error_msg_with_free(char *msg, char **array);
 
 /* env */
-char		**parsing_env_path(char **envp);
 t_env		*parsing_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
 
 // Builtin functions
-void		manager_functions(t_parser *parse_data, t_data *data);
+bool	is_buildin(t_parser *parse_data, t_data *data);
 void		echo_n(t_parser *data);
-void		pwd(t_parser *data);
-
-bool		has_flags(char *arg, t_parser **parser);
 void		pwd(t_parser *parser);
-void		env_print(t_data *data, t_parser *parse);
 void		ft_cd(t_parser *data, t_data *info);
+void		env_print(t_data *data, t_parser *parse);
+void		ft_unset(t_env **env, t_parser *parser);
+
+// UTILS
 int			change_fd(t_parser *parser);
-int			ft_unset(t_env **env, t_parser *parser);
+bool		has_flags(char *arg, t_parser **parser);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);
@@ -133,5 +140,8 @@ char		*remove_flags(char *arg);
 
 /*handle file*/
 int			handle_files(t_parser	**parser, t_data data, int i);
+
+// Execution
+int		ft_execute(t_data *data);
 
 #endif
