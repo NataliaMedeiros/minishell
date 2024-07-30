@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 17:41:49 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/30 14:06:45 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static char	*search_envp(t_data data, char *var, int len)
 		if (ft_strncmp(data.env->key_word, temp, len + 1) == 0)
 		{
 			return (free(temp), ft_strdup(data.env->info));
-			break ;
 		}
 		data.env = data.env->next;
 	}
@@ -80,28 +79,25 @@ char	*handle_dollar_sign(char *line, t_data data)
 {
 	int		i;
 	char	*new_line;
+	bool	has_single_quote;
 
+	printf("line: %s\n", line);
+	new_line = NULL;
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{
 		i = 0;
-		int single_quote = 0;
+		has_single_quote = false;
 		while (line[i])
 		{
-			// printf("line[%d]: %c\n", i, line[i]);
 			if (line[i] == '\'')
-			{
-				if (single_quote == 0)
-					single_quote++;
-				else
-					single_quote = 0;
-			}
-			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0' && single_quote == 0)
+				has_single_quote = !has_single_quote;
+			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0'
+					&& has_single_quote == false && line[i + 1] != ' ')
 			{
 				new_line = get_var(line, i + 1, data);
 				line = new_line;
 				if (strcmp(new_line, "") == 0 || ft_strlen(new_line) <= 3)
 					return (new_line);
-				//i += 2;
 			}
 			else if (line[i] == '$' && (line [i + 1] == '\0' || line [i + 1] == '"'))
 			{

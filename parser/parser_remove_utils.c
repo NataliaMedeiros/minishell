@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 17:50:34 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/07/30 14:20:27 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*remove_quotes(char *limiter)
 {
 	char	*new_limiter;
-	bool	double_quotes;
+	bool	has_double_quotes;
 	int		i;
 	int		j;
 
@@ -24,15 +24,17 @@ char	*remove_quotes(char *limiter)
 		return (NULL);
 	i = 0;
 	j = 0;
-	double_quotes = false;
+	has_double_quotes = false;
+	if (limiter[i] == '"' && limiter[i + 1] == '\0')
+		return ("\0");
 	while (limiter[i] != '\0')
 	{
 		if (limiter[i] == '"')
-			double_quotes = true;
+			has_double_quotes = !has_double_quotes;
 		if (limiter[i] == '$' && limiter[i + 1] == '\'')
 			i++;
 		if ((limiter[i] != '"' && limiter[i] != '\'')
-			|| (limiter[i] == '\'' && double_quotes == true))
+			|| (limiter[i] == '\'' && has_double_quotes == true))
 		{
 			new_limiter[j] = limiter[i];
 			j++;
@@ -65,6 +67,8 @@ char	*remove_flags(char *arg)
 				i = prev_i;
 				break ;
 			}
+			else if (arg[i] == '\0')
+				break ;
 		}
 		else
 			break ;
