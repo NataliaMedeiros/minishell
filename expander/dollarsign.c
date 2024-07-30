@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/30 14:06:45 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/30 14:25:56 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ char	*handle_dollar_sign(char *line, t_data data)
 	char	*new_line;
 	bool	has_single_quote;
 
-	printf("line: %s\n", line);
 	new_line = NULL;
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{
