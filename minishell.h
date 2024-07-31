@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/30 17:32:41 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/31 17:49:08 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct s_data
 {
 	char			*cmd_line;
 	char			**cmd_lst;
-	char			**envp;
 	char			**path;
+	char			**envp;
 	struct s_env	*env;
 	t_parser		*parser;
 }					t_data;
@@ -123,7 +123,7 @@ t_env		*parsing_env(char **env);
 char		*handle_dollar_sign(char *line, t_data data);
 
 // Builtin functions
-bool	is_buildin(t_parser *parse_data, t_data *data);
+bool		is_buildin(t_parser *parse_data, t_data *data);
 void		echo_n(t_parser *data);
 void		pwd(t_parser *parser);
 void		ft_cd(t_parser *data, t_data *info);
@@ -143,5 +143,7 @@ int			handle_files(t_parser	**parser, t_data data, int i);
 
 // Execution
 int		ft_execute(t_data *data);
+char	*check_path(t_data *data);
+void	free_split(char **array);
 
 #endif

@@ -39,7 +39,5 @@ bool	is_buildin(t_parser *parse_data, t_data *data)
 		return (ft_unset(&data->env, parse_data), true);
 	else
 		return (false);
-	// ft_free(parse_data);
-	// o else vai pra execucao 
-	// pode retornar (true or false) e limpar o data aqui para todas as funcoes
+	// falta o export and exit
 }
