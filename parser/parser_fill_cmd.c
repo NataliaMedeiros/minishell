@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/30 15:16:11 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/31 14:24:30 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	}
 	else
 		temp = arg + j;
-	printf("temp: %s\n", temp);
 	if (has_flags(temp, parser) == true)
 		new_cmd = remove_flags(temp);
 	else

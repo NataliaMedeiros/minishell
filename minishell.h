@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/30 15:15:47 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/31 14:12:27 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
-
 
 # define READ 0
 # define WRITE 1
@@ -71,9 +70,9 @@ typedef struct s_data
 {
 	char			*cmd_line;
 	char			**cmd_lst;
-	char			**envp;
 	char			**path;
 	struct s_env	*env;
+	t_parser		*parser;
 }					t_data;
 
 /* parser */

@@ -6,13 +6,13 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/30 15:13:37 by natalia       ########   odam.nl         */
+/*   Updated: 2024/07/31 14:15:38 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_input_valid(char *cmd) //testar bem essa funcao
+bool	is_valid_input(char *cmd) //testar bem essa funcao
 {
 	int	i;
 
@@ -47,21 +47,21 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1 && argv)
 	{
 		error_msg(" Wrong amount of args");
-		error_msg("\tExecute only \033[31m./minishell\033[0m");
+		error_msg("\tExecute only "RED"./minishell"RESET);
 		return (EXIT_FAILURE);
 	}
 	data.env = parsing_env(envp);
 	while (1)
 	{
 		data.cmd_line = readline("[minishell]: ");
-		data.envp = envp;
 		add_history(data.cmd_line);
-		if (is_input_valid(data.cmd_line) == true)
+		if (is_valid_input(data.cmd_line) == true)
 		{
-			while (data.cmd_line[0] == '\0')
-				data.cmd_line = readline("[minishell]: ");
-			if (parser(&data) == 1)
-				return (free_env(&data.env), -1);
+			if (data.cmd_line[0] != '\0')
+			{
+				if (parser(&data) == 1)
+					return (free_env(&data.env), -1);
+			}
 		}
 	}
 	// rl_clear_history();
