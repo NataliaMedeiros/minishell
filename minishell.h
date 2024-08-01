@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/01 14:02:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 17:12:43 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_parser
 	int				fd_infile;
 	// char			*infile;
 	t_infile		*infile;
+	int				nb_pipes;
 	struct s_parser	*pipe;
 }					t_parser;
 
@@ -90,6 +91,7 @@ typedef struct s_data
 /* parser */
 int			parser(t_data *data);
 int			nb_commands(char *cmd_line);
+int			pipe_counter(t_parser *parser);
 
 /* parser_heredoc */
 int			handle_heredoc(t_parser **parser, t_data data);
@@ -145,7 +147,6 @@ char		*remove_flags(char *arg);
 int			handle_files(t_parser	**parser, t_data data, int i);
 
 // Execution
-// int	ft_execute(t_parser *parser, t_data *data);
 int		ft_execute(t_data *data);
 char	*absolute_path_checker(t_data *data);
 void	free_split(char **array);
