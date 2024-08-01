@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/01 13:07:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 14:01:48 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ char	*check_path(t_data *data)
 	path = ft_split(find_path_env(data->env), ':');
 	if (path == NULL)
 	{
-		ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
-		exit (EXIT_FAILURE);
+		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
+		// free stuff
+		return (NULL);
+		// exit (EXIT_FAILURE);
 	}
 	while (path[i])
 	{
@@ -65,4 +67,14 @@ void	free_split(char **array)
 		i++;
 	}
 	free(array);
+}
+char	*absolute_path_checker(t_data *data)
+{
+	char	*path;
+
+	if (access(data->parser->cmd[0], F_OK | X_OK) == 0)
+		path = ft_strdup(data->parser->cmd[0]);
+	else
+		path = check_path(data);
+	return (path);
 }
