@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/30 17:25:37 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 12:33:41 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 // 	}
 // }
 
-void	exec_infile(t_parser **parser, t_data	data)
+void	exec_infile(t_parser **parser, t_data data)
 {
 	while ((*parser)->infile->next != NULL)
 	{

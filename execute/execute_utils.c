@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/31 17:50:16 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 13:07:38 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 char	*find_path_env(t_env *env)
 {
-	while (env)
+	t_env	*temp; 
+
+	temp = env;
+	while (temp)
 	{
-		if (ft_strncmp(env->key_word, "PATH",4) == 0)
-			return (env->info);
-		env = env->next;
+		if (ft_strncmp(temp->key_word, "PATH",4) == 0)
+			return (temp->info);
+		temp = temp->next;
 	}
 	return (NULL);
 }
@@ -34,7 +37,7 @@ char	*check_path(t_data *data)
 	path = ft_split(find_path_env(data->env), ':');
 	if (path == NULL)
 	{
-		ft_putendl_fd(2, "\033[0;33m\tNot ENV, Unexpected error\033[0m");
+		ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
 		exit (EXIT_FAILURE);
 	}
 	while (path[i])

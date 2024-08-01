@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/31 17:49:08 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 13:07:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -142,6 +144,7 @@ char		*remove_flags(char *arg);
 int			handle_files(t_parser	**parser, t_data data, int i);
 
 // Execution
+// int	ft_execute(t_parser *parser, t_data *data);
 int		ft_execute(t_data *data);
 char	*check_path(t_data *data);
 void	free_split(char **array);
