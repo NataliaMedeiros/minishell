@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/31 14:07:57 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/08/01 14:26:45 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
 SOURCE = main.c \
+		check_input.c \
 		free_utils.c \
 		utils.c \
 		parser/parser.c \

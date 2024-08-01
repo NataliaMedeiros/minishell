@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/01 09:49:38 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/01 14:49:07 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,8 @@ char		*remove_flags(char *arg);
 int			handle_files(t_parser	**parser, t_data data, int i);
 
 bool	has_quotes(char *arg);
+
+/*check input*/
+bool	is_input_valid(char *cmd);
 
 #endif
