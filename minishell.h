@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/31 14:12:27 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/01 09:49:38 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void		error_msg_with_free(char *msg, char **array);
 
 /* env */
 char		**parsing_env_path(char **envp);
-t_env		*parsing_env(char **env);
+t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);

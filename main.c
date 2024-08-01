@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/31 14:15:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/01 09:49:44 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **envp)
 		error_msg("\tExecute only "RED"./minishell"RESET);
 		return (EXIT_FAILURE);
 	}
-	data.env = parsing_env(envp);
+	data.env = parse_env(envp);
 	while (1)
 	{
 		data.cmd_line = readline("[minishell]: ");
