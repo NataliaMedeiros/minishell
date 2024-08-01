@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/25 14:04:39 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/01 16:50:49 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
 {
+	printf("cmd_list[%d + 1]: %s\n", i,cmd_lst[i + 1] );
 	(*parser)->outfile = ft_strdup(cmd_lst[i + 1]);
 	if ((*parser)->outfile == NULL)
 		return (1);

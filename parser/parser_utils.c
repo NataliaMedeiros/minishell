@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/30 15:16:45 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/01 17:00:19 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,45 +32,83 @@ int	nb_commands(char *cmd_line)
 	return (count);
 }
 
+bool is_operator_or_null(char c) {
+	return c == '\0' || c == '|' || c == '>' || c == '<';
+}
+
 char	**split_cmds(t_data data)
 {
+	char	**cmd;
 	int		nb_args;
 	int		counter;
 	int		i;
 	int		start;
-	char	**cmd;
 
 	nb_args = nb_commands(data.cmd_line);
-	cmd = ft_calloc((nb_args + 1), sizeof(char *));
-	if (cmd == NULL)
-		return (NULL);
 	counter = 0;
 	i = 0;
-	while (counter < nb_args)
+	cmd	= ft_calloc(nb_args, sizeof(char *));
+	if (cmd == NULL)
+		return (NULL);
+	while (counter < nb_args - 1 || data.cmd_line[i] != '\0')
 	{
+		//printf("%c\n", data.cmd_line[i]);
 		start = i;
-		while (data.cmd_line[i] != '\0' && data.cmd_line[i] != '|'
-			&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
+		if (is_operator_or_null(data.cmd_line[i])) {
 			i++;
+		} else {
+			while (!is_operator_or_null(data.cmd_line[i + 1])) {
+				i++;
+			}
+		}
 		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
-		printf("cmd[%d]: %s\n", counter, cmd[counter]);
-		if (cmd[counter] == NULL)
-			return (free_array(counter, cmd), NULL);
-		counter++;
-		start = i;
-		if (counter == nb_args)
-			break ;
-		if (data.cmd_line[i] == '>' || data.cmd_line[i] == '<')
-			i++;
-		cmd[counter] = ft_substr(data.cmd_line, start, (i + 1 - start));
-		if (cmd[counter] == NULL)
-			return (free_array(counter, cmd), NULL);
+		printf("*%s*\n", cmd[counter]);
 		counter++;
 		i++;
 	}
-	cmd[counter] = NULL;
 	return (cmd);
 }
+
+// char	**split_cmds(t_data data)
+// {
+// 	int		nb_args;
+// 	int		counter;
+// 	int		i;
+// 	int		start;
+// 	char	**cmd;
+
+// 	nb_args = nb_commands(data.cmd_line); // este cria os numeros de commandos corretamente
+// 	cmd = ft_calloc((nb_args + 1), sizeof(char *));
+// 	if (cmd == NULL)
+// 		return (NULL);
+// 	counter = 0;
+// 	i = 0;
+// 	while (counter < nb_args)
+// 	{
+// 		start = i;
+// 		while (data.cmd_line[i] != '\0' && data.cmd_line[i] != '|'
+// 			&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
+// 			i++;
+// 		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
+// 		if (cmd[counter] == NULL)
+// 			return (free_array(counter, cmd), NULL);
+// 		printf("cmd[%d]: %s\n", counter, cmd[counter]);
+// 		counter++;
+// 		start = i;
+// 		if (counter == nb_args)
+// 			break ;
+// 		if (data.cmd_line[i] == '>' || data.cmd_line[i] == '<')
+// 			i++;
+// 		cmd[counter] = ft_substr(data.cmd_line, start, (i + 1 - start));
+// 		if (cmd[counter] == NULL)
+// 			return (free_array(counter, cmd), NULL);
+// 		printf("cmd[%d]: %s\n", counter, cmd[counter]);
+// 		counter++;
+// 		i++;
+// 	}
+// 	cmd[counter] = NULL;
+// 	return (cmd);
+// }
 
 /*this substring was modified to remove space on the beginning*/
 char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
