@@ -6,61 +6,57 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/31 14:58:00 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/02 14:58:48 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	fill_without_quotes(char *cmd, int i, char *new_cmd)
+static void	fill_without_quotes(char *arg, char *new_arg)
 {
 	int		j;
+	int		i;
 	bool	has_double_quotes;
 
 	j = 0;
+	i = 0;
 	has_double_quotes = false;
-	while (cmd[i] != '\0')
+	while (arg[i] != '\0')
 	{
-		if (cmd[i] == '"')
+		if (arg[i] == '"')
 			has_double_quotes = !has_double_quotes;
-		if (cmd[i] == '$' && (cmd[i + 1] == '\''
-				|| cmd[i + 1] == '"'))
+		if (arg[i] == '$' && (arg[i + 1] == '\''
+				|| arg[i + 1] == '"'))
 			i++;
-		if ((cmd[i] != '"' && cmd[i] != '\'')
-			|| (cmd[i] == '\'' && has_double_quotes == true))
+		if ((arg[i] != '"' && arg[i] != '\'')
+			|| (arg[i] == '\'' && has_double_quotes == true))
 		{
-			new_cmd[j] = cmd[i];
+			new_arg[j] = arg[i];
 			j++;
 		}
 		i++;
 	}
 }
 
-char	*remove_quotes(char *cmd)
-{
-	char	*new_cmd;
-	int		i;
-
-	new_cmd = ft_calloc(sizeof(char), ft_strlen(cmd));
-	if (new_cmd == NULL)
-		return (NULL);
-	i = 0;
-	if (cmd[i] == '"' && cmd[i + 1] == '\0')
-		return ("\0");
-	fill_without_quotes(cmd, i, new_cmd);
-	return (new_cmd);
-}
-
-char	*remove_flags(char *arg)
+char	*remove_quotes(char *arg)
 {
 	char	*new_arg;
+
+	new_arg = ft_calloc(sizeof(char), ft_strlen(arg));
+	if (new_arg == NULL)
+		return (NULL);
+	if (arg[0] == '"' && arg[1] == '\0')
+		return ("\0");
+	fill_without_quotes(arg, new_arg);
+	return (new_arg);
+}
+
+static int	count_flags(char *arg, int len)
+{
 	int		i;
-	int		len;
-	int		new_len;
 	int		prev_i;
 
 	i = 0;
-	len = ft_strlen(arg);
 	while (arg[i] != '\0' && (arg[i] == '-' || arg[i] == 'n' || arg[i] == ' '))
 	{
 		if (i < len && (arg[i] == '-' && arg[i + 1] == 'n'))
@@ -81,10 +77,22 @@ char	*remove_flags(char *arg)
 			break ;
 		i++;
 	}
-	new_len = len - i + 1;
+	return (i);
+}
+
+char	*remove_flags(char *arg)
+{
+	char	*new_arg;
+	int		total_flags;
+	int		len;
+	int		new_len;
+
+	len = ft_strlen(arg);
+	total_flags = count_flags(arg, len);
+	new_len = len - total_flags + 1;
 	new_arg = (char *)malloc(sizeof(char) * new_len);
 	if (new_arg == NULL)
 		return (NULL);
-	ft_strlcpy(new_arg, arg + i, new_len);
+	ft_strlcpy(new_arg, arg + total_flags, new_len);
 	return (new_arg);
 }
