@@ -7,7 +7,7 @@ static bool	has_cmd_before_operator(char	*cmd)
 	i = 0;
 	while (cmd[i] == ' ' && cmd[i] != '\0')
 		i++;
-	if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
+	if (cmd[i] == '|' /*|| cmd[i] == '>' || cmd[i] == '<'*/)
 		return (false);
 	return (true);
 }
