@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/02 12:53:36 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/02 15:10:18 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,11 @@ void	exec_infile(t_parser **parser, t_data	data)
 		{
 			// (*parser)->fd_infile = open((*parser)->infile->name,
 			// 		O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			// printf("open return: %d\n", (*parser)->fd_infile);
 			// if ((*parser)->fd_infile == -1)
 			// 	return (error_msg("Fail to open infile\n"));
 			handle_heredoc(parser, data);
-			//int i = close((*parser)->fd_infile);
-			// printf("close return: %d\n", i);
+			// close((*parser)->fd_infile);
 		}
 		(*parser)->infile = (*parser)->infile->next;
 	}
