@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/30 15:16:20 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/02 12:52:53 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	char	*line;
 	char	*limiter;
 
-	printf("Entrei no handle heredoc\n");
-	printf("name: %s\n", (*parser)->infile->name);
+	//printf("Entrei no handle heredoc\n");
+	// printf("name: %s\n", (*parser)->infile->name);
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if ((*parser)->fd_infile == -1)

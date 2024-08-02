@@ -29,6 +29,9 @@ static bool	has_cmd_after_operator(char	*cmd, int i)
 
 static bool	has_cmd_between_operators(char	*cmd, int i, char operator)
 {
+	if ((operator == '>' && cmd[i] == '>')
+		|| (operator == '<' && cmd[i] == '<'))
+		i++;
 	while (cmd[i] == ' ' && cmd[i] != '\0')
 		i++;
 	if (operator != '|' && (cmd[i] == '|' || cmd[i] == '>'

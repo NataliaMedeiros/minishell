@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/01 17:00:19 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/02 12:51:48 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ char	**split_cmds(t_data data)
 		return (NULL);
 	while (counter < nb_args - 1 || data.cmd_line[i] != '\0')
 	{
-		//printf("%c\n", data.cmd_line[i]);
 		start = i;
 		if (is_operator_or_null(data.cmd_line[i])) {
 			i++;
@@ -61,8 +60,8 @@ char	**split_cmds(t_data data)
 				i++;
 			}
 		}
-		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
-		printf("*%s*\n", cmd[counter]);
+		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i + 1 - start));
+		// printf("*%s*\n", cmd[counter]);
 		counter++;
 		i++;
 	}
@@ -136,6 +135,9 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 			return (substring);
 		else if (s[start] == ' ' && (s[start + 1] == '>'
 				|| s[start + 1] == '<' || s[start + 1] == '|'))
+			return (substring);
+		else if (s[start] == ' ' && is_operator_or_null(s[start - 1]) == 1
+				&& ft_isalpha(s[start + 1]) == 1)
 			return (substring);
 		substring[i] = s[start];
 		i++;
