@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/02 12:51:48 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/02 13:35:57 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,17 @@ int	nb_commands(char *cmd_line)
 {
 	int	i;
 	int	count;
+	bool	has_double_quotes;
 
 	i = 0;
 	count = 1;
+	has_double_quotes = false;
 	while (cmd_line[i] != '\0')
 	{
-		if (cmd_line[i] == '|' || cmd_line[i] == '>' || cmd_line[i] == '<')
+		if (cmd_line[i] == '"')
+				has_double_quotes = !has_double_quotes;
+		if ((cmd_line[i] == '|' || cmd_line[i] == '>' || cmd_line[i] == '<')
+			&& has_double_quotes == false)
 		{
 			count += 2;
 			if (cmd_line[i + 1] == '>' || cmd_line[i + 1] == '<')
@@ -32,8 +37,9 @@ int	nb_commands(char *cmd_line)
 	return (count);
 }
 
-bool is_operator_or_null(char c) {
-	return c == '\0' || c == '|' || c == '>' || c == '<';
+bool is_operator_or_null(char c)
+{
+	return (c == '\0' || c == '|' || c == '>' || c == '<');
 }
 
 char	**split_cmds(t_data data)
@@ -43,25 +49,32 @@ char	**split_cmds(t_data data)
 	int		counter;
 	int		i;
 	int		start;
+	bool	has_double_quotes;
 
 	nb_args = nb_commands(data.cmd_line);
 	counter = 0;
 	i = 0;
+	has_double_quotes = false;
 	cmd	= ft_calloc(nb_args, sizeof(char *));
 	if (cmd == NULL)
 		return (NULL);
 	while (counter < nb_args - 1 || data.cmd_line[i] != '\0')
 	{
 		start = i;
-		if (is_operator_or_null(data.cmd_line[i])) {
+		if (is_operator_or_null(data.cmd_line[i]))
+		{
 			i++;
-		} else {
-			while (!is_operator_or_null(data.cmd_line[i + 1])) {
+		}
+		else
+		{
+			while (!is_operator_or_null(data.cmd_line[i + 1]) || has_double_quotes == true)
+			{
+				if (data.cmd_line[i] == '"')
+					has_double_quotes = !has_double_quotes;
 				i++;
 			}
 		}
 		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i + 1 - start));
-		// printf("*%s*\n", cmd[counter]);
 		counter++;
 		i++;
 	}
@@ -114,6 +127,7 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 {
 	char	*substring;
 	size_t	i;
+	bool	has_double_quotes;
 
 	i = 0;
 	if (!s)
@@ -129,15 +143,19 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 	substring = ft_calloc(len + 1, sizeof(char));
 	if (substring == NULL)
 		return (NULL);
+		has_double_quotes = false;
 	while (i < len && start < ft_strlen(s))
 	{
+		if (s[start] == '"')
+				has_double_quotes = !has_double_quotes;
 		if (s[start] == ' ' && s[start + 1] == '\0')
 			return (substring);
-		else if (s[start] == ' ' && (s[start + 1] == '>'
-				|| s[start + 1] == '<' || s[start + 1] == '|'))
+		else if ((s[start] == ' ' && has_double_quotes == false)
+				&& (s[start + 1] == '>'|| s[start + 1] == '<'
+				|| s[start + 1] == '|'))
 			return (substring);
 		else if (s[start] == ' ' && is_operator_or_null(s[start - 1]) == 1
-				&& ft_isalpha(s[start + 1]) == 1)
+				&& ft_isalpha(s[start + 1]) == 1 && has_double_quotes == false)
 			return (substring);
 		substring[i] = s[start];
 		i++;
