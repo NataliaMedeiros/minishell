@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/07/29 14:04:07 by edribeir      ########   odam.nl          #
+#    Updated: 2024/08/01 16:43:10 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT = ./libft/libft.a
 LIBFTDIR = libft
 
 CFLAGS = -Wall -Werror -Wextra -g
-CFLAGS += -fsanitize=address
+#CFLAGS += -fsanitize=address
 LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
 #LFLAGS = -L/usr/lib/x86_64-linux-gnu -lreadline #linux
@@ -34,6 +34,7 @@ RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
 SOURCE = main.c \
+		check_input.c \
 		free_utils.c \
 		utils.c \
 		parser/parser.c \

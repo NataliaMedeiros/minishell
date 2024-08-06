@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 12:15:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/02 15:10:06 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,10 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	char	*line;
 	char	*limiter;
 
-	printf("Entrei no handle heredoc\n");
-	printf("name: %s\n", (*parser)->infile->name);
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if ((*parser)->fd_infile == -1)
-	{
-		perror("Erro ao abrir/criar o arquivo");
-        fprintf(stderr, "Erro: %s\n", strerror(errno));
 		return (printf("Fail to open infile\n"), 1);
-	}
 	limiter = find_limiter(parser);
 	line = readline(">");
 	while (line != NULL)

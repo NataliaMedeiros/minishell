@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 13:44:45 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/02 15:10:18 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,13 @@ void	exec_infile(t_parser **parser, t_data	data)
 					O_RDONLY, 0644);
 		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 		{
+			// (*parser)->fd_infile = open((*parser)->infile->name,
+			// 		O_CREAT | O_WRONLY | O_TRUNC, 0644);
+			// printf("open return: %d\n", (*parser)->fd_infile);
+			// if ((*parser)->fd_infile == -1)
+			// 	return (error_msg("Fail to open infile\n"));
 			handle_heredoc(parser, data);
-			int i = close((*parser)->fd_infile);
-			printf("close return: %d\n", i);
+			// close((*parser)->fd_infile);
 		}
 		(*parser)->infile = (*parser)->infile->next;
 	}
@@ -101,24 +105,26 @@ void	exec_infile(t_parser **parser, t_data	data)
 /*Function creates parser struct*/
 int	parser(t_data *data)
 {
-	t_parser	*parser;
 	t_parser	*head_parser;
 
 	data->cmd_lst = split_cmds(*data);
 	if (data->cmd_lst == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1);
-	parser = new_struct();
-	if (parser == NULL)
-		return (error_msg_with_free("Failure on create parsing struct\n", data->cmd_lst), 1);
-	head_parser = parser;
-	if (fill_parser((*data), &parser) != 0)
-		return (free_parsing(&parser), error_msg("Failure on parsing\n"), 1);
-	if (parser->infile != NULL)
-		exec_infile(&parser, (*data));
-	print_struct(parser);
+	// print_array(data->cmd_lst);
+	data->parser = new_struct();
+	if (data->parser == NULL)
+		return (error_msg_with_free("Failure on create parsing struct\n",
+				data->cmd_lst), 1);
+	head_parser = data->parser;
+	if (fill_parser((*data), &data->parser) != 0)
+		return (free_parsing(&data->parser),
+			error_msg("Failure on parsing\n"), 1);
+	if (data->parser->infile != NULL)
+		exec_infile(&data->parser, (*data));
+	print_struct(head_parser);
 	manager_functions(head_parser, data);
-	//free_array(0, &data.cmd_line);
-	//implement free parser
+	// free_array(0, &data.cmd_line);
+	// implement free parser
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/29 14:01:11 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 14:49:07 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
-
 
 # define READ 0
 # define WRITE 1
@@ -71,9 +70,9 @@ typedef struct s_data
 {
 	char			*cmd_line;
 	char			**cmd_lst;
-	char			**envp;
 	char			**path;
 	struct s_env	*env;
+	t_parser		*parser;
 }					t_data;
 
 /* parser */
@@ -110,7 +109,7 @@ void		error_msg_with_free(char *msg, char **array);
 
 /* env */
 char		**parsing_env_path(char **envp);
-t_env		*parsing_env(char **env);
+t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
@@ -133,5 +132,10 @@ char		*remove_flags(char *arg);
 
 /*handle file*/
 int			handle_files(t_parser	**parser, t_data data, int i);
+
+bool	has_quotes(char *arg);
+
+/*check input*/
+bool	is_input_valid(char *cmd);
 
 #endif
