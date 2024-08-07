@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/07 12:08:19 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/07 17:11:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_parser
 	int				fd_outfile;
 	char			*outfile;
 	int				fd_infile;
-	// char			*infile;
 	t_infile		*infile;
 	int				nb_pipes;
 	struct s_parser	*pipe;
@@ -99,7 +98,7 @@ int			handle_heredoc(t_parser **parser, t_data data);
 /* parser utils */
 int			nb_commands(char *cmd_line);
 char		**split_cmds(t_data data);
-char		*ft_substr_modified(char const *s, unsigned int start, size_t len);
+char		*get_cmd(char const *s, unsigned int start, size_t len);
 
 /* free_utils */
 void		free_array(int counter, char **cmd);
