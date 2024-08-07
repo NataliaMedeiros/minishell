@@ -35,11 +35,33 @@ static bool	has_cmd_between_operators(char	*cmd, int i, char operator)
 	while (cmd[i] == ' ' && cmd[i] != '\0')
 		i++;
 	if (operator != '|' && (cmd[i] == '|' || cmd[i] == '>'
-		|| cmd[i] == '<'))
+			|| cmd[i] == '<'))
 		return (false);
 	else if (operator == '|' && cmd[i] == '|')
 		return (false);
 	return (true);
+}
+
+bool	has_unclosed_quote(char *cmd)
+{
+	int		i;
+	bool	has_double_quotes;
+	bool	has_single_quotes;
+
+	i = 0;
+	has_double_quotes = false;
+	has_single_quotes = false;
+	while (cmd[i] != '\0')
+	{
+		if (cmd[i] == '"')
+			has_double_quotes = !has_double_quotes;
+		if (cmd[i] == '\'' && has_double_quotes == false)
+			has_single_quotes = !has_single_quotes;
+		i++;
+	}
+	if (has_double_quotes == true || has_single_quotes == true)
+		return (true);
+	return (false);
 }
 
 bool	is_input_valid(char *cmd)
@@ -50,6 +72,8 @@ bool	is_input_valid(char *cmd)
 	i = 0;
 	if (has_cmd_before_operator(cmd) == false)
 		return (error_msg("Syntax Error"), false);
+	if (has_unclosed_quote(cmd) == true)
+		return (error_msg("Syntax error: unclosed quotes"), false);
 	while (cmd[i] != '\0')
 	{
 		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')

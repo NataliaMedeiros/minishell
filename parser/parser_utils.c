@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/07 14:16:00 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/07 14:38:02 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	**split_cmds(t_data data)
 	{
 		start = i;
 		if (is_operator_or_null(data.cmd_line[i]))
-		{
 			i++;
-		}
 		else
 		{
 			while (!is_operator_or_null(data.cmd_line[i + 1]) || has_double_quotes == true)
