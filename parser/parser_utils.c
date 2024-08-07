@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 12:16:24 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/07 10:52:41 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**split_cmds(t_data data)
 			&& data.cmd_line[i] != '>' && data.cmd_line[i] != '<')
 			i++;
 		cmd[counter] = ft_substr_modified(data.cmd_line, start, (i - start));
-		printf("cmd[%d]: %s\n", counter, cmd[counter]);
+		// printf("cmd[%d]: %s\n", counter, cmd[counter]);
 		if (cmd[counter] == NULL)
 			return (free_array(counter, cmd), NULL);
 		counter++;
