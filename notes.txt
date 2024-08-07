@@ -124,3 +124,4 @@ List with some commands sample (not necessary we should implement all):
 	//TO DO - entender melhor as funcao de check path da DUDA
 	//TO DO - verificar qual melhor lugar para colocar o check_path
 	//TO DO - entender mais conceitos do Pipex (fork, process, etc)
+	
