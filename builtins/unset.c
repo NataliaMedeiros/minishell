@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:49:44 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/07/30 17:16:43 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	delete_node(t_env *previous, t_env *current, t_env **env)
 	free(tmp);
 }
 
-int	ft_unset(t_env **env, t_parser *parser)
+void	ft_unset(t_env **env, t_parser *parser)
 {
 	char	*str;
 	t_env	*previous;
@@ -35,19 +35,21 @@ int	ft_unset(t_env **env, t_parser *parser)
 
 	previous = NULL;
 	current = *env;
+	if (parser->cmd[1] == NULL)
+		return ;
 	str = ft_strcharjoin(parser->cmd[1], '=');
-	if (str == NULL)
-		return (error_msg("UNEXPECT ERROR"), 1);
+	// if (str == NULL)
+	// 	return (error_msg("UNEXPECT ERROR"), 1);
+	// todo a errormsg with exit
 	while (current != NULL)
 	{
 		if (ft_strncmp(current->key_word, str, ft_strlen(str)) == 0)
 		{
 			delete_node(previous, current, env);
-			return (0);
+			return ;
 		}
 		previous = current;
 		current = current->next;
 	}
 	free(str);
-	return (0);
 }

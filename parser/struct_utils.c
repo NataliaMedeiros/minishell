@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:56:25 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 13:45:58 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 16:32:42 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_parser	*new_struct(void)
 	new_element->outfile = NULL;
 	new_element->fd_infile = -2; //check if is good initualize
 	new_element->fd_outfile = -2; //check if is good initualize
+	new_element->nb_pipes = 0;
 	new_element->pipe = NULL;
 	return (new_element);
 }
@@ -39,4 +40,19 @@ void	free_parsing(t_parser **parser)
 		free(temp);
 	}
 	*parser = NULL;
+}
+
+int	pipe_counter(t_parser *parser)
+{
+	t_parser	*temp;
+	int			counter;
+
+	counter = -1;
+	temp = parser;
+	while (temp)
+	{
+		counter++;
+		temp = temp->pipe;
+	}
+	return (counter);
 }

@@ -24,23 +24,20 @@ int	change_fd(t_parser *parser)
 	return (fd);
 }
 
-void	manager_functions(t_parser *parse_data, t_data *data)
+bool	is_buildin(t_parser *parse_data, t_data *data)
 {
 	if (ft_strncmp(parse_data->cmd[0], "echo", 4) == 0)
-		echo_n(parse_data);
+		return (echo_n(parse_data), true);
 	else if (ft_strncmp(parse_data->cmd[0], "pwd", 4) == 0)
-		pwd(parse_data);
+		return (pwd(parse_data), true);
 	else if (ft_strncmp(parse_data->cmd[0], "cd", 2) == 0)
-		ft_cd(parse_data, data);
+		return (ft_cd(parse_data, data), true);
 	else if (ft_strncmp(parse_data->cmd[0], "env\0", 4) == 0
 		&& parse_data->cmd[1] == NULL)
-		env_print(data, parse_data);
+		return (env_print(data, parse_data), true);
 	else if(ft_strncmp(parse_data->cmd[0], "unset", 5) == 0)
-	{
-		if (ft_unset(&data->env, parse_data) != 0)
-			return ;
-	}
-	// ft_free(parse_data);
-	// o else vai pra execucao 
-	// pode retornar (true or false) e limpar o data aqui para todas as funcoes
+		return (ft_unset(&data->env, parse_data), true);
+	else
+		return (false);
+	// falta o export and exit
 }
