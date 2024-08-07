@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/07 17:24:29 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/07 17:43:40 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	parser(t_data *data)
 	if (fill_parser((*data), &data->parser) != 0)
 		return (free_parsing(&data->parser),
 			error_msg("Failure on parsing\n"), 1);
-	printf("hello\n");
+	// printf("hello\n");
 	// 	if (data->parser->cmd == NULL)
 	// {
 	// 	printf("data->parser->cmd is NULL\n");
@@ -128,7 +128,7 @@ int	parser(t_data *data)
 	// printf("%s\n", data->parser->cmd[0]);
 	if (data->parser->infile != NULL)
 		exec_infile(&data->parser, (*data));
-	print_struct(head_parser);
+	// print_struct(head_parser);
 	data->parser->nb_pipes = pipe_counter(head_parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser

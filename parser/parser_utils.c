@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/07 17:40:14 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/07 17:46:19 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,24 @@ char	**split_cmds(t_data data)
 	int		start;
 
 	nb_args = nb_commands(data.cmd_line);
+	printf("nb_argd: %d\n", nb_args);
 	counter = 0;
 	i = 0;
-	cmd = ft_calloc((nb_args + 1), sizeof(char *));
+	cmd = ft_calloc(nb_args, sizeof(char *));
 	if (cmd == NULL)
 		return (NULL);
-	while (counter < nb_args || data.cmd_line[i] != '\0')
+	while (counter < nb_args - 1 || data.cmd_line[i] != '\0')
 	{
 		start = i;
 		i = find_position(data, i);
 		cmd[counter] = get_cmd(data.cmd_line, start,
 				(i + 1 - start));
+		printf("%s\n", cmd[counter]);
 		counter++;
 		i++;
 	}
 	cmd[counter] = NULL;
+	printf("%s\n", cmd[counter]);
 	return (cmd);
 }
 
