@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:56:25 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/01 16:32:42 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/07 15:50:47 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_parser	*new_struct(void)
 	new_element = malloc(sizeof(t_parser));
 	if (new_element == NULL)
 		return (NULL);
+	new_element->cmd = NULL;
 	new_element->flag = false;
 	new_element->infile = NULL;
 	new_element->outfile = NULL;
