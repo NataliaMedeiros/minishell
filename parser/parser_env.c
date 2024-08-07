@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:29:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 13:50:20 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/01 09:49:38 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	add_env_back(t_env **head, void *content)
 	current_node->next = new_node;
 }
 
-t_env	*parsing_env(char **env)
+t_env	*parse_env(char **env)
 {
 	t_env	*env_list;
 	int		i;

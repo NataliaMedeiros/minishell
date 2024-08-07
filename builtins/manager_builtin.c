@@ -26,6 +26,12 @@ int	change_fd(t_parser *parser)
 
 bool	is_buildin(t_parser *parse_data, t_data *data)
 {
+	if (data->parser->cmd == NULL)
+	{
+		printf("data->parser->cmd is NULL\n");
+		return (free_parsing(&data->parser),
+			error_msg("data->parser->cmd is not initialized\n"), 1);
+	}
 	if (ft_strncmp(parse_data->cmd[0], "echo", 4) == 0)
 		return (echo_n(parse_data), true);
 	else if (ft_strncmp(parse_data->cmd[0], "pwd", 4) == 0)

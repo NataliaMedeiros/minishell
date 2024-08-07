@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/01 17:12:43 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/07 17:11:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ typedef struct s_parser
 	int				fd_outfile;
 	char			*outfile;
 	int				fd_infile;
-	// char			*infile;
 	t_infile		*infile;
 	int				nb_pipes;
 	struct s_parser	*pipe;
@@ -99,7 +98,7 @@ int			handle_heredoc(t_parser **parser, t_data data);
 /* parser utils */
 int			nb_commands(char *cmd_line);
 char		**split_cmds(t_data data);
-char		*ft_substr_modified(char const *s, unsigned int start, size_t len);
+char		*get_cmd(char const *s, unsigned int start, size_t len);
 
 /* free_utils */
 void		free_array(int counter, char **cmd);
@@ -122,7 +121,8 @@ void		error_msg(char *msg);
 void		error_msg_with_free(char *msg, char **array);
 
 /* env */
-t_env		*parsing_env(char **env);
+char		**parsing_env_path(char **envp);
+t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
@@ -145,6 +145,11 @@ char		*remove_flags(char *arg);
 
 /*handle file*/
 int			handle_files(t_parser	**parser, t_data data, int i);
+
+bool	has_quotes(char *arg);
+
+/*check input*/
+bool	is_input_valid(char *cmd);
 
 // Execution
 int		ft_execute(t_data *data);

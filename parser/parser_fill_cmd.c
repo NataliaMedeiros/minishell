@@ -6,13 +6,13 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 12:15:12 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/07 16:17:31 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static bool	has_quotes(char *arg)
+bool	has_quotes(char *arg)
 {
 	int	i;
 

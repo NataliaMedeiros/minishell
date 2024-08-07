@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/25 14:58:48 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/07 15:01:36 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,18 @@ static int	var_end(char *line, int i)
 
 static char	*search_envp(t_data data, char *var, int len)
 {
-	while (data.env->key_word)
+	char *temp;
+
+	temp = ft_strjoin(var, "=");
+	while (data.env)
 	{
-		if (ft_strncmp(data.env->key_word, var, len) == 0)
+		if (ft_strncmp(data.env->key_word, temp, len + 1) == 0)
 		{
-			return (ft_strdup(data.env->info));
-			break ;
+			return (free(temp), ft_strdup(data.env->info));
 		}
 		data.env = data.env->next;
 	}
-	return ("");
+	return (free(temp), "");
 }
 
 static char	*get_var(char *line, int start, t_data data)
@@ -62,7 +64,7 @@ static char	*get_var(char *line, int start, t_data data)
 	char	*new_line;
 
 	end = var_end(line, start);
-	var_name = ft_substr(line, start, start - end);
+	var_name = ft_substr(line, start, end - start);
 	var_value = search_envp(data, var_name, end - start);
 	new_line = replace_var(line, var_value, start, end);
 	return (new_line);
@@ -77,17 +79,24 @@ char	*handle_dollar_sign(char *line, t_data data)
 {
 	int		i;
 	char	*new_line;
+	bool	has_single_quote;
 
+	new_line = NULL;
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{
 		i = 0;
-		while (line[i] != '\0')
+		has_single_quote = false;
+		while (line[i])
 		{
-			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0')
+			if (line[i] == '\'')
+				has_single_quote = !has_single_quote;
+			if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0'
+					&& has_single_quote == false && line[i + 1] != ' ')
 			{
 				new_line = get_var(line, i + 1, data);
 				line = new_line;
-				i += 2;
+				if (strcmp(new_line, "") == 0 || ft_strlen(new_line) <= 3)
+					return (new_line);
 			}
 			else if (line[i] == '$' && (line [i + 1] == '\0' || line [i + 1] == '"'))
 			{
