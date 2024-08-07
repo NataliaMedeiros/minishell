@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/02 15:10:18 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/07 12:20:48 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,14 +115,13 @@ int	parser(t_data *data)
 	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n",
 				data->cmd_lst), 1);
-	head_parser = data->parser;
 	if (fill_parser((*data), &data->parser) != 0)
 		return (free_parsing(&data->parser),
 			error_msg("Failure on parsing\n"), 1);
+	head_parser = data->parser;
 	if (data->parser->infile != NULL)
 		exec_infile(&data->parser, (*data));
-	print_struct(head_parser);
-	manager_functions(head_parser, data);
+	// print_struct(head_parser);
 	// free_array(0, &data.cmd_line);
 	// implement free parser
 	return (0);

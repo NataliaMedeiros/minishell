@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/02 13:35:57 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/07 14:15:03 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	**split_cmds(t_data data)
 		counter++;
 		i++;
 	}
+	cmd[counter] = NULL;
 	return (cmd);
 }
 
@@ -143,7 +144,7 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 	substring = ft_calloc(len + 1, sizeof(char));
 	if (substring == NULL)
 		return (NULL);
-		has_double_quotes = false;
+	has_double_quotes = false;
 	while (i < len && start < ft_strlen(s))
 	{
 		if (s[start] == '"')
