@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/07 17:43:40 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/08 10:36:39 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,31 +49,6 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	return (0);
 }
 
-// void	exec_infile(t_parser **parser, t_data	data)
-// {
-// 	printf("Entrei no exec infile\n");
-// 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
-// 	{
-// 		while ((*parser)->infile->next != NULL)
-// 		{
-// 			(*parser)->infile = (*parser)->infile->next;
-// 		}
-// 		(*parser)->fd_infile = open((*parser)->infile->name,
-// 				O_RDONLY, 0644);
-// 	}
-// 	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-// 	{
-// 		while ((*parser)->infile->next != NULL)
-// 		{
-// 			handle_heredoc(parser, data);
-// 			int i = close((*parser)->fd_infile);
-// 			printf("close return: %d\n", i);
-// 			(*parser)->infile = (*parser)->infile->next;
-// 		}
-// 		handle_heredoc(parser, data);
-// 	}
-// }
-
 void	exec_infile(t_parser **parser, t_data data)
 {
 	while ((*parser)->infile->next != NULL)
@@ -94,7 +69,6 @@ void	exec_infile(t_parser **parser, t_data data)
 		}
 		(*parser)->infile = (*parser)->infile->next;
 	}
-	printf("infile type: %s\n", (*parser)->infile->type);
 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 		(*parser)->fd_infile = open((*parser)->infile->name,
 				O_RDONLY, 0644);
@@ -118,14 +92,6 @@ int	parser(t_data *data)
 	if (fill_parser((*data), &data->parser) != 0)
 		return (free_parsing(&data->parser),
 			error_msg("Failure on parsing\n"), 1);
-	// printf("hello\n");
-	// 	if (data->parser->cmd == NULL)
-	// {
-	// 	printf("data->parser->cmd is NULL\n");
-	// 	return (free_parsing(&data->parser),
-	// 		error_msg("data->parser->cmd is not initialized\n"), 1);
-	// }
-	// printf("%s\n", data->parser->cmd[0]);
 	if (data->parser->infile != NULL)
 		exec_infile(&data->parser, (*data));
 	// print_struct(head_parser);

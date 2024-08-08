@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/02 15:10:06 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/08 10:37:49 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,6 @@ char	*find_limiter(t_parser **parser)
 	return (limiter);
 }
 
-/* This functions create the space op terminal to receive the heredoc
-input, reads this imput,checks delimiter (remover quotes and backslash
-if necessary) and closing the typing space on terminal when limiter is
-placed as input */
-/* PS: bash behavio: if the limiter is typed followed by more text it
-not works as limiter,if limiter is typed between quotes (simple os
-double), the quotes should be removed and the same happens with backslash*/
-/* PS2: In this function I copied the limiter from the parser->imput
-checar se compensa deixar assim ou usar o strdup(cmd_lst[i+1])*/
 int	handle_heredoc(t_parser **parser, t_data data)
 {
 	char	*line;
