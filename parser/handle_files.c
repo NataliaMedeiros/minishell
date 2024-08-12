@@ -6,18 +6,56 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/08 10:36:47 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/12 11:34:07 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
+char **split_out_and_cmd(char *cmd)
 {
-	(*parser)->outfile = ft_strdup(cmd_lst[i + 1]);
+	char	**temp;
+	int		i;
+	int		j;
+
+	i = 0;
+	temp = malloc(3 * sizeof(char *));
+	if (temp == NULL)
+		return (NULL);
+	while (cmd[i] != ' ' && cmd[i] != '\0')
+		i++;
+	temp[0] = ft_calloc((i + 1), sizeof(char));
+	if (temp[0] == NULL)
+		return (NULL);
+	ft_strlcpy(temp[0], cmd, i + 1);
+	i++;
+	j = i;
+	while (cmd[j] != '\0')
+		j++;
+	if (j > i)
+	{
+		temp[1] = ft_calloc((i + 1), sizeof(char));
+		if (temp[1] == NULL)
+			return (NULL);
+		ft_strlcpy(temp[1], cmd + i, (j - i + 1));
+	}
+	else
+		temp[1] = NULL;
+	temp[3] = NULL;
+	return(temp);
+}
+int handle_first_redirection_outfile(t_parser **parser, char **cmd_table, int i)
+{
+	char **temp;
+
+	temp = split_out_and_cmd(cmd_table[i + 1]);
+	(*parser)->cmd = ft_split(temp[1], ' ');
+	if ((*parser)->cmd == NULL)
+		return (1);
+	(*parser)->outfile = ft_strdup(temp[0]);
 	if ((*parser)->outfile == NULL)
 		return (1);
-	if (cmd_lst[i][1] == '>')
+	if (cmd_table[i][1] == '>')
 		(*parser)->fd_outfile = open((*parser)->outfile,
 				O_CREAT | O_WRONLY | O_APPEND, 0664);
 	else
@@ -26,6 +64,27 @@ int	handle_outfile(t_parser	**parser, char **cmd_lst, int i)
 	if ((*parser)->fd_outfile == -1)
 		return (error_msg("Failure to open outfile\n"),
 			free((*parser)->outfile), 1);
+	return (0);
+}
+int	handle_outfile(t_parser	**parser, char **cmd_table, int i, bool first_redirection)
+{
+	if (first_redirection == true)
+		handle_first_redirection_outfile(parser, cmd_table, i);
+	else
+	{
+		(*parser)->outfile = ft_strdup(cmd_table[i + 1]);
+		if ((*parser)->outfile == NULL)
+			return (1);
+		if (cmd_table[i][1] == '>')
+			(*parser)->fd_outfile = open((*parser)->outfile,
+					O_CREAT | O_WRONLY | O_APPEND, 0664);
+		else
+			(*parser)->fd_outfile = open((*parser)->outfile,
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if ((*parser)->fd_outfile == -1)
+			return (error_msg("Failure to open outfile\n"),
+				free((*parser)->outfile), 1);
+	}
 	return (0);
 }
 
@@ -61,38 +120,43 @@ void	add_infile_back(t_infile **head, char *name, char *type)
 
 /*function to handle input redirection (<) and heredoc (<<).
 However the heredod still neds some implementation*/
-int	handle_infile(t_parser	**parser, t_data data, int i)
+int	handle_infile(t_parser	**parser, char **cmd_table, int i)
 {
 	char		*type;
 	t_infile	*temp;
 
-	if (data.cmd_lst[i][1] == '<')
+	if (cmd_table[i][1] == '<')
 		type = "heredoc";
 	else
 		type = "infile";
 	if ((*parser)->infile == NULL)
-		(*parser)->infile = new_infile(data.cmd_lst[i + 1], type);
+		(*parser)->infile = new_infile(cmd_table[i + 1], type);
 	else
 	{
 		temp = (*parser)->infile;
 		while (temp->next != NULL)
 			temp = temp->next;
-		temp->next = new_infile(data.cmd_lst[i + 1], type);
+		temp->next = new_infile(cmd_table[i + 1], type);
 	}
 	return (0);
 }
 
 int	handle_files(t_parser	**parser, t_data data, int i)
 {
-	if (data.cmd_lst[i][0] == '>')
+	bool	first_redirection;
+
+	first_redirection = false;
+	if (i == 0)
+		first_redirection = true;
+	if (data.cmd_table[i][0] == '>')
 	{
-		if (handle_outfile(parser, data.cmd_lst, i) != 0)
+		if (handle_outfile(parser, data.cmd_table, i, first_redirection) != 0)
 			return (1);
 		i++;
 	}
-	else if (data.cmd_lst[i][0] == '<')
+	else if (data.cmd_table[i][0] == '<')
 	{
-		if (handle_infile(parser, data, i) != 0)
+		if (handle_infile(parser, data.cmd_table, i) != 0)
 			return (1);
 		i++;
 	}

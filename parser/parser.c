@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/08 10:36:39 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/12 10:57:25 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	int	i;
 
 	i = 0;
-	while (data.cmd_lst[i] != NULL)
+	while (data.cmd_table[i] != NULL)
 	{
-		if (data.cmd_lst[i][0] == '|')
+		if (data.cmd_table[i][0] == '|')
 		{
 			if (handle_pipe(parser) != 0)
 				return (1);
 		}
-		else if (data.cmd_lst[i][0] == '>' || data.cmd_lst[i][0] == '<')
+		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
 			if (handle_files(parser, data, i) != 0)
 				return (1);
@@ -81,13 +81,14 @@ int	parser(t_data *data)
 {
 	t_parser	*head_parser;
 
-	data->cmd_lst = split_cmds(*data);
-	if (data->cmd_lst == NULL)
+	data->cmd_table = split_cmds(*data);
+	if (data->cmd_table == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1);
+	// print_array(data->cmd_table);
 	data->parser = new_struct();
 	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n",
-				data->cmd_lst), 1);
+				data->cmd_table), 1);
 	head_parser = data->parser;
 	if (fill_parser((*data), &data->parser) != 0)
 		return (free_parsing(&data->parser),

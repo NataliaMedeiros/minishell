@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/07 17:11:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/12 10:44:46 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_parser
 typedef struct s_data
 {
 	char			*cmd_line;
-	char			**cmd_lst;
+	char			**cmd_table;
 	char			**path;
 	char			**envp;
 	struct s_env	*env;
