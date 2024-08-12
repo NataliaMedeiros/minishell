@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   execute_main.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/07 11:32:51 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/12 12:17:48 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	ft_execute(t_data *data)
 	}
 	// else if (data->parser->nb_pipes >= 1)
 	// {
-		
+
 	// }
 	return (0);
 }
