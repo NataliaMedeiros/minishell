@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/13 11:29:17 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/13 11:56:54 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // int pipeline(t_data *data, char *path, t_parser *parse)
 // {
-	
+	// 
 // }
 
 void	one_cmd(t_data *data, char *path, t_parser *parser)
@@ -32,8 +32,9 @@ void	one_cmd(t_data *data, char *path, t_parser *parser)
 		close(data->parser->fd_infile);
 		close(data->parser->fd_outfile);
 		execve(path, parser->cmd, data->envp);
-		ft_putstr_fd("Command not found", 2);
-		// ft_putendl_fd(2, parser->cmd[0]);
+		ft_putstr_fd("Command not found: ", 2);
+		ft_putendl_fd(2, parser->cmd[0]);
+		exit (127);
 	}
 	waitpid(pid_child, &status, 0);
 }
@@ -52,7 +53,7 @@ int	ft_execute(t_data *data)
 	}
 	// else if (data->parser->nb_pipes >= 1)
 	// {
-	// 	if(pipeline(data, path, data->parser) == 1)
+	// 	if (pipeline(data, path, data->parser) == 1)
 	// 		error_msg("error piping");
 	// }
 	return (0);
