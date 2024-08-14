@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/14 16:18:32 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/14 18:22:14 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ void	one_cmd(t_data *data, char *path, t_parser *parser)
 	pid_child = fork();
 	if (pid_child == -1)
 		error_msg("Problem in fork");
+	printf("pid_child: %d\n", pid_child);
 	if (pid_child == 0)
 	{
 		dup2(data->parser->fd_infile, STDIN_FILENO);
@@ -213,6 +214,7 @@ void	one_cmd(t_data *data, char *path, t_parser *parser)
 		close(data->parser->fd_infile);
 		close(data->parser->fd_outfile);
 		execve(path, parser->cmd, data->envp);
+		printf("Entrei no filho\n");
 		ft_putstr_fd("Command not found: ", 2);
 		ft_putendl_fd(2, parser->cmd[0]);
 		exit (127);

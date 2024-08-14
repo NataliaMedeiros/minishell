@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/12 12:16:27 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/14 17:39:55 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,72 +111,70 @@ void	add_infile_back(t_infile **head, char *name, char *type)
 
 /*function to handle input redirection (<) and heredoc (<<).
 However the heredod still neds some implementation*/
-// int	handle_infile(t_parser	**parser, char **cmd_table, int i, bool start_with_redirection)
-// {
-// 	char		*type;
-// 	t_infile	*temp;
-// 	char		**new_cmd;
-
-// 	new_cmd = NULL;
-// 	if (cmd_table[i][1] == '<')
-// 		type = "heredoc";
-// 	else
-// 		type = "infile";
-// 	if (start_with_redirection == true)
-// 	{
-// 		printf("boboca\n");
-// 		new_cmd = split_out_and_cmd(cmd_table[i + 1]);
-// 		i = 0;
-// 		(*parser)->cmd = ft_split(new_cmd[1], ' ');
-// 		if ((*parser)->cmd == NULL)
-// 			return (1);
-// 		print_array((*parser)->cmd);
-// 		// if ((*parser)->infile == NULL)
-// 		// 	(*parser)->infile = new_infile(new_cmd[0], type);
-// 		// else
-// 		// {
-// 		// 	temp = (*parser)->infile;
-// 		// 	while (temp->next != NULL)
-// 		// 		temp = temp->next;
-// 		// 	temp->next = new_infile(new_cmd[0], type);
-// 		// }
-// 		// printf("infile: %s\n", (*parser)->infile->name);
-// 	}
-// 	else
-// 		new_cmd = &cmd_table[i + 1];
-// 	if ((*parser)->infile == NULL)
-// 		(*parser)->infile = new_infile(new_cmd[0], type);
-// 	else
-// 	{
-// 		temp = (*parser)->infile;
-// 		while (temp->next != NULL)
-// 			temp = temp->next;
-// 		temp->next = new_infile(new_cmd[0], type);
-// 	}
-// 	// }
-// 	return (0);
-// }
-
-int	handle_infile(t_parser	**parser, char **cmd_table, int i)
+int	handle_infile(t_parser	**parser, char **cmd_table, int i, bool start_with_redirection)
 {
 	char		*type;
 	t_infile	*temp;
+	char		**new_cmd;
 
+	new_cmd = NULL;
 	if (cmd_table[i][1] == '<')
 		type = "heredoc";
 	else
 		type = "infile";
+	if (start_with_redirection == true)
+	{
+		new_cmd = split_out_and_cmd(cmd_table[i + 1]);
+		i = 0;
+		(*parser)->cmd = ft_split(new_cmd[1], ' ');
+		if ((*parser)->cmd == NULL)
+			return (1);
+		// if ((*parser)->infile == NULL)
+		// 	(*parser)->infile = new_infile(new_cmd[0], type);
+		// else
+		// {
+		// 	temp = (*parser)->infile;
+		// 	while (temp->next != NULL)
+		// 		temp = temp->next;
+		// 	temp->next = new_infile(new_cmd[0], type);
+		// }
+		// printf("infile: %s\n", (*parser)->infile->name);
+	}
+	else
+		new_cmd = &cmd_table[i + 1];
 	if ((*parser)->infile == NULL)
-		(*parser)->infile = new_infile(cmd_table[i + 1], type);
+		(*parser)->infile = new_infile(new_cmd[0], type);
 	else
 	{
 		temp = (*parser)->infile;
 		while (temp->next != NULL)
 			temp = temp->next;
-		temp->next = new_infile(cmd_table[i + 1], type);
+		temp->next = new_infile(new_cmd[0], type);
 	}
+	// }
 	return (0);
 }
+
+// int	handle_infile(t_parser	**parser, char **cmd_table, int i)
+// {
+// 	char		*type;
+// 	t_infile	*temp;
+
+// 	if (cmd_table[i][1] == '<')
+// 		type = "heredoc";
+// 	else
+// 		type = "infile";
+// 	if ((*parser)->infile == NULL)
+// 		(*parser)->infile = new_infile(cmd_table[i + 1], type);
+// 	else
+// 	{
+// 		temp = (*parser)->infile;
+// 		while (temp->next != NULL)
+// 			temp = temp->next;
+// 		temp->next = new_infile(cmd_table[i + 1], type);
+// 	}
+// 	return (0);
+// }
 
 int	handle_files(t_parser	**parser, t_data data, int i)
 {
@@ -193,7 +191,7 @@ int	handle_files(t_parser	**parser, t_data data, int i)
 	}
 	else if (data.cmd_table[i][0] == '<')
 	{
-		if (handle_infile(parser, data.cmd_table, i) != 0)
+		if (handle_infile(parser, data.cmd_table, i, start_with_redirection) != 0)
 			return (1);
 		i++;
 	}
