@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/07 17:11:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/14 14:48:12 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_parser
 	char			*outfile;
 	int				fd_infile;
 	t_infile		*infile;
-	int				nb_pipes;
 	struct s_parser	*pipe;
 }					t_parser;
 
