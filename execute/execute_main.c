@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/14 16:05:43 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/14 20:50:17 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,73 +130,73 @@
 // 	return (path);
 // }
 
-// void	pipeline(t_data *data, t_parser *parser)
-// {
-// 	int	i;
-// 	//int *fd  ||   ||   ||
-// 	int	fd[2];
-// 	int	pd_child;
-// 	int	status;
-// 	t_parser *temp;
-// 	char *path;
+void	pipeline(t_data *data, t_parser *parser, int nb_pipes)
+{
+	int	i;
+	int	**fd;
+	int	pd_child;
+	int	status;
+	t_parser *temp;
+	char *path;
 
-// 	temp = parser;
-// 	i = 0;
-// 	path = absolute_path_checker_pipes(data, parser);
-// 	// printf("number of pipes: %d <<<<<\n", nb_pipes);
-// 	while (temp)
-// 	{
-// 		// path = absolute_path_checker(data);
-// 		if(pipe(fd) < 0)
-// 		{
-// 			// precisa fechar os pipes anteriores, se eles tiverem abertos!
-// 			error_msg("error pipe");
-// 		}
-// 		// pd_child1 = fork();
-// 		// if (pd_child1 < 0)
-// 		// 	error_msg("Fork error");
-// 		// if (pd_child1 == 0)
-// 		// {
-// 		// 	//need to close the fd previous and not used, how i will know what to close with child?
-// 		// 	dup2(temp->fd_infile, STDIN_FILENO);
-// 		// 	dup2(fd[1], STDOUT_FILENO);
-// 		// 	close(temp->fd_infile);
-// 		// 	close(fd[0]);
-// 		// 	execve(path, temp->cmd, data->envp);
-// 		// 	ft_putstr_fd("Command not found: ", 2);
-// 		// 	ft_putendl_fd(2, temp->cmd[0]);
-// 		// 	exit (EXIT_FAILURE);
-// 		// }
-// 		pd_child = fork();
-// 		if (pd_child < 0)
-// 			error_msg("Fork error");
-// 		if (pd_child == 0)
-// 		{
-// 			//need to close the fd previous and not used, how i will now what to close in with child?
-// 			// close(fd[0][1]);
-// 			dup2(fd[0], STDIN_FILENO);
-// 			// dup2(temp->fd_outfile, STDOUT_FILENO);
-// 			close(fd[1]);
-// 			// close(temp->fd_outfile);
-// 			execve(path, temp->cmd, data->envp);
-// 			ft_putstr_fd("Command not found: ", 2);
-// 			ft_putendl_fd(2, temp->cmd[0]);
-// 			exit (127);
-// 		}
-// 		// waitpid(pd_child1, NULL, 0);
-// 		waitpid(pd_child, &status, 0);
-// 		// wait(NULL);
-// 		// printf("passei aqui\n");
-// 		temp = temp->pipe;
-// 	}
-// 	// close(temp->fd_infile);
-// 	// close(temp->fd_outfile);
-// 	// close(fd[1]);
-// 	// close(fd[0]);
+	temp = parser;
+	i = 0;
+	path = absolute_path_checker(data);
+	fd = malloc(nb_pipes * sizeof(int *));
+	while (i <= nb_pipes)
+	{
+		fd[i] = malloc(2 * sizeof(int));
+		i++;
+	}
+	i = 0;
+	// printf("cheguei na pipeline\n");
+	// fd[0][0] = 1;
+	// fd[0][1] = 2;
+	// fd[1][0] = 3;
+	// fd[1][1] = 4;
+	// i = 0;
+	// while (i < 2)
+	// {
+	// 	printf("%d and %d\n", fd[i][0], fd[i][1]);
+	// 	i++;
+	// }
+	printf("number of pipes: %d <<<<<\n", nb_pipes);
+	while (temp)
+	{
+		if(pipe(fd[i]) < 0)
+		{
+			// precisa fechar os pipes anteriores, se eles tiverem abertos!
+			error_msg("error pipe");
+		}
+		pd_child = fork();
+		if (pd_child < 0)
+			error_msg("Fork error");
+		if (pd_child == 0)
+		{
+			//need to close the fd previous and not used, how i will now what to close in with child?
+			dup2(fd[i][0], STDIN_FILENO);
+			dup2(temp->fd_outfile, STDOUT_FILENO);
+			close(fd[i][1]);
+			close(temp->fd_outfile);
+			execve(path, temp->cmd, data->envp);
+			ft_putstr_fd("Command not found: ", 2);
+			ft_putendl_fd(2, temp->cmd[0]);
+			exit (127);
+		}
+		// waitpid(pd_child1, NULL, 0);
+		waitpid(pd_child, &status, 0);
+		// wait(NULL);
+		// printf("passei aqui\n");
+		temp = temp->pipe;
+	}
+	// close(temp->fd_infile);
+	// close(temp->fd_outfile);
+	close(fd[i][1]);
+	close(fd[i][0]);
 	
-// 	// return (0);
-// 	// exit(WEXITSTATUS(status));
-// }
+	// return (0);
+	// exit(WEXITSTATUS(status));
+}
 
 void	one_cmd(t_data *data, char *path, t_parser *parser)
 {
@@ -208,7 +208,7 @@ void	one_cmd(t_data *data, char *path, t_parser *parser)
 		error_msg("Problem in fork");
 	if (pid_child == 0)
 	{
-		dup2(data->parser->fd_infile, STDIN_FILENO);
+		dup2(data->parser->fd_infile, STDIN_FILENO); // add if verification to existing fd_in and fd_out
 		dup2(data->parser->fd_outfile, STDOUT_FILENO);
 		close(data->parser->fd_infile);
 		close(data->parser->fd_outfile);
@@ -235,12 +235,12 @@ int	ft_execute(t_data *data)
 			one_cmd(data, path, data->parser);
 		}
 	}
-	// else if (nb_pipes >= 1)
-	// {
-	// 	// path = absolute_path_checker(data);
-	// 	pipeline(data, data->parser);
-	// 	// if (pipeline(data, path, data->parser) == 1)
-	// 	// 	error_msg("error piping");
-	// }
+	else if (nb_pipes >= 1)
+	{
+		// path = absolute_path_checker(data);
+		pipeline(data, data->parser, nb_pipes);
+		// if (pipeline(data, path, data->parser) == 1)
+		// 	error_msg("error piping");
+	}
 	return (0);
 }
