@@ -119,3 +119,21 @@ char	*ft_substr_modified(char const *s, unsigned int start, size_t len)
 	}
 	return (substring);
 }
+
+void ft_list_reverse (t_list **begin_list)
+{
+	t_list	*prev = NULL;
+	t_list	*current = *begin_list;
+	t_list	*next = NULL;
+
+// 1 - 2 - 3 - 4 - 5
+	while (current != NULL)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*begin_list = prev;
+	print_list(*begin_list);
+}
