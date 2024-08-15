@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 16:34:48 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:54:14 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char **split_redirection_first(char *cmd)
 	return(temp);
 }
 
-int	handle_files(t_data *data, int i)
+int	handle_files(t_data data, t_parser **parser, int i)
 {
 	bool	start_with_redirection;
 
@@ -59,15 +59,17 @@ int	handle_files(t_data *data, int i)
 	printf("i = %d\n", i);
 	if (i == 0)
 		start_with_redirection = true;
-	if (data->cmd_table[i][0] == '>')
+	// if (ft_strcmp(data.cmd_table[i], "|") == 0)
+	// 	start_with_redirection = true;
+	if (data.cmd_table[i][0] == '>')
 	{
-		if (handle_outfile(data, i, start_with_redirection) != 0)
-			return (1);
+		if (handle_outfile(data, parser, i, start_with_redirection) != 0)
+			return (error_msg("failurre on handle outfile"), 1);
 		i++;
 	}
-	else if (data->cmd_table[i][0] == '<')
+	else if (data.cmd_table[i][0] == '<')
 	{
-		if (handle_infile(data, i, start_with_redirection) != 0)
+		if (handle_infile(data, parser, i, start_with_redirection) != 0)
 			return (error_msg("failurre on handle infile"), 1);
 		i++;
 	}

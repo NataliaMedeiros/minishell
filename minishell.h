@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 16:32:56 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:55:17 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ char		*remove_quotes(char *limiter);
 char		*remove_flags(char *arg);
 
 /*handle file*/
-int			handle_files(t_data *data, int i);
+int			handle_files(t_data data, t_parser **parser, int i);
 
 bool	has_quotes(char *arg);
 
@@ -155,8 +155,8 @@ int		ft_execute(t_data *data);
 char	*absolute_path_checker(t_data *data);
 void	free_split(char **array);
 
-int	handle_infile(t_data *data, int i, bool start_with_redirection);
+int	handle_infile(t_data data, t_parser **parser,  int i, bool start_with_redirection);
 char **split_redirection_first(char *cmd);
-int	handle_outfile(t_data *data, int i, bool start_with_redirection);
+int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
 
 #endif

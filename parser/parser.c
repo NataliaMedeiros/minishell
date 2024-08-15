@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 16:32:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:38:24 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
 			printf("Entrei aqui\n");
-			if (handle_files(&data, i) != 0)
+			if (handle_files(data, parser, i) != 0)
 				return (error_msg("failure on handle files"), 1);
 			i++;
 		}
