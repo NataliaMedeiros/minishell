@@ -6,13 +6,13 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/14 17:39:55 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/15 11:17:03 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char **split_out_and_cmd(char *cmd)
+char **split_redirection_first(char *cmd)
 {
 	char	**temp;
 	int		i;
@@ -44,38 +44,44 @@ char **split_out_and_cmd(char *cmd)
 	temp[3] = NULL;
 	return(temp);
 }
-int handle_first_redirection(t_parser **parser, char **cmd_table, int i)
+
+int handle_redirection_out(t_data *data, int i)
 {
 	char **temp;
 
-	temp = split_out_and_cmd(cmd_table[i + 1]);
-	(*parser)->cmd = ft_split(temp[1], ' ');
-	if ((*parser)->cmd == NULL)
+	temp = split_redirection_first(data->cmd_table[i + 1]);
+	if (temp == NULL)
 		return (1);
-	(*parser)->outfile = ft_strdup(temp[0]);
-	if ((*parser)->outfile == NULL)
+	data->parser->cmd = ft_split(temp[1], ' ');
+	if (data->parser->cmd == NULL)
+		return (1);
+	data->parser->outfile = ft_strdup(temp[0]);
+	if (data->parser->outfile == NULL)
 		return (1);
 	return (0);
 }
-int	handle_outfile(t_parser	**parser, char **cmd_table, int i, bool start_with_redirection)
+int	handle_outfile(t_data *data, int i, bool start_with_redirection)
 {
 	if (start_with_redirection == true)
-		handle_first_redirection(parser, cmd_table, i);
-	else
 	{
-		(*parser)->outfile = ft_strdup(cmd_table[i + 1]);
-		if ((*parser)->outfile == NULL)
+		if (handle_redirection_out(data, i) == 1)
 			return (1);
 	}
-	if (cmd_table[i][1] == '>')
-		(*parser)->fd_outfile = open((*parser)->outfile,
+	else
+	{
+		data->parser->outfile = ft_strdup(data->cmd_table[i + 1]);
+		if (data->parser->outfile == NULL)
+			return (1);
+	}
+	if (data->cmd_table[i][1] == '>')
+		data->parser->fd_outfile = open(data->parser->outfile,
 				O_CREAT | O_WRONLY | O_APPEND, 0664);
 	else
-		(*parser)->fd_outfile = open((*parser)->outfile,
+		data->parser->fd_outfile = open(data->parser->outfile,
 				O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if ((*parser)->fd_outfile == -1)
+	if (data->parser->fd_outfile == -1)
 		return (error_msg("Failure to open outfile\n"),
-			free((*parser)->outfile), 1);
+			free(data->parser->outfile), 1);
 	return (0);
 }
 
@@ -92,7 +98,6 @@ t_infile	*new_infile(char *name, char *type)
 
 	return (new_element);
 }
-
 void	add_infile_back(t_infile **head, char *name, char *type)
 {
 	t_infile	*current_node;
@@ -108,90 +113,78 @@ void	add_infile_back(t_infile **head, char *name, char *type)
 	new_node = new_infile(name, type);
 	current_node->next = new_node;
 }
+int	handle_redirection_in(t_data	*data, int i, char *type)
+{
+	// t_infile	*temp;
+	char		**new_cmd;
+
+	new_cmd = split_redirection_first(data->cmd_table[i + 1]);
+	i = 0;
+	data->parser->cmd = ft_split(new_cmd[1], ' ');
+	if (data->parser->cmd == NULL)
+		return (1);
+	if (data->parser->infile == NULL)
+		data->parser->infile = new_infile(new_cmd[0], type);
+	else
+	{
+		add_infile_back(&data->parser->infile, new_cmd[0], type);
+		// temp = data->parser->infile;
+		// while (temp->next != NULL)
+		// 	temp = temp->next;
+		// temp->next = new_infile(new_cmd[0], type);
+	}
+	return (0);
+}
+
 
 /*function to handle input redirection (<) and heredoc (<<).
 However the heredod still neds some implementation*/
-int	handle_infile(t_parser	**parser, char **cmd_table, int i, bool start_with_redirection)
+int	handle_infile(t_data *data, int i, bool start_with_redirection)
 {
 	char		*type;
-	t_infile	*temp;
-	char		**new_cmd;
+	// t_infile	*temp;
 
-	new_cmd = NULL;
-	if (cmd_table[i][1] == '<')
+	if (data->cmd_table[i][1] == '<')
 		type = "heredoc";
 	else
 		type = "infile";
 	if (start_with_redirection == true)
 	{
-		new_cmd = split_out_and_cmd(cmd_table[i + 1]);
-		i = 0;
-		(*parser)->cmd = ft_split(new_cmd[1], ' ');
-		if ((*parser)->cmd == NULL)
+		if (handle_redirection_in(data, i, type) == 1)
 			return (1);
-		// if ((*parser)->infile == NULL)
-		// 	(*parser)->infile = new_infile(new_cmd[0], type);
-		// else
-		// {
-		// 	temp = (*parser)->infile;
-		// 	while (temp->next != NULL)
-		// 		temp = temp->next;
-		// 	temp->next = new_infile(new_cmd[0], type);
-		// }
-		// printf("infile: %s\n", (*parser)->infile->name);
 	}
-	else
-		new_cmd = &cmd_table[i + 1];
-	if ((*parser)->infile == NULL)
-		(*parser)->infile = new_infile(new_cmd[0], type);
 	else
 	{
-		temp = (*parser)->infile;
-		while (temp->next != NULL)
-			temp = temp->next;
-		temp->next = new_infile(new_cmd[0], type);
+		if (data->parser->infile == NULL)
+			data->parser->infile = new_infile(data->cmd_table[i+1], type);
+		else
+		{
+			add_infile_back(&data->parser->infile, data->cmd_table[i + 1], type);
+			// temp = data->parser->infile;
+			// while (temp->next != NULL)
+			// 	temp = temp->next;
+			// temp->next = new_infile(data->cmd_table[i+1], type);
+		}
 	}
-	// }
 	return (0);
 }
 
-// int	handle_infile(t_parser	**parser, char **cmd_table, int i)
-// {
-// 	char		*type;
-// 	t_infile	*temp;
-
-// 	if (cmd_table[i][1] == '<')
-// 		type = "heredoc";
-// 	else
-// 		type = "infile";
-// 	if ((*parser)->infile == NULL)
-// 		(*parser)->infile = new_infile(cmd_table[i + 1], type);
-// 	else
-// 	{
-// 		temp = (*parser)->infile;
-// 		while (temp->next != NULL)
-// 			temp = temp->next;
-// 		temp->next = new_infile(cmd_table[i + 1], type);
-// 	}
-// 	return (0);
-// }
-
-int	handle_files(t_parser	**parser, t_data data, int i)
+int	handle_files(t_data *data, int i)
 {
 	bool	start_with_redirection;
 
 	start_with_redirection = false;
 	if (i == 0)
 		start_with_redirection = true;
-	if (data.cmd_table[i][0] == '>')
+	if (data->cmd_table[i][0] == '>')
 	{
-		if (handle_outfile(parser, data.cmd_table, i, start_with_redirection) != 0)
+		if (handle_outfile(data, i, start_with_redirection) != 0)
 			return (1);
 		i++;
 	}
-	else if (data.cmd_table[i][0] == '<')
+	else if (data->cmd_table[i][0] == '<')
 	{
-		if (handle_infile(parser, data.cmd_table, i, start_with_redirection) != 0)
+		if (handle_infile(data, i, start_with_redirection) != 0)
 			return (1);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/14 17:45:30 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/15 11:03:09 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		}
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
-			if (handle_files(parser, data, i) != 0)
+			if (handle_files(&data, i) != 0)
 				return (1);
 			i++;
 		}

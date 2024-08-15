@@ -137,3 +137,24 @@ void ft_list_reverse (t_list **begin_list)
 	*begin_list = prev;
 	print_list(*begin_list);
 }
+
+// int	handle_infile(t_parser	**parser, char **cmd_table, int i)
+// {
+// 	char		*type;
+// 	t_infile	*temp;
+
+// 	if (cmd_table[i][1] == '<')
+// 		type = "heredoc";
+// 	else
+// 		type = "infile";
+// 	if ((*parser)->infile == NULL)
+// 		(*parser)->infile = new_infile(cmd_table[i + 1], type);
+// 	else
+// 	{
+// 		temp = (*parser)->infile;
+// 		while (temp->next != NULL)
+// 			temp = temp->next;
+// 		temp->next = new_infile(cmd_table[i + 1], type);
+// 	}
+// 	return (0);
+// }
