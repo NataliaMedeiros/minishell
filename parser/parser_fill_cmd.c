@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/07 16:17:31 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/12 10:46:18 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,16 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	int		j;
 
 	j = 0;
-	arg = ft_strchr_adp(data.cmd_lst[i], ' '); //alterar nome dessa variavel
+	arg = ft_strchr_adp(data.cmd_table[i], ' '); //alterar nome dessa variavel
 	if (arg != NULL)
 	{
 		while (arg[j] == ' ')
 			j++;
-		len_arg = arg - data.cmd_lst[i] - 1;
+		len_arg = arg - data.cmd_table[i] - 1;
 		(*parser)->cmd[0] = ft_calloc(len_arg + 2, sizeof(char));
 		if ((*parser)->cmd[0] == NULL)
 			return (1);
-		ft_strlcpy((*parser)->cmd[0], data.cmd_lst[i], len_arg + 1);
+		ft_strlcpy((*parser)->cmd[0], data.cmd_table[i], len_arg + 1);
 		if (fill_echo_argument(parser, data, arg, j) == 1)
 			return (1);
 	}
@@ -102,7 +102,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 
 int	fill_cmd(t_parser **parser, t_data data, int i)
 {
-	if (ft_strncmp(data.cmd_lst[i], "echo", 4) == 0)
+	if (ft_strncmp(data.cmd_table[i], "echo", 4) == 0)
 	{
 		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
 		if ((*parser)->cmd == NULL)
@@ -111,7 +111,7 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 			return (1);
 	}
 	else
-		(*parser)->cmd = ft_split(data.cmd_lst[i], ' ');
+		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
 	if ((*parser)->cmd == NULL)
 		return (1);
 	return (0);

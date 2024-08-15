@@ -6,13 +6,13 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/14 11:13:39 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/15 16:59:57 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*find_path_env(t_env *env)
+static char	*find_path_env(t_env *env)
 {
 	t_env	*temp;
 
@@ -26,26 +26,17 @@ char	*find_path_env(t_env *env)
 	return (NULL);
 }
 
-char	*check_path(t_data *data)
+static char	*check_path(t_parser *parser, char **path)
 {
 	int		i;
 	char	*execute;
-	char	**path;
 	char	*part_path;
 
 	i = 0;
-	path = ft_split(find_path_env(data->env), ':');
-	if (path == NULL)
-	{
-		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
-		// free stuff
-		return (NULL);
-		// exit (EXIT_FAILURE);
-	}
 	while (path[i])
 	{
 		part_path = ft_strjoin(path[i], "/");
-		execute = ft_strjoin(part_path, data->parser->cmd[0]);
+		execute = ft_strjoin(part_path, parser->cmd[0]);
 		free(part_path);
 		if (access(execute, F_OK | X_OK) == 0)
 			return (free_split(path), execute);
@@ -69,13 +60,22 @@ void	free_split(char **array)
 	free(array);
 }
 
-char	*absolute_path_checker(t_data *data)
+char	*cmd_path_checker(t_data *data, t_parser *parser)
 {
 	char	*path;
+	char	**envp;
 
-	if (access(data->parser->cmd[0], F_OK | X_OK) == 0)
-		path = ft_strdup(data->parser->cmd[0]);
+	envp = ft_split(find_path_env(data->env), ':');
+	if (envp == NULL)
+	{
+		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
+		// free stuff
+		return (NULL);
+		// exit (EXIT_FAILURE);
+	}
+	if (access(parser->cmd[0], F_OK | X_OK) == 0)
+		path = ft_strdup(parser->cmd[0]);
 	else
-		path = check_path(data);
+		path = check_path(parser, envp);
 	return (path);
 }
