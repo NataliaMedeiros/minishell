@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/14 14:48:12 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/15 17:40:26 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ typedef enum s_token //nao usado
 
 // typedef struct s_execute
 // {
-// 	char	*cmd;
-// 	// char	*path_cmd;
-// 	// int		pipe_right[2];
-// 	// int		pipe_left[2];
-// 	// pid_t	fork_pid;
+// 	char		*path;
+// 	int			fd[2];
+// 	pid_t		pd_child;
+// 	int			status;
+// 	t_parser	*temp;
+// 	int			prev_read;
 // }	t_exec;
 
 typedef struct s_env
@@ -79,7 +80,7 @@ typedef struct s_parser
 typedef struct s_data
 {
 	char			*cmd_line;
-	char			**cmd_lst;
+	char			**cmd_table;
 	char			**path;
 	char			**envp;
 	struct s_env	*env;
@@ -120,7 +121,6 @@ void		error_msg(char *msg);
 void		error_msg_with_free(char *msg, char **array);
 
 /* env */
-char		**parsing_env_path(char **envp);
 t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
@@ -145,14 +145,14 @@ char		*remove_flags(char *arg);
 /*handle file*/
 int			handle_files(t_parser	**parser, t_data data, int i);
 
-bool	has_quotes(char *arg);
+bool		has_quotes(char *arg);
 
 /*check input*/
-bool	is_input_valid(char *cmd);
+bool		is_input_valid(char *cmd);
 
 // Execution
-int		ft_execute(t_data *data);
-char	*absolute_path_checker(t_data *data);
-void	free_split(char **array);
+int			ft_execute(t_data *data);
+char		*cmd_path_checker(t_data *data, t_parser *parser);
+void		free_split(char **array);
 
 #endif

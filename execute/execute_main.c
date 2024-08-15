@@ -3,244 +3,114 @@
 /*                                                        ::::::::            */
 /*   execute_main.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/15 11:19:24 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/15 17:50:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// void	pipeline(t_data *data, char *path, t_parser *parser)
-// {
-// 	int	i = 0;
-// 	//int *fd  ||   ||   ||
-// 	int	fd[i][2];
-// 	int	pd_child1;
-// 	int	pd_child2;
-// 	int	status;
-
-// 	i = 0;
-// 	while (parser->nb_pipes > i)
-// 	{
-// 		if(pipe(fd[i]) < 0)
-// 		{
-// 			// precisa fechar os pipes anteriores, se eles tiverem abertos!
-// 			error_msg("error pipe");
-// 		}
-// 		pd_child1 = fork();
-// 		if (pd_child1 < 0)
-// 			error_msg("Fork error");
-// 		if (pd_child1 == 0)
-// 		{
-// 			//need to close the fd previous and not used, how i will know what to close with child?
-// 			dup2(data->parser->fd_infile, STDIN_FILENO);
-// 			dup2(fd[i][1], STDOUT_FILENO);
-// 			close(data->parser->fd_infile);
-// 			close(fd[i][0]);
-// 			execve(path, parser->cmd, data->envp);
-// 			ft_putstr_fd("Command not found: ", 2);
-// 			ft_putendl_fd(2, parser->cmd[0]);
-// 			exit (EXIT_FAILURE);
-// 		}
-// 		pd_child2 = fork();
-// 		if (pd_child2 < 0)
-// 			error_msg("Fork error");
-// 		if (pd_child2 == 0)
-// 		{
-// 			//need to close the fd previous and not used, how i will now what to close in with child?
-// 			// close(fd[0][1]);
-// 			dup2(fd[i][0], STDIN_FILENO);
-// 			dup2(data->parser->fd_outfile, STDOUT_FILENO);
-// 			close(fd[i][1]);
-// 			close(data->parser->fd_outfile);
-// 			execve(path, parser->cmd, data->envp);
-// 			ft_putstr_fd("Command not found: ", 2);
-// 			ft_putendl_fd(2, parser->cmd[0]);
-// 			exit (127);
-// 		}
-// 		// waitpid(pd_child1, NULL, 0);
-// 		waitpid(pd_child2, &status, 0);
-// 		wait(NULL);
-// 		i++;
-// 	}
-// 	close(data->parser->fd_infile);
-// 	close(data->parser->fd_outfile);
-// 	close(fd[0][1]);
-// 	close(fd[i][0]);
-// 
-// 	// return (0);
-// 	// exit(WEXITSTATUS(status));
-// }
-
-// char	*find_path_env_pipes(t_env *env)
-// {
-// 	t_env	*temp;
-
-// 	temp = env;
-// 	while (temp)
-// 	{
-// 		if (ft_strncmp(temp->key_word, "PATH", 4) == 0)
-// 			return (temp->info);
-// 		temp = temp->next;
-// 	}
-// 	return (NULL);
-// }
-
-// char	*check_path_pipe(t_data *data, t_parser *pipe)
-// {
-// 	int		i;
-// 	char	*execute;
-// 	char	**path;
-// 	char	*part_path;
-
-// 	i = 0;
-// 	path = ft_split(find_path_env_pipes(data->env), ':');
-// 	if (path == NULL)
-// 	{
-// 		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
-// 		// free stuff
-// 		return (NULL);
-// 		// exit (EXIT_FAILURE);
-// 	}
-// 	while (path[i])
-// 	{
-// 		part_path = ft_strjoin(path[i], "/");
-// 		execute = ft_strjoin(part_path, pipe->cmd[0]);
-// 		free(part_path);
-// 		if (access(execute, F_OK | X_OK) == 0)
-// 			return (free_split(path), execute);
-// 		free(execute);
-// 		i++;
-// 	}
-// 	free_split(path);
-// 	return (NULL);
-// }
-
-
-// char	*absolute_path_checker_pipes(t_data *data, t_parser *parse)
-// {
-// 	char	*path;
-
-// 	if (access(parse->cmd[0], F_OK | X_OK) == 0)
-// 		path = ft_strdup(parse->cmd[0]);
-// 	else
-// 		path = check_path_pipe(data, parse);
-// 	return (path);
-// }
-// void	dup_output(int **fd)
-// {
-	
-// }
-void	dup_manager(int **fd, int i, int nb_pipes /*, t_parser *temp */)
+void	dup_manager(int *fd, int i, int nb_pipes, int prev_read, t_parser *temp)
 {
 	if (i == 0)
 	{
-		// if(temp->fd_infile != -2)
-		// 	dup2(temp->fd_infile, STDIN_FILENO);
-		// else
-			dup2(fd[0][0], STDIN_FILENO);
-		dup2(fd[0][1], STDOUT_FILENO);
-		return ;
+		if (temp->fd_infile != -2)
+			dup2(temp->fd_infile, STDIN_FILENO);
+		if (dup2(fd[WRITE], STDOUT_FILENO) == -1)
+			perror("noooo");
 	}
-	else if(i == nb_pipes)
+	else if (i == nb_pipes)
 	{
-		dup2(fd[i][0], STDIN_FILENO);
-		// if(temp->fd_outfile != -2)
-		// 	dup2(temp->fd_outfile, STDOUT_FILENO);
-		// else
-			dup2(fd[i][1], STDOUT_FILENO);
-		return ;
+		if (temp->fd_outfile != -2)
+			dup2(temp->fd_outfile, STDOUT_FILENO);
+		dup2(prev_read, STDIN_FILENO);
 	}
 	else
 	{
-		dup2(fd[i][0], STDIN_FILENO);
-		dup2(fd[i][1], STDOUT_FILENO);
-		return ;
+		dup2(prev_read, STDIN_FILENO);
+		dup2(fd[WRITE], STDOUT_FILENO);
 	}
+	close(fd[READ]);
+	close(fd[WRITE]);
+	// if (prev_read != STDIN_FILENO)
+	// 	close(prev_read);
 }
 
 void	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 {
+	char		*path;
 	int			i;
-	int			**fd;
+	int			fd[2];
 	pid_t		pd_child;
 	int			status;
 	t_parser	*temp;
-	char		*path;
-
+	int			prev_read;
+	
+	prev_read = STDIN_FILENO;
 	temp = parser;
 	i = 0;
-	path = absolute_path_checker(data);
-	fd = malloc(nb_pipes * sizeof(int *));
-	if (fd == NULL)
-		error_msg("Allocation problem"); // return
-	while (i <= nb_pipes)
-	{
-		fd[i] = malloc(2 * sizeof(int));
-		if (fd[i] == NULL)
-			error_msg("Allocation problem 2"); // return
-		i++;
-	}
-	i = 0;
-	// printf("number of pipes: %d <<<<<\n", nb_pipes);
 	while (temp)
 	{
-		if (pipe(fd[0]) < 0)
+		path = cmd_path_checker(data, temp);
+		if (pipe(fd) < 0)
 		{
-			// precisa fechar os pipes anteriores, se eles tiverem abertos!
 			error_msg("error pipe");
+			exit(EXIT_FAILURE);
 		}
 		pd_child = fork();
 		if (pd_child < 0)
-			error_msg("Fork error");
+		{
+			perror("Fork error");
+			exit(EXIT_FAILURE);
+		}
 		if (pd_child == 0)
 		{
-			//need to close the fd previous and not used, how i will now what to close in with child?
-			dup_manager(fd, i, nb_pipes /*, temp*/);
+			dup_manager(fd, i, nb_pipes, prev_read, temp);
 			execve(path, temp->cmd, data->envp);
 			ft_putstr_fd("Command not found: ", 2);
 			ft_putendl_fd(2, temp->cmd[0]);
 			exit (127);
 		}
-		// waitpid(pd_child1, NULL, 0);
-		waitpid(pd_child, &status, 0);
-		// wait(NULL);
-		// printf("passei aqui\n");
+		else
+		{
+			close(fd[WRITE]);
+			// if (prev_read != STDIN_FILENO)
+			// 	close(prev_read);
+			prev_read = fd[READ];
+			waitpid(pd_child, &status, 0);
+		}
 		i++;
 		temp = temp->pipe;
 	}
-	// close(temp->fd_infile);
-	// close(temp->fd_outfile);
-	// i = 0;
-	// while(i != nb_pipes)
-	// {
-	// 	close(fd[i][1]);
-	// 	close(fd[i][0]);
-	// 	i++;
-	// }
-	// return (0);
+	close(prev_read);
 	// exit(WEXITSTATUS(status));
 }
 
-void	one_cmd(t_data *data, char *path, t_parser *parser)
+void	one_cmd(t_data *data, char *path)
 {
 	pid_t	pid_child;
 	int		status;
 
 	pid_child = fork();
 	if (pid_child == -1)
-		error_msg("Problem in fork");
+		error_msg("Problem forking");
 	if (pid_child == 0)
 	{
-		dup2(data->parser->fd_infile, STDIN_FILENO); // add if verification to existing fd_in and fd_out
-		dup2(data->parser->fd_outfile, STDOUT_FILENO);
-		close(data->parser->fd_infile);
-		close(data->parser->fd_outfile);
-		execve(path, parser->cmd, data->envp);
+		if (data->parser->fd_infile != -2)
+		{
+			dup2(data->parser->fd_infile, STDIN_FILENO); // add check to dup 2 ?
+			close(data->parser->fd_infile);
+		}
+		if(data->parser->fd_outfile != -2)
+		{
+			dup2(data->parser->fd_outfile, STDOUT_FILENO);
+			close(data->parser->fd_outfile);
+		}
+		execve(path, data->parser->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", 2);
-		ft_putendl_fd(2, parser->cmd[0]);
+		ft_putendl_fd(2, data->parser->cmd[0]);
 		exit (127);
 	}
 	waitpid(pid_child, &status, 0);
@@ -257,16 +127,17 @@ int	ft_execute(t_data *data)
 	{
 		if (is_buildin(data->parser, data) == false)
 		{
-			path = absolute_path_checker(data);
-			one_cmd(data, path, data->parser);
+			path = cmd_path_checker(data, data->parser);
+			one_cmd(data, path);
 		}
 	}
 	else if (nb_pipes >= 1)
 	{
-		// path = absolute_path_checker(data);
 		pipeline(data, data->parser, nb_pipes);
 		// if (pipeline(data, path, data->parser) == 1)
 		// 	error_msg("error piping");
 	}
+	// if (data->parser->infile->name)
+	// 	unlink(data->parser->infile->name); // this will be in the cleanup function in the main
 	return (0);
 }
