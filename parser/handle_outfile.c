@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 11:33:12 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:33:37 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ static int handle_redirection_out(t_data *data, int i)
 	temp = split_redirection_first(data->cmd_table[i + 1]);
 	if (temp == NULL)
 		return (1);
-	data->parser->cmd = ft_split(temp[1], ' ');
-	if (data->parser->cmd == NULL)
-		return (1);
+	if (temp[1] != NULL)
+	{
+		data->parser->cmd = ft_split(temp[1], ' ');
+		if (data->parser->cmd == NULL)
+			return (1);
+	}
 	data->parser->outfile = ft_strdup(temp[0]);
 	if (data->parser->outfile == NULL)
 		return (1);

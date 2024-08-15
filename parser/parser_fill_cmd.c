@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/12 10:46:18 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 13:35:26 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
 	if ((*parser)->cmd == NULL)
 		return (1);
+	print_array((*parser)->cmd);
 	return (0);
 }

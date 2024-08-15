@@ -6,12 +6,20 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 11:59:33 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:34:48 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	ft_bnull(char **temp, int nb)
+{
+	while (nb >= 0)
+	{
+		temp[nb] = NULL;
+		nb--;
+	}
+}
 char **split_redirection_first(char *cmd)
 {
 	char	**temp;
@@ -22,12 +30,14 @@ char **split_redirection_first(char *cmd)
 	temp = malloc(3 * sizeof(char *));
 	if (temp == NULL)
 		return (NULL);
+	ft_bnull(temp, 3);
 	while (cmd[i] != ' ' && cmd[i] != '\0')
 		i++;
 	temp[0] = ft_calloc((i + 1), sizeof(char));
 	if (temp[0] == NULL)
 		return (NULL);
 	ft_strlcpy(temp[0], cmd, i + 1);
+	i++;
 	j = i;
 	while (cmd[j] != '\0')
 		j++;
@@ -38,9 +48,6 @@ char **split_redirection_first(char *cmd)
 			return (NULL);
 		ft_strlcpy(temp[1], cmd + i, (j - i + 1));
 	}
-	else
-		temp[1] = NULL;
-	temp[3] = NULL;
 	return(temp);
 }
 
@@ -49,6 +56,7 @@ int	handle_files(t_data *data, int i)
 	bool	start_with_redirection;
 
 	start_with_redirection = false;
+	printf("i = %d\n", i);
 	if (i == 0)
 		start_with_redirection = true;
 	if (data->cmd_table[i][0] == '>')

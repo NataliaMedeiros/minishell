@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 11:56:14 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:25:10 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ static int	handle_redirection_in(t_data	*data, int i, char *type)
 
 	new_cmd = split_redirection_first(data->cmd_table[i + 1]);
 	i = 0;
-	printf("%s\n", new_cmd[2]);
 	if (new_cmd[1] != NULL)
+	{
 		data->parser->cmd = ft_split(new_cmd[1], ' ');
-	if (data->parser->cmd == NULL)
-		return (error_msg("failure on split cmd"), 1);
+		if (data->parser->cmd == NULL)
+			return (error_msg("failure on fill parser cmd"), 1);
+	}
 	if (data->parser->infile == NULL)
 		data->parser->infile = new_infile(new_cmd[0], type);
 	else

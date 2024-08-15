@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 11:52:15 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 16:32:41 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	{
 		if (data.cmd_table[i][0] == '|')
 		{
+			printf("Entrei no pipe\n");
 			if (handle_pipe(parser) != 0)
 				return (error_msg("failure on handle pipe"), 1);
 		}
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
+			printf("Entrei aqui\n");
 			if (handle_files(&data, i) != 0)
 				return (error_msg("failure on handle files"), 1);
 			i++;
 		}
 		else
 		{
+			printf("Entrei to fill cmd\n");
 			if (fill_cmd(parser, data, i) != 0)
 				return (error_msg("failure on fill cmd"), 1);
 		}
@@ -76,7 +79,7 @@ int	parser(t_data *data)
 	data->cmd_table = split_cmds(*data);
 	if (data->cmd_table == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1);
-	// print_array(data->cmd_table);
+	print_array(data->cmd_table);
 	data->parser = new_struct();
 	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n",
