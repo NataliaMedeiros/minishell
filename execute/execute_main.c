@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/14 20:50:17 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/15 11:19:24 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,41 +129,65 @@
 // 		path = check_path_pipe(data, parse);
 // 	return (path);
 // }
+// void	dup_output(int **fd)
+// {
+	
+// }
+void	dup_manager(int **fd, int i, int nb_pipes /*, t_parser *temp */)
+{
+	if (i == 0)
+	{
+		// if(temp->fd_infile != -2)
+		// 	dup2(temp->fd_infile, STDIN_FILENO);
+		// else
+			dup2(fd[0][0], STDIN_FILENO);
+		dup2(fd[0][1], STDOUT_FILENO);
+		return ;
+	}
+	else if(i == nb_pipes)
+	{
+		dup2(fd[i][0], STDIN_FILENO);
+		// if(temp->fd_outfile != -2)
+		// 	dup2(temp->fd_outfile, STDOUT_FILENO);
+		// else
+			dup2(fd[i][1], STDOUT_FILENO);
+		return ;
+	}
+	else
+	{
+		dup2(fd[i][0], STDIN_FILENO);
+		dup2(fd[i][1], STDOUT_FILENO);
+		return ;
+	}
+}
 
 void	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 {
-	int	i;
-	int	**fd;
-	int	pd_child;
-	int	status;
-	t_parser *temp;
-	char *path;
+	int			i;
+	int			**fd;
+	pid_t		pd_child;
+	int			status;
+	t_parser	*temp;
+	char		*path;
 
 	temp = parser;
 	i = 0;
 	path = absolute_path_checker(data);
 	fd = malloc(nb_pipes * sizeof(int *));
+	if (fd == NULL)
+		error_msg("Allocation problem"); // return
 	while (i <= nb_pipes)
 	{
 		fd[i] = malloc(2 * sizeof(int));
+		if (fd[i] == NULL)
+			error_msg("Allocation problem 2"); // return
 		i++;
 	}
 	i = 0;
-	// printf("cheguei na pipeline\n");
-	// fd[0][0] = 1;
-	// fd[0][1] = 2;
-	// fd[1][0] = 3;
-	// fd[1][1] = 4;
-	// i = 0;
-	// while (i < 2)
-	// {
-	// 	printf("%d and %d\n", fd[i][0], fd[i][1]);
-	// 	i++;
-	// }
-	printf("number of pipes: %d <<<<<\n", nb_pipes);
+	// printf("number of pipes: %d <<<<<\n", nb_pipes);
 	while (temp)
 	{
-		if(pipe(fd[i]) < 0)
+		if (pipe(fd[0]) < 0)
 		{
 			// precisa fechar os pipes anteriores, se eles tiverem abertos!
 			error_msg("error pipe");
@@ -174,10 +198,7 @@ void	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		if (pd_child == 0)
 		{
 			//need to close the fd previous and not used, how i will now what to close in with child?
-			dup2(fd[i][0], STDIN_FILENO);
-			dup2(temp->fd_outfile, STDOUT_FILENO);
-			close(fd[i][1]);
-			close(temp->fd_outfile);
+			dup_manager(fd, i, nb_pipes /*, temp*/);
 			execve(path, temp->cmd, data->envp);
 			ft_putstr_fd("Command not found: ", 2);
 			ft_putendl_fd(2, temp->cmd[0]);
@@ -187,13 +208,18 @@ void	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		waitpid(pd_child, &status, 0);
 		// wait(NULL);
 		// printf("passei aqui\n");
+		i++;
 		temp = temp->pipe;
 	}
 	// close(temp->fd_infile);
 	// close(temp->fd_outfile);
-	close(fd[i][1]);
-	close(fd[i][0]);
-	
+	// i = 0;
+	// while(i != nb_pipes)
+	// {
+	// 	close(fd[i][1]);
+	// 	close(fd[i][0]);
+	// 	i++;
+	// }
 	// return (0);
 	// exit(WEXITSTATUS(status));
 }
