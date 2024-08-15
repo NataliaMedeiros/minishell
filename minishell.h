@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 11:03:17 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 11:33:20 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,9 @@ bool	is_input_valid(char *cmd);
 int		ft_execute(t_data *data);
 char	*absolute_path_checker(t_data *data);
 void	free_split(char **array);
+
+int	handle_infile(t_data *data, int i, bool start_with_redirection);
+char **split_redirection_first(char *cmd);
+int	handle_outfile(t_data *data, int i, bool start_with_redirection);
 
 #endif

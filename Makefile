@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/08/07 15:54:42 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/08/15 11:33:45 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ SOURCE = main.c \
 		parser/parser_fill_cmd.c \
 		parser/parser_remove_utils.c \
 		parser/handle_files.c \
+		parser/handle_infile.c \
+		parser/handle_outfile.c \
 		parser/parser_env.c \
 		expander/dollarsign.c \
 		builtins/manager_builtin.c \

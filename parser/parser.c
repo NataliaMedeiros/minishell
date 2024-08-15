@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 11:03:09 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/15 11:52:15 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		if (data.cmd_table[i][0] == '|')
 		{
 			if (handle_pipe(parser) != 0)
-				return (1);
+				return (error_msg("failure on handle pipe"), 1);
 		}
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
 			if (handle_files(&data, i) != 0)
-				return (1);
+				return (error_msg("failure on handle files"), 1);
 			i++;
 		}
 		else
 		{
 			if (fill_cmd(parser, data, i) != 0)
-				return (1);
+				return (error_msg("failure on fill cmd"), 1);
 		}
 		i++;
 	}
@@ -53,20 +53,12 @@ void	exec_infile(t_parser **parser, t_data data)
 {
 	while ((*parser)->infile->next != NULL)
 	{
-		printf("infile type: %s\n", (*parser)->infile->type);
 		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 			(*parser)->fd_infile = open((*parser)->infile->name,
 					O_RDONLY, 0644);
 		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-		{
-			// (*parser)->fd_infile = open((*parser)->infile->name,
-			// 		O_CREAT | O_WRONLY | O_TRUNC, 0644);
-			// printf("open return: %d\n", (*parser)->fd_infile);
-			// if ((*parser)->fd_infile == -1)
-			// 	return (error_msg("Fail to open infile\n"));
 			handle_heredoc(parser, data);
-			// close((*parser)->fd_infile);
-		}
+
 		(*parser)->infile = (*parser)->infile->next;
 	}
 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)

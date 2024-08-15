@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/14 19:58:21 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/15 11:58:57 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@
 // 	close(data->parser->fd_outfile);
 // 	close(fd[0][1]);
 // 	close(fd[i][0]);
-// 
+//
 // 	// return (0);
 // 	// exit(WEXITSTATUS(status));
 // }
@@ -193,7 +193,7 @@
 // 	// close(temp->fd_outfile);
 // 	// close(fd[1]);
 // 	// close(fd[0]);
-	
+
 // 	// return (0);
 // 	// exit(WEXITSTATUS(status));
 // }
@@ -228,6 +228,12 @@ int	ft_execute(t_data *data)
 	char	*path;
 	int		nb_pipes;
 
+	if (data->parser->cmd == NULL)
+	{
+		printf("data->parser->cmd is NULL\n");
+		return (free_parsing(&data->parser),
+			error_msg("data->parser->cmd is not initialized\n"), 1);
+	}
 	nb_pipes = pipe_counter(data->parser);
 	if (nb_pipes == 0)
 	{
