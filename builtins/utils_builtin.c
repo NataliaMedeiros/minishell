@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   pwd.c                                              :+:    :+:            */
+/*   utils_builtin.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2024/07/10 15:04:45 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/16 16:05:24 by edribeir      ########   odam.nl         */
+/*   Created: 2024/08/16 15:07:00 by edribeir      #+#    #+#                 */
+/*   Updated: 2024/08/16 16:49:47 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	pwd(int fd)
+char	*get_env_node(t_env *env, char *str)
 {
-	char	*path;
+	t_env	*temp;
 
-	path = getcwd(NULL, 0);
-	if (path != NULL)
+	temp = env;
+	while (temp)
 	{
-		ft_putendl_fd(fd, path);
-		free(path);
+		if (ft_strncmp(str, temp->key_word, strlen(str)) == 0)
+			return (temp->info);
+		temp = temp->next;
 	}
+	return (NULL);
 }
