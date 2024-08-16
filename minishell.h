@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 17:40:26 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/16 16:37:51 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,16 +127,16 @@ t_env		*parse_env(char **env);
 char		*handle_dollar_sign(char *line, t_data data);
 
 // Builtin functions
-bool		is_buildin(t_parser *parse_data, t_data *data);
-void		echo_n(t_parser *data);
-void		pwd(t_parser *parser);
+bool		is_builtin(t_parser *parse_data, t_data *data);
+void		echo_n(t_parser *data, int fd);
+void		pwd(int fd);
 void		ft_cd(t_parser *data, t_data *info);
-void		env_print(t_data *data, t_parser *parse);
+void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
 
 // UTILS
-int			change_fd(t_parser *parser);
 bool		has_flags(char *arg, t_parser **parser);
+char		*get_env_node(t_env *env, char *str);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);
@@ -154,5 +154,7 @@ bool		is_input_valid(char *cmd);
 int			ft_execute(t_data *data);
 char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
+void		one_cmd(t_data *data, char *path);
+void		pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 #endif
