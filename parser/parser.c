@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 16:38:24 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/19 13:36:55 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	parser(t_data *data)
 	if (data->parser->infile != NULL)
 		exec_infile(&data->parser, (*data));
 	// print_array(data->parser->cmd);
-	print_struct(data->parser);
+	// print_struct(data->parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser
 	return (0);

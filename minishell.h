@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 16:55:17 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/19 13:36:32 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,13 @@ typedef enum s_token //nao usado
 	AND,
 }		t_token;
 
-// typedef struct s_execute
-// {
-// 	char	*cmd;
-// 	// char	*path_cmd;
-// 	// int		pipe_right[2];
-// 	// int		pipe_left[2];
-// 	// pid_t	fork_pid;
-// }	t_exec;
+typedef struct s_execute
+{
+	int			fd[2];
+	int			prev_read;
+	int			nb_pipes;
+	int			status;
+}	t_exec;
 
 typedef struct s_env
 {
@@ -120,23 +119,22 @@ void		error_msg(char *msg);
 void		error_msg_with_free(char *msg, char **array);
 
 /* env */
-char		**parsing_env_path(char **envp);
 t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
 
 // Builtin functions
-bool		is_buildin(t_parser *parse_data, t_data *data);
-void		echo_n(t_parser *data);
-void		pwd(t_parser *parser);
+bool		is_builtin(t_parser *parse_data, t_data *data);
+void		echo_n(t_parser *data, int fd);
+void		pwd(int fd);
 void		ft_cd(t_parser *data, t_data *info);
-void		env_print(t_data *data, t_parser *parse);
+void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
 
 // UTILS
-int			change_fd(t_parser *parser);
 bool		has_flags(char *arg, t_parser **parser);
+char		*get_env_node(t_env *env, char *str);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);
@@ -145,15 +143,17 @@ char		*remove_flags(char *arg);
 /*handle file*/
 int			handle_files(t_data data, t_parser **parser, int i);
 
-bool	has_quotes(char *arg);
+bool		has_quotes(char *arg);
 
 /*check input*/
-bool	is_input_valid(char *cmd);
+bool		is_input_valid(char *cmd);
 
 // Execution
-int		ft_execute(t_data *data);
-char	*absolute_path_checker(t_data *data);
-void	free_split(char **array);
+int			ft_execute(t_data *data);
+char		*cmd_path_checker(t_data *data, t_parser *parser);
+void		free_split(char **array);
+void		one_cmd(t_data *data, char *path);
+int		pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 int	handle_infile(t_data data, t_parser **parser,  int i, bool start_with_redirection);
 char **split_redirection_first(char *cmd);
