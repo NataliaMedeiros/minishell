@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:27:37 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:46:22 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 		execve(path, temp->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", 2);
 		ft_putendl_fd(2, temp->cmd[0]);
+		free(path);
 		exit (127);
 	}
+	free(path);
 	exit(EXIT_SUCCESS);
 }
 

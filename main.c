@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 14:33:40 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 17:50:34 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ bool	init_prompt(t_data data)
 				if (parser(&data) == 1)
 					return (false);
 				ft_execute(&data);
-				// cleanup
+				// cleanup(data);
 			}
 		}
 	}
@@ -46,6 +46,12 @@ int	main(int argc, char **argv, char **envp)
 	data.env = parse_env(envp);
 	if (init_prompt(data) == false)
 		return (free_env(&data.env), -1);
-	// rl_clear_history();
+	rl_clear_history();
+	cleanup(data);
+	if (data.env != NULL)
+	{
+		printf("clean 1!\n");
+		free_env(&data.env);
+	}
 	return (0);
 }

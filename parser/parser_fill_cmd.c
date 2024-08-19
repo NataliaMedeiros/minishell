@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 14:52:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:27:47 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	int		j;
 
 	j = 0;
-	arg = ft_strchr_adp(data.cmd_table[i], ' '); //alterar nome dessa variavel
+	arg = ft_strchr_adp(data.cmd_table[i], ' '); //alterar nome dessa funcao
 	if (arg != NULL)
 	{
 		while (arg[j] == ' ')

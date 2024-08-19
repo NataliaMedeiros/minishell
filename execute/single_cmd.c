@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/16 16:41:29 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:46:59 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	checker_fd_dup(t_data *data)
 	}
 }
 
-void	one_cmd(t_data *data, char *path)
+int	one_cmd(t_data *data, char *path)
 {
 	pid_t	pid_child;
 	int		status;
@@ -45,5 +45,5 @@ void	one_cmd(t_data *data, char *path)
 		exit (127);
 	}
 	waitpid(pid_child, &status, 0);
-	// exit(WEXITSTATUS(status));
+	return (WEXITSTATUS(status));
 }

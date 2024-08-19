@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 10:38:04 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:34:08 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 	fd = change_fd(parse_data);
 	if (data->parser->cmd == NULL)
 	{
-		printf("data->parser->cmd is NULL\n");
 		return (free_parsing(&data->parser),
 			error_msg("data->parser->cmd is not initialized\n"), STDERR_FILENO);
 	}

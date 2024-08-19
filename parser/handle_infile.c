@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 14:04:21 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:25:00 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,21 @@ static void	add_infile_back(t_infile **head, char *name, char *type)
 }
 static int	handle_redirection_in(t_data data, t_parser **parser, int i, char *type)
 {
-	char		**new_cmd;
+	char		**temp;
 
-	new_cmd = split_redirection_first(data.cmd_table[i + 1]);
+	temp = split_redirection_first(data.cmd_table[i + 1]);
 	i = 0;
-	if (new_cmd[1] != NULL)
+	if (temp[1] != NULL)
 	{
-		(*parser)->cmd = ft_split(new_cmd[1], ' ');
+		(*parser)->cmd = ft_split(temp[1], ' ');
 		if ((*parser)->cmd == NULL)
-			return (error_msg("failure on fill parser cmd"), 1);
+			return (free_array(0, temp), error_msg("failure on fill parser cmd"), 1);
 	}
 	if ((*parser)->infile == NULL)
-		(*parser)->infile = new_infile(new_cmd[0], type);
+		(*parser)->infile = new_infile(temp[0], type);
 	else
-		add_infile_back(&(*parser)->infile, new_cmd[0], type);
-	return (0);
+		add_infile_back(&(*parser)->infile, temp[0], type);
+	return (free_array(0, temp), 0);
 }
 
 

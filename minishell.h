@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 14:13:28 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 16:29:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void		ft_unset(t_env **env, t_parser *parser);
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
 char		*get_env_node(t_env *env, char *str);
+void		cleanup(t_data data);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);
@@ -152,11 +153,11 @@ bool		is_input_valid(char *cmd);
 int			ft_execute(t_data *data);
 char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
-void		one_cmd(t_data *data, char *path);
-int		pipeline(t_data *data, t_parser *parser, int nb_pipes);
+int			one_cmd(t_data *data, char *path);
+int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
-int	handle_infile(t_data data, t_parser **parser,  int i, bool start_with_redirection);
-char **split_redirection_first(char *cmd);
-int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
+int			handle_infile(t_data data, t_parser **parser,  int i, bool start_with_redirection);
+char		**split_redirection_first(char *cmd);
+int			handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
 
 #endif

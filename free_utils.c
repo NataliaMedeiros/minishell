@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/07/29 14:04:29 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 17:48:13 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,63 @@ void	free_env(t_env **env)
 		free(temp->info);
 		free(temp);
 	}
-	*env = NULL;
-// void	ft_free(t_parser *parser)
-// {
-// 	if (parser->cmd != NULL)
-// 		free_array(0, parser->cmd);
+	// *env = NULL;
+}
+
+void	free_infile(t_infile *infile)
+{
+	t_infile	*temp;
+
+	while (infile)
+	{
+		temp = infile;
+		infile = infile->next;
+		if (ft_strcmp(temp->type, "heredoc") == 0)
+			unlink(temp->name);
+		free(temp);
+	}
+	// *env = NULL;
+}
+
+void	free_parser(t_parser **parser)
+{
+	t_parser	*temp;
+
+	while (*parser)
+	{
+		temp = *parser;
+		*parser = (*parser)->pipe;
+		free_array(0, temp->cmd);
+		// free(temp->outfile);
+		// free_infile(temp->infile);
+		free(temp);
+	}
+	// *env = NULL;
+}
+
+void	cleanup(t_data data)
+{
+	// if (data.envp != NULL)
+	// 	free(data.envp);
+	// if (data.env != NULL)
+	// {
+	// 	printf("clean 1!\n");
+	// 	free_env(&data.env);
+	// }
+	if (data.cmd_line != NULL)
+	{
+		printf("CLEAN 2\n");
+		free(data.cmd_line);
+	}
+	if (data.cmd_table != NULL)
+	{
+		printf("CLEAN 3\n");
+		free_array(0, data.cmd_table);
+	}
+	// if (data.parser != NULL)
+	// {
+	// 	printf("CLEAN 4\n");
+	// 	free_parser(&data.parser);
+	// }
+	
 }

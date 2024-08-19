@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:36:49 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 15:31:34 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,8 @@ int	handle_heredoc(t_parser **parser, t_data data)
 		free(line);
 		line = readline(">");
 	}
-	free(line);
 	close((*parser)->fd_infile);
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_RDONLY , 0644);
-	return (0);
+	return (free(line), 0);
 }
