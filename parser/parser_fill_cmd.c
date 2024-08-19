@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/15 13:35:26 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/19 14:52:38 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 			return (1);
 	}
 	else
-		(*parser)->cmd[0] = ft_strdup("echo");
+		(*parser)->cmd[0] = ft_strdup(data.cmd_table[i]);
 	return (0);
 }
 
@@ -114,6 +114,5 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
 	if ((*parser)->cmd == NULL)
 		return (1);
-	print_array((*parser)->cmd);
 	return (0);
 }

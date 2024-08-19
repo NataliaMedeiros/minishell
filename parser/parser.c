@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 14:21:48 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 14:52:48 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,12 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		has_pipe = false;
 		if (data.cmd_table[i][0] == '|')
 		{
-			// printf("Entrei no pipe\n");
 			if (handle_pipe(parser) != 0)
 				return (error_msg("failure on handle pipe"), 1);
 			has_pipe = true;
 		}
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
-			// printf("Entrei aqui\n");
 			if (i == 0)
 				start_with_redirection = true;
 			else if (has_pipe == true)
@@ -52,7 +50,6 @@ int	fill_parser(t_data	data, t_parser	**parser)
 		}
 		else
 		{
-			// printf("Entrei to fill cmd\n");
 			if (fill_cmd(parser, data, i) != 0)
 				return (error_msg("failure on fill cmd"), 1);
 		}
@@ -88,7 +85,6 @@ int	parser(t_data *data)
 	data->cmd_table = split_cmds(*data);
 	if (data->cmd_table == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1);
-	print_array(data->cmd_table);
 	data->parser = new_struct();
 	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n",
@@ -100,7 +96,7 @@ int	parser(t_data *data)
 	if (data->parser->infile != NULL)
 		exec_infile(&data->parser, (*data));
 	// print_array(data->parser->cmd);
-	print_struct(data->parser);
+	// print_struct(data->parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser
 	return (0);

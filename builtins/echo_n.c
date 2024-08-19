@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:27:23 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/16 15:49:35 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 14:56:26 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ void	echo_n(t_parser *parse, int fd)
 		}
 	}
 	else
-		ft_putendl_fd(fd, "");
+	{
+		
+		if (ft_strncmp(parse->cmd[0], "echoo", 5) == 0)
+			ft_putendl_fd(STDERR_FILENO, "Command not Found");
+		else
+			ft_putendl_fd(fd, "");
+	}
 }
