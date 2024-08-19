@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 13:36:55 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 14:21:48 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,36 @@ int	handle_pipe(t_parser **parser)
 
 int	fill_parser(t_data	data, t_parser	**parser)
 {
-	int	i;
+	int		i;
+	bool	has_pipe;
+	bool	start_with_redirection;
 
 	i = 0;
+	start_with_redirection = false;
 	while (data.cmd_table[i] != NULL)
 	{
+		has_pipe = false;
 		if (data.cmd_table[i][0] == '|')
 		{
-			printf("Entrei no pipe\n");
+			// printf("Entrei no pipe\n");
 			if (handle_pipe(parser) != 0)
 				return (error_msg("failure on handle pipe"), 1);
+			has_pipe = true;
 		}
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
-			printf("Entrei aqui\n");
-			if (handle_files(data, parser, i) != 0)
+			// printf("Entrei aqui\n");
+			if (i == 0)
+				start_with_redirection = true;
+			else if (has_pipe == true)
+				start_with_redirection = true;
+			if (handle_files(data, parser, i, start_with_redirection) != 0)
 				return (error_msg("failure on handle files"), 1);
 			i++;
 		}
 		else
 		{
-			printf("Entrei to fill cmd\n");
+			// printf("Entrei to fill cmd\n");
 			if (fill_cmd(parser, data, i) != 0)
 				return (error_msg("failure on fill cmd"), 1);
 		}
@@ -91,7 +100,7 @@ int	parser(t_data *data)
 	if (data->parser->infile != NULL)
 		exec_infile(&data->parser, (*data));
 	// print_array(data->parser->cmd);
-	// print_struct(data->parser);
+	print_struct(data->parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser
 	return (0);

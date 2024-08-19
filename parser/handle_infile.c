@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/15 16:54:57 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/19 14:04:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirec
 	else
 	{
 		if ((*parser)->infile == NULL)
-			(*parser)->infile = new_infile(data.cmd_table[i+1], type);
+			(*parser)->infile = new_infile(data.cmd_table[i + 1], type);
 		else
 			add_infile_back(&(*parser)->infile, data.cmd_table[i + 1], type);
 	}
