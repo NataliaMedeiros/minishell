@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/16 16:37:51 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/19 13:22:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,13 @@ typedef enum s_token //nao usado
 	AND,
 }		t_token;
 
-// typedef struct s_execute
-// {
-// 	char		*path;
-// 	int			fd[2];
-// 	pid_t		pd_child;
-// 	int			status;
-// 	t_parser	*temp;
-// 	int			prev_read;
-// }	t_exec;
+typedef struct s_execute
+{
+	int			fd[2];
+	int			prev_read;
+	int			nb_pipes;
+	int			status;
+}	t_exec;
 
 typedef struct s_env
 {
@@ -155,6 +153,6 @@ int			ft_execute(t_data *data);
 char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
 void		one_cmd(t_data *data, char *path);
-void		pipeline(t_data *data, t_parser *parser, int nb_pipes);
+int		pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 #endif
