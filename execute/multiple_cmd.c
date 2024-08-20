@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/19 13:27:37 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/20 18:59:31 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	first_pipe(int *fd, t_parser *temp)
 {
 	if (temp->fd_infile != -2)
 	{
-		if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
+		if (dup2(temp->fd_infile, STDOUT_FILENO) == -1)
 			perror("Problem Dup First Pipe");
-		close(temp->fd_infile);
+		// close(temp->fd_infile);
 	}
 	if (dup2(fd[WRITE], STDOUT_FILENO) == -1)
 		perror("Problem Dup First Pipe");
@@ -32,9 +32,9 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 	{
 		if (temp->fd_outfile != -2)
 		{
-			if (dup2(temp->fd_outfile, STDOUT_FILENO) == -1)
+			if (dup2(temp->fd_outfile, STDIN_FILENO) == -1)
 				perror("Problem Dup Last");
-			close (temp->fd_outfile);
+			// close (temp->fd_outfile);
 		}
 		if (dup2(exec->prev_read, STDIN_FILENO) == -1)
 			perror("Problem Dup Last Prev");
@@ -54,15 +54,20 @@ void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 {
 	char	*path;
 
-	path = cmd_path_checker(data, temp); // check if it is null ?
+	path = cmd_path_checker(data, temp);
 	dup_manager(exec, i, temp);
 	if (is_builtin(temp, data) == false)
 	{
-		execve(path, temp->cmd, data->envp);
+		if (path != NULL)
+			execve(path, temp->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", 2);
 		ft_putendl_fd(2, temp->cmd[0]);
+		if (path != NULL)
+			free(path);
 		exit (127);
 	}
+	if (path != NULL)
+		free(path);
 	exit(EXIT_SUCCESS);
 }
 
