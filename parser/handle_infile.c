@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 15:25:00 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/20 12:02:41 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	add_infile_back(t_infile **head, char *name, char *type)
 	new_node = new_infile(name, type);
 	current_node->next = new_node;
 }
-static int	handle_redirection_in(t_data data, t_parser **parser, int i, char *type)
+static t_infile	*handle_redirection_in(t_data data, t_parser **parser, int i, char *type)
 {
 	char		**temp;
 
@@ -51,13 +51,13 @@ static int	handle_redirection_in(t_data data, t_parser **parser, int i, char *ty
 	{
 		(*parser)->cmd = ft_split(temp[1], ' ');
 		if ((*parser)->cmd == NULL)
-			return (free_array(0, temp), error_msg("failure on fill parser cmd"), 1);
+			return (NULL);
 	}
 	if ((*parser)->infile == NULL)
 		(*parser)->infile = new_infile(temp[0], type);
 	else
 		add_infile_back(&(*parser)->infile, temp[0], type);
-	return (free_array(0, temp), 0);
+	return ((*parser)->infile);
 }
 
 
@@ -73,7 +73,8 @@ int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirec
 		type = "infile";
 	if (start_with_redirection == true)
 	{
-		if (handle_redirection_in(data, parser, i, type) == 1)
+		(*parser)->infile = handle_redirection_in(data, parser, i, type);
+		if ((*parser)->infile == NULL)
 			return (error_msg("failure on redirection in"), 1);
 	}
 	else

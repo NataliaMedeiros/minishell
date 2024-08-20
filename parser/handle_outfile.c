@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 10:29:46 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/20 11:54:26 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redire
 		if ((*parser)->outfile == NULL)
 			return (error_msg("fail on dup outfile"), 1);
 	}
+	// printf("--%s\n", (*parser)->outfile);
 	if (data.cmd_table[i][1] == '>')
 		(*parser)->fd_outfile = open((*parser)->outfile,
 				O_CREAT | O_WRONLY | O_APPEND, 0664);

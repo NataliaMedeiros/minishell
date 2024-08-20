@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 14:19:05 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/20 11:54:23 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ char **split_redirection_first(char *cmd)
 
 int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection)
 {
+	// printf("*%c\n", data.cmd_table[i][0]);
 	if (data.cmd_table[i][0] == '>')
 	{
+		// printf("Entrei no if\n");
 		if (handle_outfile(data, parser, i, start_with_redirection) != 0)
 			return (error_msg("failurre on handle outfile"), 1);
 		i++;
