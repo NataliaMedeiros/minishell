@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 15:22:59 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/20 10:29:46 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redire
 	}
 	else
 	{
-		data.parser->outfile = ft_strdup(data.cmd_table[i + 1]);
+		(*parser)->outfile = ft_strdup(data.cmd_table[i + 1]);
 		if ((*parser)->outfile == NULL)
 			return (error_msg("fail on dup outfile"), 1);
 	}
