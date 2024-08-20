@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/14 16:25:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/19 14:37:33 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	**split_cmds(t_data data)
 	nb_args = nb_commands(data.cmd_line);
 	counter = 0;
 	i = 0;
-	cmd = ft_calloc(nb_args, sizeof(char *));
+	cmd = ft_calloc(nb_args + 1, sizeof(char *));
 	if (cmd == NULL)
 		return (NULL);
 	while (counter < nb_args - 1 || data.cmd_line[i] != '\0')

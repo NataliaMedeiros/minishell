@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/08/07 15:54:42 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/08/19 17:44:16 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ LIBFT = ./libft/libft.a
 LIBFTDIR = libft
 
 CFLAGS = -Wall -Werror -Wextra -g
-#CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=address
 LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
 #LFLAGS = -L/usr/lib/x86_64-linux-gnu -lreadline #linux
@@ -45,6 +45,8 @@ SOURCE = main.c \
 		parser/parser_fill_cmd.c \
 		parser/parser_remove_utils.c \
 		parser/handle_files.c \
+		parser/handle_infile.c \
+		parser/handle_outfile.c \
 		parser/parser_env.c \
 		expander/dollarsign.c \
 		builtins/manager_builtin.c \
@@ -53,8 +55,11 @@ SOURCE = main.c \
 		builtins/env.c \
 		builtins/cd.c \
 		builtins/unset.c \
+		builtins/utils_builtin.c \
 		execute/execute_main.c \
 		execute/execute_utils.c \
+		execute/single_cmd.c \
+		execute/multiple_cmd.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 
