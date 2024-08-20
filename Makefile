@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/08/19 17:44:16 by edribeir      ########   odam.nl          #
+#    Updated: 2024/08/20 14:31:45 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,6 +60,7 @@ SOURCE = main.c \
 		execute/execute_utils.c \
 		execute/single_cmd.c \
 		execute/multiple_cmd.c \
+		signal/signal_handler.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 

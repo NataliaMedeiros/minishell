@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 10:22:33 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/20 14:33:37 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ bool	init_prompt(t_data data)
 {
 	while (1)
 	{
+		set_signals();
 		data.cmd_line = readline("[minishell]: ");
 		add_history(data.cmd_line);
 		if (is_input_valid(data.cmd_line) == true)
