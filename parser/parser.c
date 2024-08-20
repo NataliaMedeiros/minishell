@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 10:29:59 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/20 14:19:15 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	bool	start_with_redirection;
 
 	i = 0;
-	start_with_redirection = false;
+	has_pipe = false;
 	while (data.cmd_table[i] != NULL)
 	{
-		has_pipe = false;
+		start_with_redirection = false;
 		if (data.cmd_table[i][0] == '|')
 		{
 			if (handle_pipe(parser) != 0)
@@ -47,11 +47,15 @@ int	fill_parser(t_data	data, t_parser	**parser)
 			if (handle_files(data, parser, i, start_with_redirection) != 0)
 				return (error_msg("failure on handle files"), 1);
 			i++;
+			// if (data.cmd_table[i + 1] != NULL)
+			// 	i++;
+			has_pipe = false;
 		}
 		else
 		{
 			if (fill_cmd(parser, data, i) != 0)
 				return (error_msg("failure on fill cmd"), 1);
+			has_pipe = false;
 		}
 		i++;
 	}

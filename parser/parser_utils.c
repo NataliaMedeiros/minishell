@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 14:37:33 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/20 14:18:12 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	nb_commands(char *cmd_line)
 		if ((cmd_line[i] == '|' || cmd_line[i] == '>' || cmd_line[i] == '<')
 			&& has_double_quotes == false)
 		{
-			count += 2;
+			if (cmd_line[i - 1] == '|' || cmd_line[i - 2] == '|')
+				count++;
+			else
+				count += 2;
 			if (cmd_line[i + 1] == '>' || cmd_line[i + 1] == '<')
 				i += 1;
 		}
