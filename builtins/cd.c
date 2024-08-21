@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/16 16:40:04 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/21 18:49:33 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,11 @@ static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 	{
 		if (chdir(data->cmd[1]) != 0)
 		{
-			ft_putendl_fd(STDOUT_FILENO, "No such File or Directory");
-			return (false);
+			if (opendir(data->cmd[1]) == NULL)
+			{
+				perror("cd");
+				return (false);
+			}
 		}
 		new_pwd = getcwd(NULL, 0);
 		if (change_pwd_value(info->env, old_pwd, new_pwd) == false)
@@ -58,7 +61,7 @@ static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 	}
 	else
 	{
-		ft_putendl_fd(STDIN_FILENO, "No Such File or Directory");
+		perror("cd");
 		return (false);
 	}
 	return (true);
