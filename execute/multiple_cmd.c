@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/21 14:31:18 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/21 16:05:33 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 		{
 			if (dup2(temp->fd_outfile, STDOUT_FILENO) == -1)
 				perror("Problem Dup Last");
+			
 			// close(temp->fd_outfile); -> tem que estar aberto para functionar
 		}
 		else
@@ -55,7 +56,6 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 			if (dup2(exec->fd[WRITE], STDOUT_FILENO) == -1)
 				perror("Problem Dup First Pipe");
 		}
-		close(exec->fd[WRITE]); //chat
 	}
 	else if (i == exec->nb_pipes)
 	{
@@ -74,7 +74,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 		}
 		else if (dup2(exec->prev_read, STDIN_FILENO) == -1)
 			perror("Problem Dup Last Prev");
-		close(exec->prev_read); //chat
+		// close(exec->prev_read); //chat
 	}
 	else
 	{
@@ -86,8 +86,8 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 			perror("Problem dup");
 		close(exec->fd[WRITE]);
 	}
-	// close(exec->fd[READ]);
-	// close(exec->fd[WRITE]);
+	close(exec->fd[READ]);
+	close(exec->fd[WRITE]);
 }
 
 void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
@@ -133,6 +133,7 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 	i = 0;
 	while (temp)
 	{
+		printf("HELLO\n");
 		if (pipe(exec.fd) < 0)
 			return (perror("Pipe error"), EXIT_FAILURE);
 		pid_child = fork();
@@ -140,11 +141,11 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 			return (perror("Fork error"), EXIT_FAILURE);
 		if (pid_child == 0)
 			child(&exec, data, temp, i);
-		else
-			parent(&exec, pid_child);
+		parent(&exec, pid_child);
 		i++;
 		temp = temp->pipe;
 	}
+	// wait(NULL);
 	close(exec.prev_read);
 	return (WEXITSTATUS(exec.status));
 }
