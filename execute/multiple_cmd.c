@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/20 12:05:32 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/21 11:57:52 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static void	first_pipe(int *fd, t_parser *temp)
 	if (temp->fd_infile != -2)
 	{
 		if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
-			perror("Problem Dup First Pipe");
-		// close(temp->fd_infile);
+			perror("--Problem Dup First Pipe");
 	}
+	close(temp->fd_infile);
 	if (dup2(fd[WRITE], STDOUT_FILENO) == -1)
 		perror("Problem Dup First Pipe");
 }

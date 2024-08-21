@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 13:51:33 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/21 11:33:05 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	ft_bnull(char **temp, int nb)
 {
+	nb--;
 	while (nb >= 0)
 	{
 		temp[nb] = NULL;
