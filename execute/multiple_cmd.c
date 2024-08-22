@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/22 14:50:15 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/22 14:59:52 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,7 @@ static void	first_pipe(int *fd, t_parser *temp)
 	// }
 	// if (dup2(fd[WRITE], STDOUT_FILENO) == -1)
 	// 	perror("Problem Dup First Pipe");
-		if (temp->fd_outfile != -2)
-	{
-		ft_putstr_fd("\nfirst cmd with pipe, outfile\n", STDERR_FILENO);
-		ft_putnbr_fd(temp->fd_outfile, STDERR_FILENO);
-		if (dup2(temp->fd_outfile, STDOUT_FILENO) == -1)
-			perror("Problem Dup First Pipe OUT");
-		// close(temp->fd_outfile); -> tem que estar aberto para functionar
-	}
+
 	if (temp->fd_infile != -2)
 	{
 		ft_putstr_fd("\nfirst cmd opening pipe, infile\n", STDERR_FILENO);
@@ -38,6 +31,14 @@ static void	first_pipe(int *fd, t_parser *temp)
 		if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
 			perror("--Problem Dup First Pipe IN");
 		// close(temp->fd_infile);
+	}
+	if (temp->fd_outfile != -2)
+	{
+		ft_putstr_fd("\nfirst cmd with pipe, outfile\n", STDERR_FILENO);
+		ft_putnbr_fd(temp->fd_outfile, STDERR_FILENO);
+		if (dup2(temp->fd_outfile, STDOUT_FILENO) == -1)
+			perror("Problem Dup First Pipe OUT");
+		// close(temp->fd_outfile); -> tem que estar aberto para functionar
 	}
 	else
 	{
