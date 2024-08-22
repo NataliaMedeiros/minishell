@@ -6,24 +6,31 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/20 18:53:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/22 14:53:27 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	checker_fd_dup(t_data *data)
+static bool	checker_fd_dup(t_data *data)
 {
+	if (data->parser->fd_infile == -1)
+		return (error_msg("No such file or directory"), false);
+	if (data->parser->fd_outfile == -1)
+		return (error_msg("No such file or directory"), false);
 	if (data->parser->fd_infile != -2)
 	{
 		if (dup2(data->parser->fd_infile, STDIN_FILENO) == -1)
 			perror("Problem Dup Single CMD IN");
+			// close(data->parser->fd_infile);
 	}
 	if (data->parser->fd_outfile != -2)
 	{
 		if (dup2(data->parser->fd_outfile, STDOUT_FILENO) == -1)
 			perror("Problem Dup Single CMD OUT");
+			// close(data->parser->fd_outfile);
 	}
+	return (true);
 }
 
 int	one_cmd(t_data *data, char *path)
@@ -36,7 +43,8 @@ int	one_cmd(t_data *data, char *path)
 		error_msg("Problem forking");
 	if (pid_child == 0)
 	{
-		checker_fd_dup(data);
+		if (checker_fd_dup(data) == false)
+			return (EXIT_FAILURE);
 		if (path != NULL)
 			execve(path, data->parser->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", 2);

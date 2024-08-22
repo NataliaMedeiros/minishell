@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 17:40:30 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/21 18:38:46 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <dirent.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
