@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/21 10:54:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/22 17:11:14 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,13 @@ char	*cmd_path_checker(t_data *data, t_parser *parser)
 	if (envp == NULL)
 	{
 		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
-		if (envp != NULL)
-			free_split(envp);
 		return (NULL);
 	}
 	if (access(parser->cmd[0], F_OK | X_OK) == 0)
 	{
 		path = ft_strdup(parser->cmd[0]); 
-		// free_split(envp);
-	}// free envp if it is this case
+		free_split(envp);
+	}
 	else
 		path = check_path(parser, envp);
 	return (path);
