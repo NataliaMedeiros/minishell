@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/23 10:51:48 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/23 15:53:32 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,9 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 		// ft_putnbr_fd(STDOUT_FILENO, STDERR_FILENO);
 		if (path != NULL)
 			execve(path, temp->cmd, data->envp);
-		ft_putstr_fd("Command not found: ", STDERR_FILENO);
-		ft_putendl_fd(2, temp->cmd[0]);
+		perror("Command not found");
+		// ft_putstr_fd("Command not found: ", STDERR_FILENO);
+		// ft_putendl_fd(2, temp->cmd[0]);
 		if (path != NULL)
 			free(path);
 		exit (127);
@@ -146,13 +147,11 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 	int			i;
 	pid_t		pid_child;
 	t_parser	*temp;
-	t_parser	*wait_temp;
 	t_exec		exec;
 
 	exec.prev_read = STDIN_FILENO;
 	exec.nb_pipes = nb_pipes;
 	temp = parser;
-	wait_temp = parser;
 	i = 0;
 	while (temp)
 	{

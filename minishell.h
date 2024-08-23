@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/21 18:38:46 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/23 13:43:26 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void		pwd(int fd);
 void		ft_cd(t_parser *data, t_data *info);
 void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
+void		ft_export(t_env **env, t_parser *parser);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
