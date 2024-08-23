@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/07/18 16:48:57 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/23 10:12:03 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,3 +16,7 @@
 // sem o = seta o valor da variavel pra null
 // coloca o env em ordem albetica se for escrito so export sem outro argumento
 // mas a variavel q eu criei por ultimo nao fica na ordem alfabetica, ela aparece no final
+void	ft_export(t_data *data)
+{
+	
+}

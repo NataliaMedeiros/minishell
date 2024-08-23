@@ -6,13 +6,13 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/22 17:54:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/23 10:51:48 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	first_pipe(int *fd, t_parser *temp)
+static void	first_cmd(int *fd, t_parser *temp)
 {
 	if (temp->fd_infile != -2)
 	{
@@ -20,7 +20,7 @@ static void	first_pipe(int *fd, t_parser *temp)
 		// ft_putnbr_fd(temp->fd_infile, STDERR_FILENO);
 		if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
 			perror("Problem Dup First Pipe IN");
-		close(temp->fd_infile);
+		// close(temp->fd_infile);
 	}
 	if (temp->fd_outfile != -2)
 	{
@@ -43,7 +43,7 @@ static void	first_pipe(int *fd, t_parser *temp)
 static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 {
 	if (i == 0)
-		first_pipe(exec->fd, temp);
+		first_cmd(exec->fd, temp);
 	else if (i == exec->nb_pipes)
 	{
 		if (temp->fd_outfile != -2)
@@ -61,7 +61,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 			ft_putnbr_fd(temp->fd_infile, STDERR_FILENO);
 			if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
 				perror("Problem Dup Last IN");
-			close(temp->fd_infile);
+			// close(temp->fd_infile);
 		}
 		else
 		{
@@ -83,7 +83,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 			ft_putnbr_fd(temp->fd_infile, STDERR_FILENO);
 			if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
 				perror("Problem Dup Last IN");
-			close(temp->fd_infile);
+			// close(temp->fd_infile);
 		}
 		else
 		{
@@ -129,7 +129,7 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 	exit(EXIT_SUCCESS);
 }
 
-void	parent(t_exec *exec, pid_t pid_child, t_parser *temp)
+void	parent(t_exec *exec, t_parser *temp)
 {
 	if (temp->fd_outfile != -2)
 		close(temp->fd_outfile);
@@ -139,7 +139,6 @@ void	parent(t_exec *exec, pid_t pid_child, t_parser *temp)
 	if(exec->prev_read != STDIN_FILENO)
 		close(exec->prev_read);
 	exec->prev_read = exec->fd[READ];
-	waitpid(pid_child, &exec->status, 0);
 }
 
 int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
@@ -147,11 +146,13 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 	int			i;
 	pid_t		pid_child;
 	t_parser	*temp;
+	t_parser	*wait_temp;
 	t_exec		exec;
 
 	exec.prev_read = STDIN_FILENO;
 	exec.nb_pipes = nb_pipes;
 	temp = parser;
+	wait_temp = parser;
 	i = 0;
 	while (temp)
 	{
@@ -162,10 +163,15 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 			return (perror("Fork error"), EXIT_FAILURE);
 		if (pid_child == 0)
 			child(&exec, data, temp, i);
-		parent(&exec, pid_child, temp);
+		parent(&exec, temp);
 		i++;
 		temp = temp->pipe;
 	}
 	close(exec.prev_read);
+	while(wait(NULL) != -1)
+	{
+		wait(NULL);
+	}
+	waitpid(pid_child, &exec.status, 0);
 	return (WEXITSTATUS(exec.status));
 }

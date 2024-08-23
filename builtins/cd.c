@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/21 18:49:33 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/23 10:03:06 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,21 @@ static char	*home_dir(t_env *env, char *old_pwd)
 	return (home);
 }
 
-static void	minus_case(t_data *info, char *old_pwd)
+static void	minus_case(t_data *info)
 {
-	char	*home;
+	char	*old_pwd;
 
-	home = home_dir(info->env, old_pwd);
-	if (home != NULL)
-		ft_putendl_fd(STDOUT_FILENO, home);
+	old_pwd = get_env_node(info->env, "OLDPWD");
+	if (old_pwd == NULL)
+	{
+		error_msg("OLDPWD not found");
+		return ;
+	}
+	if (chdir(old_pwd) == -1)
+		return ;
 	else
 	{
-		ft_putendl_fd(STDOUT_FILENO, "HOME Deleted from ENV!");
+		ft_putendl_fd(STDOUT_FILENO, old_pwd);
 		return ;
 	}
 }
@@ -116,7 +121,7 @@ void	ft_cd(t_parser *data, t_data *info)
 		return ;
 	}
 	else if (data->cmd[1][0] == '-')
-		minus_case(info, old_pwd);
+		minus_case(info);
 	else
 	{
 		if (other_dir(data, info, old_pwd) == false)
