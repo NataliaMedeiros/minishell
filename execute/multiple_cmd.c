@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/26 16:24:20 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/26 17:51:32 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 		ft_putnbr_fd(temp->fd_infile, STDERR_FILENO);
 		if (temp->fd_infile != -2)
 		{
+			// if (temp->fd_infile == -1)
+			// 	error_msg("No such file or directory"); << verificat TODO
 			ft_putstr_fd("\nTO AQUI\n", STDERR_FILENO);
 			ft_putstr_fd("\nfirst cmd opening pipe, infile\n", STDERR_FILENO);
 			ft_putnbr_fd(temp->fd_infile, STDERR_FILENO);
@@ -77,7 +79,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 	}
 	else
 	{
-		if (temp->fd_infile != -2)
+		if (temp->fd_infile != -2 )
 		{
 			ft_putstr_fd("\nHERE\n", STDERR_FILENO);
 			ft_putstr_fd("\nfirst cmd opening pipe, infile\n", STDERR_FILENO);
