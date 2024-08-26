@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/21 15:38:28 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/26 16:22:59 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,17 @@ int	one_cmd(t_data *data, char *path)
 	if (pid_child == 0)
 	{
 		if (checker_fd_dup(data) == false)
-			return (124);
+			return (EXIT_FAILURE);
 		if (path != NULL)
 			execve(path, data->parser->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", 2);
 		ft_putendl_fd(2, data->parser->cmd[0]);
 		exit (127);
 	}
+	if (data->parser->fd_infile != -2)
+		close(data->parser->fd_infile);
+	if (data->parser->fd_outfile != -2)
+		close(data->parser->fd_outfile);
 	waitpid(pid_child, &status, 0);
 	return (WEXITSTATUS(status));
 }

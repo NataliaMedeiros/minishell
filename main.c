@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/21 18:24:32 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/26 16:26:24 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ bool	init_prompt(t_data data)
 		set_signals();
 		// data.cmd_line = readline("[minishell]: ");
 		temp = readline("[minishell]: ");
+		if (temp == NULL)
+			exit(EXIT_SUCCESS);
 		data.cmd_line = ft_strtrim(temp, "\t\n\v\n ");
 		add_history(data.cmd_line);
 		if (is_input_valid(data.cmd_line) == true)
@@ -33,7 +35,10 @@ bool	init_prompt(t_data data)
 				// cleanup(data);
 			}
 		}
+		free(data.cmd_line);
 	}
+	free(data.cmd_line);
+	free(temp);
 	return (true);
 }
 

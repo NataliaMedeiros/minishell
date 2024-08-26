@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 14:33:10 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/26 16:25:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <errno.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <dirent.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -131,6 +132,7 @@ void		pwd(int fd);
 void		ft_cd(t_parser *data, t_data *info);
 void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
+void		ft_export(t_env **env, t_parser *parser);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
@@ -155,16 +157,5 @@ char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
 int			one_cmd(t_data *data, char *path);
 int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
-
-int			handle_infile(t_data data, t_parser **parser,  int i, bool start_with_redirection);
-char		**split_redirection_first(char *cmd);
-int			handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
-
-
-void	set_signals(void);
-void	set_term(void);
-void	ignore_signals(void);
-void	unset_signals(void );
-void	sigint_handler(int sig);
 
 #endif
