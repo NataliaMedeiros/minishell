@@ -10,6 +10,7 @@ void	print_array(char **array)
 		printf("**%s**\n", array[i]);
 		i++;
 	}
+	printf("**%s**\n", array[i]);
 }
 
 void	print_struct(t_parser *head)

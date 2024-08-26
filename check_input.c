@@ -16,8 +16,8 @@ static bool	has_cmd_after_operator(char	*cmd, int i)
 {
 	if (cmd[i + 1] == '\0' || cmd[i + 1] == '|')
 		return (false);
-	if ((cmd[i] == '>' && cmd[i - 1] == '<')
-		|| (cmd[i] == '<' && cmd[i - 1] == '>'))
+	if (i != 0 &&((cmd[i] == '>' && cmd[i - 1] == '<')
+		|| (cmd[i] == '<' && cmd[i - 1] == '>')))
 		return (false);
 	i++;
 	while (cmd[i] == ' ' && cmd[i] != '\0')

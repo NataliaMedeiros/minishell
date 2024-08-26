@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 14:37:33 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/21 11:28:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ int	nb_commands(char *cmd_line)
 		if ((cmd_line[i] == '|' || cmd_line[i] == '>' || cmd_line[i] == '<')
 			&& has_double_quotes == false)
 		{
-			count += 2;
+			if (i != 0 && (cmd_line[i - 1] == '|' || cmd_line[i - 2] == '|'))
+				count++;
+			else
+				count += 2;
 			if (cmd_line[i + 1] == '>' || cmd_line[i + 1] == '<')
 				i += 1;
 		}
@@ -73,6 +76,7 @@ char	**split_cmds(t_data data)
 	int		start;
 
 	nb_args = nb_commands(data.cmd_line);
+	printf("nb commands: %d\n", nb_args);
 	counter = 0;
 	i = 0;
 	cmd = ft_calloc(nb_args + 1, sizeof(char *));

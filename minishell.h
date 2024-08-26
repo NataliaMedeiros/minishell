@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/19 16:29:56 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/20 14:33:10 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,5 +159,12 @@ int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 int			handle_infile(t_data data, t_parser **parser,  int i, bool start_with_redirection);
 char		**split_redirection_first(char *cmd);
 int			handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
+
+
+void	set_signals(void);
+void	set_term(void);
+void	ignore_signals(void);
+void	unset_signals(void );
+void	sigint_handler(int sig);
 
 #endif
