@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/26 16:24:04 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/26 17:14:09 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,26 @@ void	exec_infile(t_parser **parser, t_data data)
 {
 	while ((*parser)->infile->next != NULL)
 	{
+		ft_putstr_fd("BIZARROOOOOOO\n", STDERR_FILENO);
 		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+		{
+			printf("ENTREI AQUI haha333333\n<<<<<");
 			(*parser)->fd_infile = open((*parser)->infile->name,
 					O_RDONLY, 0644);
+			printf("fd infile %d<<<<\n", (*parser)->fd_infile);
+		}
 		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 			handle_heredoc(parser, data);
 
 		(*parser)->infile = (*parser)->infile->next;
 	}
 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
+	{
+		// printf("ENTREI AQUI haha\n<<<<<");
 		(*parser)->fd_infile = open((*parser)->infile->name,
 				O_RDONLY, 0644);
+		// printf("fd infile %d<<<<\n", (*parser)->fd_infile);
+	}
 	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 		handle_heredoc(parser, data);
 }
@@ -85,6 +94,7 @@ void	exec_infile(t_parser **parser, t_data data)
 int	parser(t_data *data)
 {
 	t_parser	*head_parser;
+	t_parser	*temp;
 
 	data->cmd_table = split_cmds(*data);
 	// print_array(data->cmd_table);
@@ -98,8 +108,13 @@ int	parser(t_data *data)
 	if (fill_parser((*data), &head_parser) != 0)
 		return (free_parsing(&head_parser),
 			error_msg("Failure on parsing\n"), 1);
-	if (data->parser->infile != NULL)
-		exec_infile(&data->parser, (*data));
+	temp = data->parser;
+	while (temp != NULL)
+	{
+		if (temp->infile != NULL)
+			exec_infile(&temp, (*data));
+		temp = temp->pipe;
+	}
 	print_struct(data->parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser

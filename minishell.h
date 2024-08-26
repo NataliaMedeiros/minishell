@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/26 16:25:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/26 16:32:54 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,14 @@ char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
 int			one_cmd(t_data *data, char *path);
 int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
+
+// Signal
+void	set_signals(void);
+
+
+int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
+int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirection);
+int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection);
+char **split_redirection_first(char *cmd);
 
 #endif
