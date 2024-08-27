@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/26 16:24:35 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 09:45:36 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ft_execute(t_data *data)
 		{
 			path = cmd_path_checker(data, data->parser);
 			exit_nb = one_cmd(data, path);
+			printf("exit number: %d\n", exit_nb);
 			if (path != NULL)
 				free (path);
 			// if (exit_nb != 0)
@@ -33,8 +34,8 @@ int	ft_execute(t_data *data)
 	}
 	else if (nb_pipes >= 1)
 	{
-		printf("entramos no multiplos pipes\n");
 		exit_nb = pipeline(data, data->parser, nb_pipes);
+		printf("exit number: %d\n", exit_nb);
 		// if (exit_nb != 0)
 		// 	exit (exit_nb);
 	}

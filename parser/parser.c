@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/26 17:14:09 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 13:24:27 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,72 @@ void	exec_infile(t_parser **parser, t_data data)
 		handle_heredoc(parser, data);
 }
 
+char	*add_spaces(char *str)
+{
+	int		i;
+	int		j;
+	char	*temp;
+
+	i = 0;
+	j = 0;
+	temp = ft_calloc((3 * ft_strlen(str) + 1), sizeof(char));
+	if (temp == NULL)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		if ((str[i] == '|' || str[i] == '>' || str[i] == '<') && (i == 0 || ft_isalpha(str[i + 1]) == 1))
+		{
+			temp[j] = str[i];
+			j++;
+			temp[j] = ' ';
+			j++;
+			i++;
+		}
+		else
+		{
+			temp[j] = str[i];
+			j++;
+			i++;
+		}
+		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+		{
+			if(ft_isalpha(str[i - 1]) == 1)
+			{
+				temp[j] = ' ';
+				j++;
+			}
+			temp[j] = str[i];
+			j++;
+			i++;
+			if (ft_isalpha(str[i]) == 1)
+			{
+				temp[j] = ' ';
+				j++;
+			}
+			if (str[i] == '<' || str[i] == '>')
+			{
+				temp[j] = ' ';
+				j++;
+			}
+		}
+	}
+	printf("new str: %s\n", temp);
+	return (temp);
+}
+
 /*Function creates parser struct*/
 int	parser(t_data *data)
 {
 	t_parser	*head_parser;
 	t_parser	*temp;
+	char		*cmd_line;
 
+	cmd_line = ft_calloc((strlen(data->cmd_line) + 1), sizeof(char));
+	if (cmd_line == NULL)
+		return (error_msg("Failure to malloc word\n"), 1);
+	ft_strcpy(cmd_line, data->cmd_line);
+	free(data->cmd_line);
+	data->cmd_line = add_spaces(cmd_line);
 	data->cmd_table = split_cmds(*data);
 	// print_array(data->cmd_table);
 	if (data->cmd_table == NULL)
