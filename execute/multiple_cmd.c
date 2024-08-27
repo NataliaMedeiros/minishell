@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/27 11:08:44 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 11:20:51 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,16 @@ static int	first_cmd(int *fd, t_parser *temp)
 		if (dup2(fd[WRITE], STDOUT_FILENO) == -1)
 			return(perror("Problem Dup First Pipe"), EXIT_FAILURE);
 	}
+	return (EXIT_SUCCESS);
 }
 
 static int	dup_manager(t_exec *exec, int i, t_parser *temp)
 {
 	if (i == 0)
+	{
 		if (first_cmd(exec->fd, temp) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
+	}
 	else if (i == exec->nb_pipes)
 	{
 		if (temp->fd_outfile != -2)
@@ -89,6 +92,7 @@ static int	dup_manager(t_exec *exec, int i, t_parser *temp)
 	}
 	close(exec->fd[READ]);
 	close(exec->fd[WRITE]);
+	return (EXIT_SUCCESS);
 }
 
 static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
