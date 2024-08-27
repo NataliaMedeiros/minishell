@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/27 13:24:27 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/27 14:35:57 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ int	fill_parser(t_data	data, t_parser	**parser)
 
 void	exec_infile(t_parser **parser, t_data data)
 {
+	handle_signals(HEREDOC);m
 	while ((*parser)->infile->next != NULL)
 	{
-		ft_putstr_fd("BIZARROOOOOOO\n", STDERR_FILENO);
 		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 		{
-			printf("ENTREI AQUI haha333333\n<<<<<");
+			// printf("ENTREI AQUI haha333333\n<<<<<");
 			(*parser)->fd_infile = open((*parser)->infile->name,
 					O_RDONLY, 0644);
-			printf("fd infile %d<<<<\n", (*parser)->fd_infile);
+			// printf("fd infile %d<<<<\n", (*parser)->fd_infile);
 		}
 		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 			handle_heredoc(parser, data);
@@ -81,10 +81,8 @@ void	exec_infile(t_parser **parser, t_data data)
 	}
 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 	{
-		// printf("ENTREI AQUI haha\n<<<<<");
 		(*parser)->fd_infile = open((*parser)->infile->name,
 				O_RDONLY, 0644);
-		// printf("fd infile %d<<<<\n", (*parser)->fd_infile);
 	}
 	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 		handle_heredoc(parser, data);
@@ -107,8 +105,11 @@ char	*add_spaces(char *str)
 		{
 			temp[j] = str[i];
 			j++;
-			temp[j] = ' ';
-			j++;
+			if ((str[i] == '<' && str[i + 1] != '<') || (str[i] == '>' && str[i + 1] != '>'))
+			{
+				temp[j] = ' ';
+				j++;
+			}
 			i++;
 		}
 		else
@@ -132,7 +133,12 @@ char	*add_spaces(char *str)
 				temp[j] = ' ';
 				j++;
 			}
-			if (str[i] == '<' || str[i] == '>')
+			if ((str[i] == '<' && str[i + 1] != '<') && (str[i] == '>' && str[i + 1] != '>'))
+			{
+				temp[j] = ' ';
+				j++;
+			}
+			if (str[i - 1] == '|' && (str[i] == '<' || str[i] == '>'))
 			{
 				temp[j] = ' ';
 				j++;

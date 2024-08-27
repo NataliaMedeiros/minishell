@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/27 09:44:19 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/27 14:07:59 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ bool	init_prompt(t_data data)
 
 	while (1)
 	{
-		set_signals();
+		// set_signals();
+		handle_signals(PARENT);
 		temp = readline("[minishell]: ");
 		if (temp == NULL)
 			exit(EXIT_SUCCESS);

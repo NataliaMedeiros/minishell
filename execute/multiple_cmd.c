@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/26 17:51:32 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 14:23:11 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 		first_cmd(exec->fd, temp);
 	else if (i == exec->nb_pipes)
 	{
-		printf("to no fim\n");
+		// printf("to no fim\n");
 		if (temp->fd_outfile != -2)
 		{
 			if (dup2(temp->fd_outfile, STDOUT_FILENO) == -1)
@@ -103,7 +103,7 @@ static void	dup_manager(t_exec *exec, int i, t_parser *temp)
 		else
 			if (dup2(exec->fd[WRITE], STDOUT_FILENO) == -1)
 				perror("Problem dup");
-		
+
 	}
 	close(exec->fd[READ]);
 	close(exec->fd[WRITE]);
@@ -163,7 +163,7 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 	i = 0;
 	while (temp)
 	{
-		printf("HELLO\n");
+		// printf("HELLO\n");
 		if (pipe(exec.fd) < 0)
 			return (perror("Pipe error"), EXIT_FAILURE);
 		pid_child = fork();
