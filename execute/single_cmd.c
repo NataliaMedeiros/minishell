@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/26 16:22:59 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 10:31:16 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 static bool	checker_fd_dup(t_data *data)
 {
 	if (data->parser->fd_infile == -1)
-		return (error_msg("No such file or directory"), false);
+		return (false);
 	if (data->parser->fd_infile != -2)
 	{
 		if (dup2(data->parser->fd_infile, STDIN_FILENO) == -1)
-			perror("Problem Dup Single CMD IN");
-		// close(data->parser->fd_infile);
+			return (perror("Problem Dup Single CMD IN"), false);
+		close(data->parser->fd_infile);
 	}
 	if (data->parser->fd_outfile != -2)
 	{
 		if (dup2(data->parser->fd_outfile, STDOUT_FILENO) == -1)
-			perror("Problem Dup Single CMD OUT");
-		// close(data->parser->fd_outfile);
+			return (perror("Problem Dup Single CMD OUT"), false);
+		close(data->parser->fd_outfile);
 	}
 	return (true);
 }
@@ -45,13 +45,13 @@ int	one_cmd(t_data *data, char *path)
 			return (EXIT_FAILURE);
 		if (path != NULL)
 			execve(path, data->parser->cmd, data->envp);
-		ft_putstr_fd("Command not found: ", 2);
-		ft_putendl_fd(2, data->parser->cmd[0]);
+		ft_putstr_fd("Command not found: ", STDERR_FILENO);
+		ft_putendl_fd(STDERR_FILENO, data->parser->cmd[0]);
 		exit (127);
 	}
-	if (data->parser->fd_infile != -2)
+	if (data->parser->fd_infile != -2 && data->parser->fd_infile != -1)
 		close(data->parser->fd_infile);
-	if (data->parser->fd_outfile != -2)
+	if (data->parser->fd_outfile != -2 && data->parser->fd_outfile != -1)
 		close(data->parser->fd_outfile);
 	waitpid(pid_child, &status, 0);
 	return (WEXITSTATUS(status));

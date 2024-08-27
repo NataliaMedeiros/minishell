@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/26 16:24:35 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 09:28:45 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_execute(t_data *data)
 	}
 	else if (nb_pipes >= 1)
 	{
-		printf("entramos no multiplos pipes\n");
 		exit_nb = pipeline(data, data->parser, nb_pipes);
 		// if (exit_nb != 0)
 		// 	exit (exit_nb);

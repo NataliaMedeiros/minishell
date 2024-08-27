@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:31:34 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 10:08:22 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int	handle_heredoc(t_parser **parser, t_data data)
 
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
-	if ((*parser)->fd_infile == -1)
-		return (printf("Fail to open infile\n"), 1);
+	minus_one_verificator(parser);
 	limiter = find_limiter(parser);
 	line = readline(">");
 	while (line != NULL)
@@ -102,5 +101,6 @@ int	handle_heredoc(t_parser **parser, t_data data)
 	close((*parser)->fd_infile);
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_RDONLY , 0644);
+	minus_one_verificator(parser);
 	return (free(line), 0);
 }

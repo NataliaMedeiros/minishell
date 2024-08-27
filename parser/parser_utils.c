@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/21 11:28:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/27 10:08:38 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	**split_cmds(t_data data)
 	int		start;
 
 	nb_args = nb_commands(data.cmd_line);
-	printf("nb commands: %d\n", nb_args);
+	// printf("nb commands: %d\n", nb_args);
 	counter = 0;
 	i = 0;
 	cmd = ft_calloc(nb_args + 1, sizeof(char *));
@@ -155,4 +155,9 @@ char	*get_cmd(char const *s, int unsigned start, size_t len)
 		start++;
 	}
 	return (substring);
+}
+void	minus_one_verificator(t_parser **parser)
+{
+	if ((*parser)->fd_infile == -1)
+		perror("bash");
 }
