@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/26 16:32:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 13:51:45 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,9 @@
 # define READ 0
 # define WRITE 1
 
-typedef enum s_token //nao usado
-{
-	PIPE,
-	WORDS,
-	IN,
-	HEREDOC,
-	OUT,
-	APPEND,
-	AND,
-}		t_token;
+# define PARENT 1
+# define CHILD 2
+# define HEREDOC 3
 
 typedef struct s_execute
 {
@@ -160,6 +153,7 @@ int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 // Signal
 void	set_signals(void);
+void	handle_signals(int proc);
 
 
 int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);

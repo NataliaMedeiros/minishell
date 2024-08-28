@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/08/21 11:43:31 by nmedeiro      ########   odam.nl          #
+#    Updated: 2024/08/27 14:04:57 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,9 @@ LIBFT = ./libft/libft.a
 
 LIBFTDIR = libft
 
-CFLAGS = -Wall -Werror -Wextra -g
+CFLAGS = -Wall -Werror -Wextra -g -I/opt/homebrew/Cellar/readline/8.2.10/include
 #CFLAGS += -fsanitize=address
-LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.1/lib -lreadline #MAC M1
+LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.10/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
 #LFLAGS = -L/usr/lib/x86_64-linux-gnu -lreadline #linux
 #LFLAGS = -lreadline
