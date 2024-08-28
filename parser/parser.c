@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/28 15:32:08 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:31:20 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,19 @@ void	exec_infile(t_parser **parser, t_data *data)
 	{
 		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 		{
-			// printf("ENTREI AQUI haha333333\n<<<<<");
 			(*parser)->fd_infile = open((*parser)->infile->name,
 					O_RDONLY, 0644);
-			// printf("fd infile %d<<<<\n", (*parser)->fd_infile);
+			minus_one_verificator(parser);
 		}
 		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 			handle_heredoc(parser, data);
-
 		(*parser)->infile = (*parser)->infile->next;
 	}
 	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
 	{
 		(*parser)->fd_infile = open((*parser)->infile->name,
 				O_RDONLY, 0644);
+		minus_one_verificator(parser);
 	}
 	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
 		handle_heredoc(parser, data);
@@ -180,7 +179,7 @@ int	parser(t_data *data)
 			exec_infile(&temp, data);
 		temp = temp->pipe;
 	}
-	print_struct(data->parser);
+	// print_struct(data->parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser
 	return (0);
