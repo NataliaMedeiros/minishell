@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:31:34 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:01:02 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,19 @@ char	*find_limiter(t_parser **parser)
 		limiter = (*parser)->infile->name;
 	return (limiter);
 }
-
-int	handle_heredoc(t_parser **parser, t_data data)
+static void heredoc_child(t_parser **parser, t_data *data)
 {
 	char	*line;
 	char	*limiter;
 
+	handle_signals(HEREDOC);
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if ((*parser)->fd_infile == -1)
-		return (printf("Fail to open infile\n"), 1);
+	{
+		printf("Fail to open infile\n");
+		exit(EXIT_FAILURE);
+	}
 	limiter = find_limiter(parser);
 	line = readline(">");
 	while (line != NULL)
@@ -93,14 +96,55 @@ int	handle_heredoc(t_parser **parser, t_data data)
 			&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			break ;
 		while (ft_strchr(line, '$') != NULL)
-			line = handle_dollar_sign(line, data);
+			line = handle_dollar_sign(line, (*data));
 		write((*parser)->fd_infile, line, strlen(line));
 		write((*parser)->fd_infile, "\n", 1);
 		free(line);
 		line = readline(">");
 	}
 	close((*parser)->fd_infile);
-	(*parser)->fd_infile = open((*parser)->infile->name,
-			O_RDONLY , 0644);
-	return (free(line), 0);
+	free(line);
+	exit(EXIT_SUCCESS);
+}
+
+int	handle_heredoc(t_parser **parser, t_data *data)
+{
+	pid_t	pid_child;
+	int		status;
+
+	status = 0;
+	pid_child = fork();
+	if (pid_child < 0)
+		return (perror("Fork error"), EXIT_FAILURE);
+	if (pid_child == 0)
+		heredoc_child(parser, data);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
+		waitpid(pid_child, &status, 0);
+	}
+	// if (WIFEXITED(status))
+	// {
+		int exit_code = WEXITSTATUS(status);
+		printf("Child exited with status: %d\n", exit_code);
+
+		// Verify if exit status is 130, indicating it was terminated by SIGINT
+		data->exit_code = exit_code;
+		if (exit_code == 130)
+		{
+			unlink((*parser)->infile->name);
+		}
+		if (exit_code == 0)
+		{
+			(*parser)->fd_infile = open((*parser)->infile->name,
+				O_RDONLY, 0644);
+		}
+	// }
+	// else
+	// {
+	// 	printf("Unhandled exit status: %d\n", status);
+	// }
+	printf("I've received the status: %d\n", status);
+	return (WEXITSTATUS(status));
 }
