@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/28 15:29:33 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/28 15:34:58 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*find_limiter(t_parser **parser)
 	return (limiter);
 }
 
-int	handle_heredoc(t_parser **parser, t_data data)
+int	handle_heredoc(t_parser **parser, t_data *data)
 {
 	char	*line;
 	char	*limiter;
@@ -103,7 +103,7 @@ int	handle_heredoc(t_parser **parser, t_data data)
 				&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 				break ;
 			while (ft_strchr(line, '$') != NULL)
-				line = handle_dollar_sign(line, data);
+				line = handle_dollar_sign(line, (*data));
 			write((*parser)->fd_infile, line, strlen(line));
 			write((*parser)->fd_infile, "\n", 1);
 			free(line);
@@ -125,7 +125,7 @@ int	handle_heredoc(t_parser **parser, t_data data)
 		printf("Child exited with status: %d\n", exit_code);
 
 		// Verify if exit status is 130, indicating it was terminated by SIGINT
-		// data.exit_code = exit_code;
+		data->exit_code = exit_code;
 		if (exit_code == 130)
 		{
 			unlink((*parser)->infile->name);

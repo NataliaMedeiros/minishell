@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/28 12:02:53 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/28 15:32:08 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	return (0);
 }
 
-void	exec_infile(t_parser **parser, t_data data)
+void	exec_infile(t_parser **parser, t_data *data)
 {
 	while ((*parser)->infile->next != NULL)
 	{
@@ -177,7 +177,7 @@ int	parser(t_data *data)
 	while (temp != NULL)
 	{
 		if (temp->infile != NULL)
-			exec_infile(&temp, (*data));
+			exec_infile(&temp, data);
 		temp = temp->pipe;
 	}
 	print_struct(data->parser);
