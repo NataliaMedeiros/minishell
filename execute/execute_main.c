@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/27 09:45:36 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/28 15:29:00 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_execute(t_data *data)
 	{
 		if (is_builtin(data->parser, data) == false)
 		{
+		// 	if (data->exit_code == 130)
+		// 		printf("Natttt\n");
 			path = cmd_path_checker(data, data->parser);
 			exit_nb = one_cmd(data, path);
 			printf("exit number: %d\n", exit_nb);

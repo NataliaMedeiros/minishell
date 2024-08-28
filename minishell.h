@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/27 13:51:45 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/28 15:25:50 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <dirent.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <dirent.h>
+# include <signal.h>
+# include <termios.h>
+# include <stdlib.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -71,6 +74,7 @@ typedef struct s_parser
 
 typedef struct s_data
 {
+	int				exit_code;
 	char			*cmd_line;
 	char			**cmd_table;
 	char			**path;
