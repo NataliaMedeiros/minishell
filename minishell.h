@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/28 16:40:04 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/29 16:37:33 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,7 @@ int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirect
 char **split_redirection_first(char *cmd);
 
 void	exit_with_msg(char *str, int exit_nb);
+
+int	fill_parser(t_data	data, t_parser	**parser);
 
 #endif
