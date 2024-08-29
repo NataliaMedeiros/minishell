@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/28 12:15:24 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/29 13:20:09 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ static t_env	*create_new_node(t_parser *parser, bool flag)
 	t_env	*node;
 	char	**array;
 	char	*keyword;
-	t_parser	*temp;
+	// t_parser	*temp;
 
 	printf("%i", flag);
-	temp = parser;
+	// temp = parsmer;
 	array = NULL;
 	node = malloc(1 * sizeof(t_env));
 	if (node == NULL)

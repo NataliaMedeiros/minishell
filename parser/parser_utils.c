@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:44:00 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/29 13:32:19 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	**split_cmds(t_data data)
 	int		start;
 
 	nb_args = nb_commands(data.cmd_line);
-	// printf("nb commands: %d\n", nb_args);
 	counter = 0;
 	i = 0;
 	cmd = ft_calloc(nb_args + 1, sizeof(char *));
@@ -127,22 +126,15 @@ bool	return_substring(const char *s, int start, bool has_double_quotes)
 	return (false);
 }
 
-/*this substring was modified to remove space on the beginning*/
-char	*get_cmd(char const *s, int unsigned start, size_t len)
+char	*write_substring(size_t len, int unsigned start, char const *s, bool has_double_quotes)
 {
-	char	*substring;
 	size_t	i;
-	bool	has_double_quotes;
+	char	*substring;
 
 	i = 0;
-	if (!s)
-		return (NULL);
-	start = remove_space_at_begging(s, start);
-	len = check_len(s, start, len);
 	substring = ft_calloc(len + 1, sizeof(char));
 	if (substring == NULL)
 		return (NULL);
-	has_double_quotes = false;
 	while (i < len && start < ft_strlen(s))
 	{
 		if (s[start] == '"')
@@ -150,10 +142,30 @@ char	*get_cmd(char const *s, int unsigned start, size_t len)
 		if (return_substring(s, start,
 				has_double_quotes) == true)
 			return (substring);
-		substring[i] = s[start];
-		i++;
-		start++;
+		if (s[start] == ' ' && s[start + 1] == ' ') // linhas novas
+			start++; // linhas novas
+		else
+		{
+			substring[i] = s[start];
+			i++;
+			start++;
+		}
 	}
+	return (substring);
+}
+
+/*this substring was modified to remove space on the beginning*/
+char	*get_cmd(char const *s, int unsigned start, size_t len)
+{
+	char	*substring;
+	bool	has_double_quotes;
+
+	has_double_quotes = false;
+	if (!s)
+		return (NULL);
+	start = remove_space_at_begging(s, start);
+	len = check_len(s, start, len);
+	substring = write_substring(len, start, s, has_double_quotes);
 	return (substring);
 }
 void	minus_one_verificator(t_parser **parser)

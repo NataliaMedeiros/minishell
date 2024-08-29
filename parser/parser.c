@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/28 16:47:37 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/29 14:34:44 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,95 @@ void	exec_infile(t_parser **parser, t_data *data)
 		handle_heredoc(parser, data);
 }
 
+// char	*add_spaces(char *str)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*temp;
+
+// 	i = 0;
+// 	j = 0;
+// 	temp = ft_calloc((3 * ft_strlen(str) + 1), sizeof(char));
+// 	if (temp == NULL)
+// 		return (NULL);
+// 	while (str[i] != '\0')
+// 	{
+// 		if ((str[i] == '|' || str[i] == '>' || str[i] == '<') && (i == 0 /*|| ft_isalpha(str[i + 1]) == 1*/))
+// 		{
+// 			temp[j] = str[i];
+// 			j++;
+// 			if ((str[i] == '<' && str[i + 1] != '<') || (str[i] == '>' && str[i + 1] != '>'))
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			i++;
+// 		}
+// 		else
+// 		{
+// 			temp[j] = str[i];
+// 			j++;
+// 			i++;
+// 		}
+// 		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+// 		{
+// 			if(ft_isalpha(str[i - 1]) == 1)
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			temp[j] = str[i];
+// 			j++;
+// 			i++;
+// 			if (ft_isalpha(str[i]) == 1)
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			if ((str[i] == '<' && str[i + 1] != '<') && (str[i] == '>' && str[i + 1] != '>'))
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			if (str[i - 1] == '|' && (str[i] == '<' || str[i] == '>'))
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 		}
+// 	}
+// 	printf("new str: %s\n", temp);
+// 	return (temp);
+// }
+
+void	write_space(char **temp, int *j)
+{
+	(*temp)[*j] = ' ';
+	(*j)++;
+}
+
+void	fill_conditional(char **temp, int *j, int *i, char *str)
+{
+	if ((*i == 0 || ft_isalpha(str[*i + 1]) == 1))
+	{
+		(*temp)[*j] = str[*i];
+		(*j)++;
+		if ((str[*i] == '<' && str[*i + 1] != '<') || (str[*i] == '>' && str[*i + 1] != '>'))
+			write_space(temp, j);
+		(*i)++;
+	}
+	else if(ft_isalpha(str[*i - 1]) == 1)
+		write_space(temp, j);
+	(*temp)[*j] = str[*i];
+	(*j)++;
+	if (((str[*i] == '<' && str[*i + 1] != '<')
+		|| (str[*i] == '>' && str[*i + 1] != '>'))
+		|| (str[*i] == '|' && (str[*i + 1] == '<' || str[*i + 1] == '>')))
+		write_space(temp, j);
+	(*i)++;
+}
+
+
 char	*add_spaces(char *str)
 {
 	int		i;
@@ -99,48 +188,13 @@ char	*add_spaces(char *str)
 		return (NULL);
 	while (str[i] != '\0')
 	{
-		if ((str[i] == '|' || str[i] == '>' || str[i] == '<') && (i == 0 /*|| ft_isalpha(str[i + 1]) == 1*/))
-		{
-			temp[j] = str[i];
-			j++;
-			if ((str[i] == '<' && str[i + 1] != '<') || (str[i] == '>' && str[i + 1] != '>'))
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			i++;
-		}
+		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+			fill_conditional(&temp, &j, &i, str);
 		else
 		{
 			temp[j] = str[i];
 			j++;
 			i++;
-		}
-		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-		{
-			if(ft_isalpha(str[i - 1]) == 1)
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			temp[j] = str[i];
-			j++;
-			i++;
-			if (ft_isalpha(str[i]) == 1)
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			if ((str[i] == '<' && str[i + 1] != '<') && (str[i] == '>' && str[i + 1] != '>'))
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			if (str[i - 1] == '|' && (str[i] == '<' || str[i] == '>'))
-			{
-				temp[j] = ' ';
-				j++;
-			}
 		}
 	}
 	printf("new str: %s\n", temp);
@@ -179,7 +233,7 @@ int	parser(t_data *data)
 			exec_infile(&temp, data);
 		temp = temp->pipe;
 	}
-	// print_struct(data->parser);
+	print_struct(data->parser);
 	//free_array(0, &data.cmd_line);
 	//implement free parser
 	return (0);
