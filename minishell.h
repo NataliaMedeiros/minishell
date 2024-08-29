@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/28 15:32:44 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:40:04 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,14 @@ void		ft_export(t_env **env, t_parser *parser);
 bool		has_flags(char *arg, t_parser **parser);
 char		*get_env_node(t_env *env, char *str);
 void		cleanup(t_data data);
+void		minus_one_verificator(t_parser **parser);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);
 char		*remove_flags(char *arg);
 
 /*handle file*/
-int			handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection);
+int			handle_files(t_data data, t_parser **parser, int i, bool start_with_redirection);
 
 bool		has_quotes(char *arg);
 
@@ -164,5 +165,7 @@ int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redire
 int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirection);
 int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection);
 char **split_redirection_first(char *cmd);
+
+void	exit_with_msg(char *str, int exit_nb);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/26 16:24:43 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/27 16:06:46 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 		return (env_print(data, parse_data, fd), true);
 	else if (ft_strncmp(parse_data->cmd[0], "unset", 5) == 0)
 		return (ft_unset(&data->env, parse_data), true);
-	// else if(ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
-	// 	return (ft_export(&data->env, parse_data), true);
+	else if(ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
+		return (ft_export(&data->env, parse_data), true);
 	else
 		return (false);
 	// falta o export and exit

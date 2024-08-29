@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:01:02 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:41:09 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ static void heredoc_child(t_parser **parser, t_data *data)
 	(*parser)->fd_infile = open((*parser)->infile->name,
 			O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if ((*parser)->fd_infile == -1)
-	{
-		printf("Fail to open infile\n");
-		exit(EXIT_FAILURE);
-	}
+		exit_with_msg("Fail to open infile\n", EXIT_FAILURE);
 	limiter = find_limiter(parser);
 	line = readline(">");
 	while (line != NULL)

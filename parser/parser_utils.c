@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/27 14:22:09 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/28 16:44:00 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,4 +155,15 @@ char	*get_cmd(char const *s, int unsigned start, size_t len)
 		start++;
 	}
 	return (substring);
+}
+void	minus_one_verificator(t_parser **parser)
+{
+	if ((*parser)->fd_infile == -1)
+		perror("bash");
+}
+
+void	exit_with_msg(char *str, int exit_nb)
+{
+	ft_putstr_fd(str, STDERR_FILENO);
+	exit(exit_nb);
 }
