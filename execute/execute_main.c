@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/27 09:28:45 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:30:20 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,23 @@ int	ft_execute(t_data *data)
 {
 	char	*path;
 	int		nb_pipes;
-	int		exit_nb;
 
+	if (data->exit_code == 130)
+		return (data->exit_code);
 	nb_pipes = pipe_counter(data->parser);
 	if (nb_pipes == 0)
 	{
 		if (is_builtin(data->parser, data) == false)
 		{
 			path = cmd_path_checker(data, data->parser);
-			exit_nb = one_cmd(data, path);
+			data->exit_code = one_cmd(data, path);
 			if (path != NULL)
 				free (path);
-			// if (exit_nb != 0)
-			// 	exit (exit_nb);
 		}
 	}
 	else if (nb_pipes >= 1)
 	{
-		exit_nb = pipeline(data, data->parser, nb_pipes);
-		// if (exit_nb != 0)
-		// 	exit (exit_nb);
+		data->exit_code = pipeline(data, data->parser, nb_pipes);
 	}
-	return (0);
+	return (data->exit_code);
 }

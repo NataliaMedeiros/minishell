@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/27 16:06:40 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:40:04 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <dirent.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <dirent.h>
+# include <signal.h>
+# include <termios.h>
+# include <stdlib.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -32,16 +35,9 @@
 # define READ 0
 # define WRITE 1
 
-typedef enum s_token //nao usado
-{
-	PIPE,
-	WORDS,
-	IN,
-	HEREDOC,
-	OUT,
-	APPEND,
-	AND,
-}		t_token;
+# define PARENT 1
+# define CHILD 2
+# define HEREDOC 3
 
 typedef struct s_execute
 {
@@ -78,6 +74,7 @@ typedef struct s_parser
 
 typedef struct s_data
 {
+	int				exit_code;
 	char			*cmd_line;
 	char			**cmd_table;
 	char			**path;
@@ -92,7 +89,7 @@ int			nb_commands(char *cmd_line);
 int			pipe_counter(t_parser *parser);
 
 /* parser_heredoc */
-int			handle_heredoc(t_parser **parser, t_data data);
+int			handle_heredoc(t_parser **parser, t_data *data);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -161,11 +158,14 @@ int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 // Signal
 void	set_signals(void);
+void	handle_signals(int proc);
 
 
 int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
 int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirection);
 int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection);
 char **split_redirection_first(char *cmd);
+
+void	exit_with_msg(char *str, int exit_nb);
 
 #endif

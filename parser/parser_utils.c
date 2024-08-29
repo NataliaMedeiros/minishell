@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/27 10:08:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/28 16:44:00 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,4 +160,10 @@ void	minus_one_verificator(t_parser **parser)
 {
 	if ((*parser)->fd_infile == -1)
 		perror("bash");
+}
+
+void	exit_with_msg(char *str, int exit_nb)
+{
+	ft_putstr_fd(str, STDERR_FILENO);
+	exit(exit_nb);
 }
