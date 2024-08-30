@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/29 16:40:23 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 11:42:49 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,20 @@ void	write_space(char **temp, int *j)
 
 void	fill_conditional(char **temp, int *j, int *i, char *str)
 {
-	if ((*i == 0 || ft_isalpha(str[*i + 1]) == 1))
+	if (*i != 0 && ft_isalpha(str[*i - 1]) == 1)
+		write_space(temp, j);
+	if (*i == 0 || ft_isalpha(str[*i + 1]) == 1)
 	{
 		(*temp)[*j] = str[*i];
 		(*j)++;
 		if ((str[*i] == '<' && str[*i + 1] != '<') || (str[*i] == '>' && str[*i + 1] != '>'))
 			write_space(temp, j);
+		else if (str[*i] == '|' && str[*i + 1] != ' ')
+			write_space(temp, j);
 		(*i)++;
 	}
-	else if(ft_isalpha(str[*i - 1]) == 1)
-		write_space(temp, j);
+	// else if(ft_isalpha(str[*i - 1]) == 1)
+	// 	write_space(temp, j);
 	(*temp)[*j] = str[*i];
 	(*j)++;
 	if (((str[*i] == '<' && str[*i + 1] != '<')

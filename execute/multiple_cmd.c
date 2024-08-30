@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:29:45 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/30 11:23:47 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	dup_manager(t_exec *exec, int i, t_parser *temp)
 		else
 			if (dup2(exec->fd[WRITE], STDOUT_FILENO) == -1)
 				return (perror("Problem dup"), EXIT_FAILURE);
-		
+
 	}
 	close(exec->fd[READ]);
 	close(exec->fd[WRITE]);
@@ -149,6 +149,7 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		if (pipe(exec.fd) < 0)
 			return (perror("Pipe error"), EXIT_FAILURE);
 		pid_child = fork();
+		handle_signals(CHILD);
 		if (pid_child < 0)
 			return (perror("Fork error"), EXIT_FAILURE);
 		if (pid_child == 0)
