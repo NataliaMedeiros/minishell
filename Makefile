@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/08/29 16:37:54 by natalia       ########   odam.nl          #
+#    Updated: 2024/08/30 14:37:29 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = ./libft/libft.a
 
 LIBFTDIR = libft
 
-CFLAGS = -Wall -Werror -Wextra -g -I/opt/homebrew/Cellar/readline/8.2.10/include
+CFLAGS = -Wall -Werror -Wextra -g -I/opt/hmomebrew/Cellar/readline/8.2.10/include
 #CFLAGS += -fsanitize=address
 LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.10/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
@@ -35,7 +35,6 @@ RESET = \033[0m
 
 SOURCE = main.c \
 		check_input.c \
-		free_utils.c \
 		utils.c \
 		parser/parser.c \
 		parser/parser_heredoc.c \
@@ -49,6 +48,7 @@ SOURCE = main.c \
 		parser/handle_outfile.c \
 		parser/parser_env.c \
 		parser/fill_parser.c \
+		parser/parser_get_cmd.c \
 		expander/dollarsign.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \
@@ -63,6 +63,9 @@ SOURCE = main.c \
 		execute/single_cmd.c \
 		execute/multiple_cmd.c \
 		signal/signal_handler.c \
+		utils/error_utils.c \
+		utils/exit_utils.c \
+		utils/free_utils.c \
 
 OBJECTS = $(SOURCE:%.c=%.o)
 
