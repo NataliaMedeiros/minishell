@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   manager_builtin.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/27 16:06:46 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/30 15:00:28 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 		return (ft_unset(&data->env, parse_data), true);
 	else if(ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
 		return (ft_export(&data->env, parse_data), true);
+	else if(ft_strncmp(parse_data->cmd[0], "exit", 4) == 0)
+		return (ft_exit(&data, parse_data), true);
 	else
 		return (false);
 	// falta o export and exit

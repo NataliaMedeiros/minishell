@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 14:43:23 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 15:00:48 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,7 @@ int	fill_parser(t_data	data, t_parser	**parser);
 bool	return_substring(const char *s, int start, bool has_double_quotes);
 
 void	exec_infile(t_parser **parser, t_data *data);
+
+void	ft_exit(t_data **data, t_parser *parser);
 
 #endif

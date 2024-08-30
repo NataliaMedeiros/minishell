@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/08/30 14:42:43 by natalia       ########   odam.nl          #
+#    Updated: 2024/08/30 15:01:02 by natalia       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SOURCE = main.c \
 		builtins/cd.c \
 		builtins/unset.c \
 		builtins/export.c \
+		builtins/exit.c \
 		builtins/utils_builtin.c \
 		execute/execute_main.c \
 		execute/execute_utils.c \
