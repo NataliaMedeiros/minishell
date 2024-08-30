@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 13:50:56 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 15:10:00 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,7 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)/
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
-	free(new_cmd);
-	free(temp);
+	//I think I should free new_cmd and temp, however it is returning error because it somethimes it is not allocated
 	if ((*parser)->cmd[1] == NULL)
 		return (1);
 	return (0);

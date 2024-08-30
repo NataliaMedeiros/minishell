@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 15:00:28 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 15:29:02 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 			error_msg("data->parser->cmd is not initialized\n"), STDERR_FILENO);
 	}
 	if (ft_strncmp(parse_data->cmd[0], "echo", 4) == 0)
-		return (echo_n(parse_data, fd), true);
+		return (echo_n(parse_data, fd, data), true);
 	else if (ft_strncmp(parse_data->cmd[0], "pwd", 4) == 0)
 		return (pwd(fd), true);
 	else if (ft_strncmp(parse_data->cmd[0], "cd", 2) == 0)

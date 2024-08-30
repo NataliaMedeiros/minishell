@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 14:42:22 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 15:25:45 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	parser(t_data *data)
 	t_parser	*temp;
 	char		*cmd_line;
 
+	data->exit_code = -1;
 	cmd_line = ft_calloc((strlen(data->cmd_line) + 1), sizeof(char));
 	if (cmd_line == NULL)
 		return (error_msg("Failure to malloc word\n"), 1);
