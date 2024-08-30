@@ -6,129 +6,58 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/28 12:15:24 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/30 15:59:54 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-// cria uma nova variavel dentro do ambiente, se tiver um = adiciona um valor pra essa variavel
-// sem o = seta o valor da variavel pra null
-// coloca o env em ordem albetica se for escrito so export sem outro argumento
-// mas a variavel q eu criei por ultimo nao fica na ordem alfabetica, ela aparece no final
-// static	bool	is_new(t_parser *parser, char *keyword_2, int i)
-// {
-// 	t_parser	*temp;
+bool	env_node_checker(t_env **env, char *keyword, char *info)
+{
+	t_env	*temp;
 
-// 	temp = parser;
-// 	while(temp)
-// 	{
-// 		if (ft_strncmp(temp->cmd[i], keyword_2, sizeof(keyword_2)) == 0)
-// 			return (false);
-// 		temp = temp->pipe;
-// 	}
-// 	return (true);
-// }
+	temp = (*env);
+	if (keyword == NULL)
+		return (error_msg("strjoin Error"), true);
+	if (ft_isalpha(keyword[0]) == 0)
+	{
+		ft_putstr_fd("export: ", STDERR_FILENO);
+		ft_putstr_fd(keyword, STDERR_FILENO);
+		return (error_msg(" : not a valid identifier"), free(keyword), true);
+	}
+	while (temp != NULL)
+	{
+		if (ft_strncmp(temp->key_word, keyword, sizeof(keyword)) == 0)
+		{
+			if (info != NULL)
+			{
+				free(temp->info);
+				temp->info = ft_strdup(info);
+			}
+			return (true);
+		}
+		temp = temp->next;
+	}
+	return (false);
+}
 
-// static	t_env	*without_spaces_node_creation(t_parser *parser, bool flag)
-// {
-// 	t_env		*node;
-// 	t_env		*node_2;
-// 	char		*keyword;
-// 	char		*keyword_2;
-// 	char		**array;
-// 	int 		i;
-
-
-// 	node_2 = NULL;
-// 	array = parser->cmd;
-// 	if (flag == false)
-// 	{
-// 		keyword = ft_strcharjoin(array[1], '=');
-// 		node->key_word = keyword;
-// 		node->info = ft_strdup("");
-// 		printf("%s<<<<<<<<<<<<\n", array[3]);
-// 		if (array[3] != NULL)
-// 		{
-// 			i = 3;
-// 			while(array[i] != NULL)
-// 			{
-// 				keyword_2 = ft_strcharjoin(array[i], '=');
-// 				if (is_new(parser, keyword_2, i) == true)
-// 				{
-// 					if (ft_strncmp(keyword, keyword_2, sizeof(keyword_2)) != 0)
-// 					{
-// 						printf("Pass here\n");
-// 						node_2 = malloc(1 * sizeof(t_env));
-// 						if (node_2 == NULL)
-// 						return (error_msg("FAIL to ADD Node\n"), NULL);
-// 							node_2->key_word = ft_strcharjoin(parser->cmd[3], '=');
-// 						node_2->info = ft_strdup("");
-// 						node_2->next = NULL;
-// 						node->next = node_2;
-// 					}
-// 				}
-// 				free(keyword_2);
-// 				i++;
-// 			}
-// 		}
-// 		else
-// 				node->next = NULL;
-// 			return (node);
-// 	}
-// 	return (NULL);
-// }
-
-static t_env	*create_new_node(t_parser *parser, bool flag)
+static t_env	*create_new_env_node(char *var_name, char *var_value)
 {
 	t_env	*node;
-	char	**array;
-	char	*keyword;
-	t_parser	*temp;
 
-	printf("%i", flag);
-	temp = parser;
-	array = NULL;
 	node = malloc(1 * sizeof(t_env));
 	if (node == NULL)
 		return (error_msg("FAIL to ADD Node\n"), NULL);
-	// case withoutspaces
-	if (parser->cmd[1] != NULL && (ft_strchr(parser->cmd[1], '=') != NULL))
-	{
-		array = ft_split(parser->cmd[1], '=');
-		if (array == NULL)
-			return (NULL);
-		keyword = ft_strcharjoin(array[0], '=');
-		if (keyword == NULL)
-			return (NULL);
-		node->key_word = keyword;
-		if (array[1] == NULL)
-			node->info = ft_strdup("");
-		else
-			node->info = ft_strdup(array[1]);
-	}
-	// case with spaces
-	if (ft_strncmp(parser->cmd[2], "=", 1) == 0)
-	{
-		// before create again verify if it already exists in the env
-		ft_putendl_fd(STDERR_FILENO, "export: `=': not a valid identifier");
-	}
+	node->key_word = ft_strdup(var_name);
+	if (var_value != NULL)
+		node->info = ft_strdup(var_value);
 	else
-	{
-		if (parser->cmd[1] != NULL)
-		{
-			keyword = ft_strcharjoin(parser->cmd[1], '=');
-			node->key_word = keyword;
-			node->info = ft_strdup("");
-		}
-	}
+		node->info = ft_strdup("");
 	node->next = NULL;
-	if (array != NULL)
-		free_split(array);
 	return (node);
 }
 
-static void	add_node_env(t_env **env, t_parser *parser, bool flag)
+static void	add_node_env(t_env **env, char *var_name, char *var_value)
 {
 	t_env	*temp;
 	t_env	*new_node;
@@ -138,69 +67,56 @@ static void	add_node_env(t_env **env, t_parser *parser, bool flag)
 	{
 		temp = temp->next;
 	}
-	new_node = create_new_node(parser, flag);
+	new_node = create_new_env_node(var_name, var_value);
 	temp->next = new_node;
+	free(var_name);
 }
 
-void	ft_export(t_env **env, t_parser *parser)
+void	keyword_with_info(char *cmd, t_env **env)
 {
-	t_env	*temp;
 	char	**array;
 	char	*keyword;
-	bool	flag;
 
-	flag = false;
-	keyword = NULL;
-	temp = (*env);
+	array = ft_split(cmd, '=');
+	if (array != NULL)
+	{
+		keyword = ft_strcharjoin(array[0], '=');
+		if (env_node_checker(env, keyword, array[1]) == false)
+		{
+			add_node_env(env, keyword, array[1]);
+			free_split(array);
+		}
+	}
+	else
+		error_msg("Split Error");
+}
+
+void	ft_export(t_env **env, t_parser *parser, int fd)
+{
+	char	*keyword;
+	int		i;
+	char	**current_cmd;
+
 	if (parser->cmd[1] == NULL)
+	{
+		export_print(env, fd);
 		printf("SORT ME\n");
+	}
 	else
 	{
-		while (temp != NULL)
+		i = 1;
+		current_cmd = parser->cmd;
+		while (current_cmd[i] != NULL)
 		{
-			// with is numerical cannot be created
-			if (parser->cmd[1] != NULL && (ft_strchr(parser->cmd[1], '=') != NULL)) // without space
-			{
-				array = ft_split(parser->cmd[1], '=');
-				if (array == NULL)
-					return ;
-				keyword = ft_strcharjoin(array[0], '=');
-				if (ft_strncmp(temp->key_word, keyword, sizeof(keyword)) == 0)
-				{
-					free(temp->info);
-					if (keyword != NULL && array[1] != NULL)
-						temp->info = ft_strdup(array[1]);
-					else
-						temp->info = ft_strdup("");
-					free_split(array);
-					free(keyword);
-					return	;
-				}
-				else
-				{
-					if (array != NULL)
-						free_split(array);
-					if (keyword != NULL)
-						free(keyword);
-					add_node_env(env, parser, flag);
-					return	;
-				}
-			}
+			if (ft_strchr(current_cmd[i], '=') != NULL)
+				keyword_with_info(current_cmd[i], env);
 			else
 			{
-				// if(ft_strncmp(parser->cmd[2], "=", 1) == 0) // with space
-				// {
-				// 	keyword = ft_strcharjoin(parser->cmd[1], '=');
-				// 	if (ft_strncmp(temp->key_word, keyword, sizeof(keyword)) == 0)
-				// 	{
-				// 		free(keyword);
-				// 		flag = true;
-				// 	}
-				// }
-				add_node_env(env, parser, flag);
-				return	;
+				keyword = ft_strcharjoin(current_cmd[i], '=');
+				if (env_node_checker(env, keyword, NULL) == false)
+					add_node_env(env, keyword, NULL);
 			}
-			temp = temp->next;
+			i++;
 		}
 	}
 }
