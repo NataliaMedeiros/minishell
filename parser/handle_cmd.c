@@ -1,55 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser_fill_cmd.c                                  :+:    :+:            */
+/*   handle_cmd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:27:47 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/30 13:44:22 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	has_quotes(char *arg)
+bool	has_quotes(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	while (arg[i] != '\0')
+	while (cmd[i] != '\0')
 	{
-		if (arg[i] == '"' || arg[i] == '\'')
+		if (cmd[i] == '"' || cmd[i] == '\'')
 			return (true);
 		i++;
 	}
 	return (false);
 }
 
-bool	has_flags(char *arg, t_parser	**parser)
+bool	has_flags(char *cmd, t_parser **parser)
 {
 	int	i;
 
 	i = 0;
-	while (arg[i] != '\0')
+	while (cmd[i] != '\0')
 	{
-		if (arg[i] == '-')
+		if (cmd[i] == '-')
 		{
-			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
-					|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
+			if (cmd[i + 1] == 'n' && (cmd[i + 2] == 'n'
+					|| cmd[i + 2] == ' ' || cmd[i + 2] == '\0'))
 			{
 				(*parser)->flag = true;
 				return (true);
 			}
 		}
-		if (arg[i] == '"' || arg[i] == '\'')
+		if (cmd[i] == '"' || cmd[i] == '\'')
 			break ;
 		i++;
 	}
 	return (false);
 }
 
-static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
+static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)//reduzir quantidade de linhas
 {
 	char	*temp;
 	char	*new_cmd;
@@ -63,13 +63,19 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	else
 		temp = arg + j;
 	if (has_flags(temp, parser) == true)
+	{
 		new_cmd = remove_flags(temp);
+		if (new_cmd == NULL)
+			return (error_msg("Failure to malloc"), 1);
+	}
 	else
 		new_cmd = temp;
 	if (has_quotes(new_cmd) == true)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
+	free(new_cmd);
+	free(temp);
 	if ((*parser)->cmd[1] == NULL)
 		return (1);
 	return (0);
