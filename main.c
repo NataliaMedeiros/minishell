@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 15:26:21 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 16:26:14 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	data.envp = envp;
 	data.env = parse_env(envp);
+	data.exit_code = 0;
 	if (init_prompt(data) == false)
 		return (free_env(&data.env), -1);
 	// rl_clear_history();
