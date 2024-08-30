@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/21 11:33:05 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/30 13:33:59 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,14 @@ char **split_redirection_first(char *cmd)
 	return(temp);
 }
 
-int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection)
+int	handle_files(t_data data, t_parser **parser, int i, bool has_pipe)
 {
+	bool	start_with_redirection;
 	// printf("*%c\n", data.cmd_table[i][0]);
+	if (i == 0 || has_pipe == true)
+		start_with_redirection = true;
+	else
+		start_with_redirection = false;
 	if (data.cmd_table[i][0] == '>')
 	{
 		// printf("Entrei no if\n");
