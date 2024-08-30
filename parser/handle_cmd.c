@@ -6,43 +6,43 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 13:44:22 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 13:50:56 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	has_quotes(char *cmd)
+bool	has_quotes(char *arg)
 {
 	int	i;
 
 	i = 0;
-	while (cmd[i] != '\0')
+	while (arg[i] != '\0')
 	{
-		if (cmd[i] == '"' || cmd[i] == '\'')
+		if (arg[i] == '"' || arg[i] == '\'')
 			return (true);
 		i++;
 	}
 	return (false);
 }
 
-bool	has_flags(char *cmd, t_parser **parser)
+bool	has_flags(char *arg, t_parser **parser)
 {
 	int	i;
 
 	i = 0;
-	while (cmd[i] != '\0')
+	while (arg[i] != '\0')
 	{
-		if (cmd[i] == '-')
+		if (arg[i] == '-')
 		{
-			if (cmd[i + 1] == 'n' && (cmd[i + 2] == 'n'
-					|| cmd[i + 2] == ' ' || cmd[i + 2] == '\0'))
+			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
+					|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
 			{
 				(*parser)->flag = true;
 				return (true);
 			}
 		}
-		if (cmd[i] == '"' || cmd[i] == '\'')
+		if (arg[i] == '"' || arg[i] == '\'')
 			break ;
 		i++;
 	}
@@ -88,7 +88,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	int		j;
 
 	j = 0;
-	arg = ft_strchr_adp(data.cmd_table[i], ' '); //alterar nome dessa funcao
+	arg = ft_strchr_arg(data.cmd_table[i], ' ');
 	if (arg != NULL)
 	{
 		while (arg[j] == ' ')

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:24:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/07/15 15:59:11 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/08/30 13:50:05 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strchr_adp(const char *s, int c)
+char	*ft_strchr_arg(const char *s, int c)
 {
 	unsigned int	i;
 
