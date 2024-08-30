@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 14:37:54 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 14:43:23 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ int			one_cmd(t_data *data, char *path);
 int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 // Signal
-void	set_signals(void);
 void	handle_signals(int proc);
 
 
@@ -172,5 +171,7 @@ void	minus_one_verificator(t_parser **parser);
 int	fill_parser(t_data	data, t_parser	**parser);
 
 bool	return_substring(const char *s, int start, bool has_double_quotes);
+
+void	exec_infile(t_parser **parser, t_data *data);
 
 #endif

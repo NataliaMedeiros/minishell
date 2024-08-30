@@ -6,35 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 11:42:49 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 14:42:22 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	exec_infile(t_parser **parser, t_data *data)
-{
-	while ((*parser)->infile->next != NULL)
-	{
-		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
-		{
-			(*parser)->fd_infile = open((*parser)->infile->name,
-					O_RDONLY, 0644);
-			minus_one_verificator(parser);
-		}
-		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-			handle_heredoc(parser, data);
-		(*parser)->infile = (*parser)->infile->next;
-	}
-	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
-	{
-		(*parser)->fd_infile = open((*parser)->infile->name,
-				O_RDONLY, 0644);
-		minus_one_verificator(parser);
-	}
-	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-		handle_heredoc(parser, data);
-}
 
 void	write_space(char **temp, int *j)
 {
@@ -56,8 +32,6 @@ void	fill_conditional(char **temp, int *j, int *i, char *str)
 			write_space(temp, j);
 		(*i)++;
 	}
-	// else if(ft_isalpha(str[*i - 1]) == 1)
-	// 	write_space(temp, j);
 	(*temp)[*j] = str[*i];
 	(*j)++;
 	if (((str[*i] == '<' && str[*i + 1] != '<')

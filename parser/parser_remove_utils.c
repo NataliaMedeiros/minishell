@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/29 16:35:35 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 13:41:11 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*remove_flags(char *arg)
 	len = ft_strlen(arg);
 	total_flags = count_flags(arg, len);
 	new_len = len - total_flags + 1;
-	new_arg = (char *)malloc(sizeof(char) * new_len);
+	new_arg = ft_calloc(sizeof(char), new_len);
 	if (new_arg == NULL)
 		return (NULL);
 	ft_strlcpy(new_arg, arg + total_flags, new_len);
