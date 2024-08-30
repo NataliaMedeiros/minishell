@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 12:02:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 14:23:56 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ static t_infile	*handle_redirection_in(t_data data, t_parser **parser, int i, ch
 	return ((*parser)->infile);
 }
 
-
-/*function to handle input redirection (<) and heredoc (<<).
-However the heredod still neds some implementation*/
 int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirection)
 {
 	char		*type;
