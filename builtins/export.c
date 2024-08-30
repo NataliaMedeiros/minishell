@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/30 15:32:46 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/30 15:59:54 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ bool	env_node_checker(t_env **env, char *keyword, char *info)
 	{
 		ft_putstr_fd("export: ", STDERR_FILENO);
 		ft_putstr_fd(keyword, STDERR_FILENO);
-		return (ft_putendl_fd(STDERR_FILENO, " : not a valid identifier"), true);
+		return (error_msg(" : not a valid identifier"), free(keyword), true);
 	}
 	while (temp != NULL)
 	{
@@ -69,13 +69,14 @@ static void	add_node_env(t_env **env, char *var_name, char *var_value)
 	}
 	new_node = create_new_env_node(var_name, var_value);
 	temp->next = new_node;
+	free(var_name);
 }
 
 void	keyword_with_info(char *cmd, t_env **env)
 {
 	char	**array;
 	char	*keyword;
-	
+
 	array = ft_split(cmd, '=');
 	if (array != NULL)
 	{
@@ -84,21 +85,23 @@ void	keyword_with_info(char *cmd, t_env **env)
 		{
 			add_node_env(env, keyword, array[1]);
 			free_split(array);
-			free(keyword);
 		}
 	}
 	else
 		error_msg("Split Error");
 }
 
-void	ft_export(t_env **env, t_parser *parser)
+void	ft_export(t_env **env, t_parser *parser, int fd)
 {
 	char	*keyword;
 	int		i;
 	char	**current_cmd;
 
 	if (parser->cmd[1] == NULL)
+	{
+		export_print(env, fd);
 		printf("SORT ME\n");
+	}
 	else
 	{
 		i = 1;
@@ -111,10 +114,7 @@ void	ft_export(t_env **env, t_parser *parser)
 			{
 				keyword = ft_strcharjoin(current_cmd[i], '=');
 				if (env_node_checker(env, keyword, NULL) == false)
-				{
 					add_node_env(env, keyword, NULL);
-					free(keyword);
-				}
 			}
 			i++;
 		}
