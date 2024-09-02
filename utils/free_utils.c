@@ -6,11 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 17:48:13 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/30 14:32:41 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_array(int counter, char **cmd)
 {
@@ -103,5 +103,5 @@ void	cleanup(t_data data)
 	// 	printf("CLEAN 4\n");
 	// 	free_parser(&data.parser);
 	// }
-	
+
 }

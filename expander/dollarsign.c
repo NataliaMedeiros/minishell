@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/27 13:20:47 by natalia       ########   odam.nl         */
+/*   Updated: 2024/08/30 16:19:06 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ char	*replace_dollar_sign(char *line, char *new_line, t_data data)
 		if (line[i] == '"')
 			has_double_quotes = !has_double_quotes;
 		if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0'
-				&& line[i + 1] != ' ' && ((!has_double_quotes && !has_single_quote) || has_double_quotes))
+				&& line[i + 1] != ' ' && line[i + 1] != '?'
+				&& ((!has_double_quotes && !has_single_quote) || has_double_quotes))
 		{
 			new_line = get_var(line, i + 1, data);
 			line = new_line;
@@ -112,6 +113,7 @@ char	*handle_dollar_sign(char *line, t_data data)
 {
 	char	*new_line;
 
+	printf("%s\n", line);
 	new_line = NULL;
 	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
 	{

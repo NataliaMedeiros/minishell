@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   export.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/30 15:59:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/02 16:16:13 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,13 @@ bool	env_node_checker(t_env **env, char *keyword, char *info)
 static t_env	*create_new_env_node(char *var_name, char *var_value)
 {
 	t_env	*node;
+	char	**array;
+	char	*keyword;
+	// t_parser	*temp;
 
+	printf("%i", flag);
+	// temp = parsmer;
+	array = NULL;
 	node = malloc(1 * sizeof(t_env));
 	if (node == NULL)
 		return (error_msg("FAIL to ADD Node\n"), NULL);

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:56:25 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/14 15:33:43 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/02 15:39:05 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ t_parser	*new_struct(void)
 	new_element->flag = false;
 	new_element->infile = NULL;
 	new_element->outfile = NULL;
-	new_element->fd_infile = -2; //check if is good initualize
-	new_element->fd_outfile = -2; //check if is good initualize
+	new_element->fd_infile = -2;
+	new_element->fd_outfile = -2;
 	new_element->pipe = NULL;
 	return (new_element);
 }

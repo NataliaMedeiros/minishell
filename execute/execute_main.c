@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:30:20 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 14:34:08 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	ft_execute(t_data *data)
 		{
 			path = cmd_path_checker(data, data->parser);
 			data->exit_code = one_cmd(data, path);
+			printf("exec just one exit code: %d\n", data->exit_code);
 			if (path != NULL)
 				free (path);
 		}
@@ -33,6 +34,7 @@ int	ft_execute(t_data *data)
 	else if (nb_pipes >= 1)
 	{
 		data->exit_code = pipeline(data, data->parser, nb_pipes);
+		printf("exec exit code: %d\n", data->exit_code);
 	}
 	return (data->exit_code);
 }

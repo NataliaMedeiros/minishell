@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser_fill_cmd.c                                  :+:    :+:            */
+/*   handle_cmd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:27:47 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/08/30 15:10:00 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	has_quotes(char *arg)
 	return (false);
 }
 
-bool	has_flags(char *arg, t_parser	**parser)
+bool	has_flags(char *arg, t_parser **parser)
 {
 	int	i;
 
@@ -49,7 +49,7 @@ bool	has_flags(char *arg, t_parser	**parser)
 	return (false);
 }
 
-static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
+static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)//reduzir quantidade de linhas
 {
 	char	*temp;
 	char	*new_cmd;
@@ -63,13 +63,18 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	else
 		temp = arg + j;
 	if (has_flags(temp, parser) == true)
+	{
 		new_cmd = remove_flags(temp);
+		if (new_cmd == NULL)
+			return (error_msg("Failure to malloc"), 1);
+	}
 	else
 		new_cmd = temp;
 	if (has_quotes(new_cmd) == true)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
+	//I think I should free new_cmd and temp, however it is returning error because it somethimes it is not allocated
 	if ((*parser)->cmd[1] == NULL)
 		return (1);
 	return (0);
@@ -82,7 +87,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	int		j;
 
 	j = 0;
-	arg = ft_strchr_adp(data.cmd_table[i], ' '); //alterar nome dessa funcao
+	arg = ft_strchr_arg(data.cmd_table[i], ' ');
 	if (arg != NULL)
 	{
 		while (arg[j] == ' ')

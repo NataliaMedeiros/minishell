@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   manager_builtin.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 16:00:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/02 16:16:19 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 			error_msg("data->parser->cmd is not initialized\n"), STDERR_FILENO);
 	}
 	if (ft_strncmp(parse_data->cmd[0], "echo", 4) == 0)
-		return (echo_n(parse_data, fd), true);
+		return (echo_n(parse_data, fd, data), true);
 	else if (ft_strncmp(parse_data->cmd[0], "pwd", 4) == 0)
 		return (pwd(fd), true);
 	else if (ft_strncmp(parse_data->cmd[0], "cd", 2) == 0)
@@ -45,7 +45,9 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 	else if (ft_strncmp(parse_data->cmd[0], "unset", 5) == 0)
 		return (ft_unset(&data->env, parse_data), true);
 	else if(ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
-		return (ft_export(&data->env, parse_data, fd), true);
+		return (ft_export(&data->env, parse_data), true);
+	else if(ft_strncmp(parse_data->cmd[0], "exit", 4) == 0)
+		return (ft_exit(&data, parse_data), true);
 	else
 		return (false);
 	// falta o export and exit
