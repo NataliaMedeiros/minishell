@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/30 15:59:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/02 13:40:14 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,20 @@ void	ft_export(t_env **env, t_parser *parser, int fd)
 	int		i;
 	char	**current_cmd;
 
+	
 	if (parser->cmd[1] == NULL)
 	{
-		export_print(env, fd);
+		// export_print(env, fd);
+		export_sorting(env);
 		printf("SORT ME\n");
+		// int j = ft_strcmp((*env)->key_word ,(*env)->next->key_word);
+		// // int j = (*env)->key_word - (*env)->next->key_word;
+		// printf("%i esse eh o valor do j esse eh o fd %i\n", j, fd);
+		// printf("%s primeira  %s segunda", (*env)->key_word ,(*env)->next->key_word);
 	}
 	else
 	{
+				export_print(env, fd);
 		i = 1;
 		current_cmd = parser->cmd;
 		while (current_cmd[i] != NULL)

@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:39:27 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/02 14:10:10 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,38 @@ static void	delete_env_node(t_env *previous, t_env *current, t_env **env)
 
 void	ft_unset(t_env **env, t_parser *parser)
 {
-	char	*str;
+	char	*cmd;
+	int		i;
+	char	**current_cmd;
 	t_env	*previous;
 	t_env	*current;
 
 	previous = NULL;
-	current = *env;
 	if (parser->cmd[1] == NULL)
 		return ;
-	str = ft_strcharjoin(parser->cmd[1], '=');
-	// if (str == NULL)
-	// 	return (error_msg("UNEXPECT ERROR"), 1);
-	// todo a errormsg with exit
-	while (current != NULL)
+	i = 1;
+	current_cmd = parser->cmd;
+	while(current_cmd[i] != NULL)
 	{
-		if (ft_strncmp(current->key_word, str, ft_strlen(str)) == 0)
+		cmd = ft_strcharjoin(current_cmd[i], '=');
+		if(cmd == NULL)
 		{
-			delete_env_node(previous, current, env);
-			free(str);
+			error_msg("Error strjoin");
 			return ;
 		}
-		previous = current;
-		current = current->next;
+		current = (*env);
+		while (current != NULL)
+		{
+			if (ft_strncmp(current->key_word, cmd, ft_strlen(cmd)) == 0)
+			{
+				delete_env_node(previous, current, env);
+				break ;
+			}
+			previous = current;
+			current = current->next;
+		}
+		free(cmd);
+		i++;
 	}
-	free(str);
+
 }
