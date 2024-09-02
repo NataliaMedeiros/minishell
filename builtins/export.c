@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/02 16:16:13 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 16:42:41 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,8 @@ bool	env_node_checker(t_env **env, char *keyword, char *info)
 static t_env	*create_new_env_node(char *var_name, char *var_value)
 {
 	t_env	*node;
-	char	**array;
-	char	*keyword;
-	// t_parser	*temp;
 
-	printf("%i", flag);
-	// temp = parsmer;
-	array = NULL;
+
 	node = malloc(1 * sizeof(t_env));
 	if (node == NULL)
 		return (error_msg("FAIL to ADD Node\n"), NULL);
@@ -103,13 +98,20 @@ void	ft_export(t_env **env, t_parser *parser, int fd)
 	int		i;
 	char	**current_cmd;
 
+	
 	if (parser->cmd[1] == NULL)
 	{
-		export_print(env, fd);
+		// export_print(env, fd);
+		export_sorting(env);
 		printf("SORT ME\n");
+		// int j = ft_strcmp((*env)->key_word ,(*env)->next->key_word);
+		// // int j = (*env)->key_word - (*env)->next->key_word;
+		// printf("%i esse eh o valor do j esse eh o fd %i\n", j, fd);
+		// printf("%s primeira  %s segunda", (*env)->key_word ,(*env)->next->key_word);
 	}
 	else
 	{
+				export_print(env, fd);
 		i = 1;
 		current_cmd = parser->cmd;
 		while (current_cmd[i] != NULL)

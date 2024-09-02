@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 16:16:04 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 16:43:53 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_env
 {
 	char			*key_word;
 	char			*info;
+	bool			min_node;
 	struct s_env	*next;
 }					t_env;
 
@@ -130,13 +131,14 @@ void		ft_cd(t_parser *data, t_data *info);
 void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
 void		ft_export(t_env **env, t_parser *parser, int fd);
+void		export_print(t_env **env_sort, int fd);
+void		export_sorting(t_env **env);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
 char		*get_env_node(t_env *env, char *str);
 void		cleanup(t_data data);
 void		minus_one_verificator(t_parser **parser);
-void		export_print(t_env **env_sort, int fd);
 
 /*parser_remove utils.c*/
 char		*remove_quotes(char *limiter);
