@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/02 15:21:32 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 16:13:24 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	first_cmd(int *fd, t_parser *temp)
 	if (temp->fd_infile != -2)
 	{
 		if (temp->fd_infile == -1)
-				return (EXIT_FAILURE);
+			return (EXIT_FAILURE);
 		if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
 			return (perror("Problem Dup First Pipe IN"), EXIT_FAILURE);
 		close(temp->fd_infile);
@@ -30,7 +30,7 @@ static int	first_cmd(int *fd, t_parser *temp)
 	else
 	{
 		if (dup2(fd[WRITE], STDOUT_FILENO) == -1)
-			return(perror("Problem Dup First Pipe"), EXIT_FAILURE);
+			return (perror("Problem Dup First Pipe"), EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -47,7 +47,7 @@ static int	dup_manager(t_exec *exec, int i, t_parser *temp)
 		if (temp->fd_outfile != -2)
 		{
 			if (dup2(temp->fd_outfile, STDOUT_FILENO) == -1)
-				return(perror("Problem Dup Last OUT"), EXIT_FAILURE);
+				return (perror("Problem Dup Last OUT"), EXIT_FAILURE);
 		}
 		if (temp->fd_infile != -2)
 		{
@@ -71,7 +71,7 @@ static int	dup_manager(t_exec *exec, int i, t_parser *temp)
 			if (temp->fd_infile == -1)
 				return (EXIT_FAILURE);
 			if (dup2(temp->fd_infile, STDIN_FILENO) == -1)
-				return (perror("Problem Dup Last IN") , EXIT_FAILURE);
+				return (perror("Problem Dup Last IN"), EXIT_FAILURE);
 			close(temp->fd_infile);
 		}
 		else
@@ -100,7 +100,7 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 	char	*path;
 
 	path = cmd_path_checker(data, temp);
-	if(dup_manager(exec, i, temp) == 1)
+	if (dup_manager(exec, i, temp) == 1)
 	{
 		if (path != NULL)
 			free(path);
@@ -114,13 +114,11 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 		ft_putendl_fd(STDERR_FILENO, temp->cmd[0]);
 		if (path != NULL)
 			free(path);
-		data->exit_code = 127;
 		exit (127);
 	}
-	if (path != NULL)
-		free(path);
-	data->exit_code = EXIT_SUCCESS;
-	exit(EXIT_SUCCESS);
+	// if (path != NULL)
+	// 	free(path);
+	// exit(EXIT_SUCCESS);
 }
 
 void	parent(t_exec *exec, t_parser *temp)
@@ -130,7 +128,7 @@ void	parent(t_exec *exec, t_parser *temp)
 	if (temp->fd_infile != -2 && temp->fd_infile != -1)
 		close(temp->fd_infile);
 	close(exec->fd[WRITE]);
-	if(exec->prev_read != STDIN_FILENO)
+	if (exec->prev_read != STDIN_FILENO)
 		close(exec->prev_read);
 	exec->prev_read = exec->fd[READ];
 }
@@ -161,12 +159,10 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		temp = temp->pipe;
 	}
 	close(exec.prev_read);
-	while(wait(NULL) != -1)
+	while (waitpid(-1, &exec.status, 0) > 0)
 	{
-		wait(NULL);
+		if (WIFEXITED(exec.status))
+			data->exit_code = WEXITSTATUS(exec.status);
 	}
-	waitpid(pid_child, &exec.status, 0);
-	printf("pipeline exit code %d\n", data->exit_code);
-	printf("pipeline exit code %d\n", WEXITSTATUS(exec.status));
-	return (WEXITSTATUS(exec.status));
+	return (data->exit_code);
 }
