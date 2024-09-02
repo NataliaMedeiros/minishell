@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:27:23 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/30 16:36:10 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 14:27:48 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	put_echo(t_parser *parse, int fd, t_data *data)
 	}
 	data->exit_code = 0;
 }
+
 void	echo_n(t_parser *parse, int fd, t_data *data)
 {
 	if (parse->cmd[1] != NULL)
@@ -48,7 +49,10 @@ void	echo_n(t_parser *parse, int fd, t_data *data)
 			data->exit_code = 127;
 		}
 		else if (ft_strncmp(parse->cmd[0], "echo", 4) == 0)
+		{
 			put_echo(parse, fd, data);
+			// data->exit_code = 0;
+		}
 	}
 	else
 	{

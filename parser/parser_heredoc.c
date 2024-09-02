@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 14:26:03 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 15:37:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	*find_limiter(t_parser **parser)
 		limiter = (*parser)->infile->name;
 	return (limiter);
 }
-static void heredoc_child(t_parser **parser, t_data *data)
+
+static void	heredoc_child(t_parser **parser, t_data *data)
 {
 	char	*line;
 	char	*limiter;
@@ -117,12 +118,10 @@ int	handle_heredoc(t_parser **parser, t_data *data)
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid_child, &status, 0);
 	}
-	int exit_code = WEXITSTATUS(status);
-	data->exit_code = exit_code;
-	if (exit_code == 130)
+	data->exit_code = WEXITSTATUS(status);
+	if (data->exit_code == 130)
 		unlink((*parser)->infile->name);
-	if (exit_code == 0)
-		(*parser)->fd_infile = open((*parser)->infile->name,
-			O_RDONLY, 0644);
+	if (data->exit_code == 0)
+		(*parser)->fd_infile = open((*parser)->infile->name, O_RDONLY, 0644);
 	return (WEXITSTATUS(status));
 }

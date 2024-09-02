@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 14:22:14 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 15:33:28 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_be_null(char **temp, int nb)
 		nb--;
 	}
 }
+
 void	fill_temp(char **temp, int i, char *cmd, int j)
 {
 	if (j == 0)
@@ -38,7 +39,8 @@ void	fill_temp(char **temp, int i, char *cmd, int j)
 		ft_strlcpy(temp[1], cmd + i, (j - i + 1));
 	}
 }
-char **split_redirection_first(char *cmd)
+
+char	**split_redirection_first(char *cmd)
 {
 	char	**temp;
 	int		i;
@@ -61,12 +63,13 @@ char **split_redirection_first(char *cmd)
 		fill_temp(temp, i, cmd, j);
 	if (temp[0] == NULL || temp[1] == NULL)
 		return (free_array(3, temp), NULL);
-	return(temp);
+	return (temp);
 }
 
 int	handle_files(t_data data, t_parser **parser, int i, bool has_pipe)
 {
 	bool	start_with_redirection;
+
 	if (i == 0 || has_pipe == true)
 		start_with_redirection = true;
 	else

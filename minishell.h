@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 16:19:11 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 15:40:58 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ char		*remove_quotes(char *limiter);
 char		*remove_flags(char *arg);
 
 /*handle file*/
-int			handle_files(t_data data, t_parser **parser, int i, bool start_with_redirection);
+int			handle_files(t_data data, t_parser **parser, int i,
+				bool start_with_redirection);
 
 bool		has_quotes(char *arg);
 
@@ -157,23 +158,26 @@ int			one_cmd(t_data *data, char *path);
 int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 // Signal
-void	handle_signals(int proc);
+void		handle_signals(int proc);
 
 
-int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection);
-int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirection);
-int	handle_files(t_data data, t_parser **parser, int i, bool	start_with_redirection);
-char **split_redirection_first(char *cmd);
+int			handle_outfile(t_data data, t_parser **parser, int i,
+				bool start_with_redirection);
+int			handle_infile(t_data data, t_parser **parser, int i,
+				bool start_with_redirection);
+int			handle_files(t_data data, t_parser **parser, int i,
+				bool start_with_redirection);
+char		**split_redirection_first(char *cmd);
 
-void	exit_with_msg(char *str, int exit_nb);
-void	minus_one_verificator(t_parser **parser);
+void		exit_with_msg(char *str, int exit_nb);
+void		minus_one_verificator(t_parser **parser);
 
-int	fill_parser(t_data	data, t_parser	**parser);
+int			fill_parser(t_data	data, t_parser	**parser);
 
-bool	return_substring(const char *s, int start, bool has_double_quotes);
+bool		return_substring(const char *s, int start, bool has_double_quotes);
 
-void	exec_infile(t_parser **parser, t_data *data);
+void		exec_infile(t_parser **parser, t_data *data);
 
-void	ft_exit(t_data **data, t_parser *parser);
+void		ft_exit(t_data **data, t_parser *parser);
 
 #endif

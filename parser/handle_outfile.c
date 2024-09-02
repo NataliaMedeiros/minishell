@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/21 12:02:36 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 15:35:16 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int handle_redirection_out(t_data data, t_parser **parser, int i)
 	return (free_array(0, temp), 0);
 }
 
-int	handle_outfile(t_data data, t_parser **parser, int i, bool start_with_redirection)
+int	handle_outfile(t_data data, t_parser **parser, int i,
+	bool start_with_redirection)
 {
 	if (start_with_redirection == true)
 	{

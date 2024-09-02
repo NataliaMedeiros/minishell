@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 16:26:17 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 15:31:57 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	fill_conditional(char **temp, int *j, int *i, char *str)
 	{
 		(*temp)[*j] = str[*i];
 		(*j)++;
-		if ((str[*i] == '<' && str[*i + 1] != '<') || (str[*i] == '>' && str[*i + 1] != '>'))
+		if ((str[*i] == '<' && str[*i + 1] != '<')
+			|| (str[*i] == '>' && str[*i + 1] != '>'))
 			write_space(temp, j);
 		else if (str[*i] == '|' && str[*i + 1] != ' ')
 			write_space(temp, j);
@@ -35,7 +36,7 @@ void	fill_conditional(char **temp, int *j, int *i, char *str)
 	(*temp)[*j] = str[*i];
 	(*j)++;
 	if (((str[*i] == '<' && str[*i + 1] != '<')
-		|| (str[*i] == '>' && str[*i + 1] != '>'))
+			|| (str[*i] == '>' && str[*i + 1] != '>'))
 		|| (str[*i] == '|' && (str[*i + 1] == '<' || str[*i + 1] == '>')))
 		write_space(temp, j);
 	(*i)++;

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/30 11:23:47 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 15:21:32 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,10 +114,12 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 		ft_putendl_fd(STDERR_FILENO, temp->cmd[0]);
 		if (path != NULL)
 			free(path);
+		data->exit_code = 127;
 		exit (127);
 	}
 	if (path != NULL)
 		free(path);
+	data->exit_code = EXIT_SUCCESS;
 	exit(EXIT_SUCCESS);
 }
 
@@ -164,5 +166,7 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		wait(NULL);
 	}
 	waitpid(pid_child, &exec.status, 0);
+	printf("pipeline exit code %d\n", data->exit_code);
+	printf("pipeline exit code %d\n", WEXITSTATUS(exec.status));
 	return (WEXITSTATUS(exec.status));
 }

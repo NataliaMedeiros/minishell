@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:30:53 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 15:10:37 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	one_cmd(t_data *data, char *path)
 	pid_t	pid_child;
 	int		status;
 
-	printf("Dudaaaaaaaaaaaaaaaa\n");
 	pid_child = fork();
 	if (pid_child == -1)
 		error_msg("Problem forking");

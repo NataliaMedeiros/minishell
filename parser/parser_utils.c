@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 14:37:03 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/02 15:38:42 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,11 @@ bool	return_substring(const char *s, int start, bool has_double_quotes)
 	if (s[start] == ' ' && s[start + 1] == '\0')
 		return (true);
 	else if ((s[start] == ' ' && has_double_quotes == false)
-			&& (s[start + 1] == '>'|| s[start + 1] == '<'
+		&& (s[start + 1] == '>' || s[start + 1] == '<'
 			|| s[start + 1] == '|'))
 		return (true);
 	else if (s[start] == ' ' && is_operator_or_null(s[start - 1]) == 1
-			&& ft_isalpha(s[start + 1]) == 1 && has_double_quotes == false)
+		&& ft_isalpha(s[start + 1]) == 1 && has_double_quotes == false)
 		return (true);
 	return (false);
 }
