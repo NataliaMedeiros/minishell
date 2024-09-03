@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 16:43:53 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 11:44:19 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <stdlib.h>
+# include <limits.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -51,7 +52,8 @@ typedef struct s_env
 {
 	char			*key_word;
 	char			*info;
-	bool			min_node;
+	int				max_node;
+	bool			printed;
 	struct s_env	*next;
 }					t_env;
 
