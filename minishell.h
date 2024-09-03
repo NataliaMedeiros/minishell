@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/03 14:15:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 14:43:02 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <signal.h>
 # include <termios.h>
 # include <stdlib.h>
+# include <limits.h>
 
 # define RED "\033[31m"
 # define RESET "\033[0m"
@@ -51,6 +52,8 @@ typedef struct s_env
 {
 	char			*key_word;
 	char			*info;
+	int				max_node;
+	bool			printed;
 	struct s_env	*next;
 }					t_env;
 
@@ -131,8 +134,10 @@ void		ft_cd(t_parser *data, t_data *info);
 void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
 void		ft_export(t_env **env, t_parser *parser, int fd);
-void		export_print(t_env **env_sort, int fd);
 void		export_sorting(t_env **env, int fd);
+void		keyword_with_info(char *cmd, t_env **env);
+void		add_node_env(t_env **env, char *var_name, char *var_value);
+bool		env_node_checker(t_env **env, char *keyword, char *info);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);

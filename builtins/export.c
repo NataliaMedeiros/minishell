@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 12:56:30 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 14:43:14 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static t_env	*create_new_env_node(char *var_name, char *var_value)
 	return (node);
 }
 
-static void	add_node_env(t_env **env, char *var_name, char *var_value)
+void	add_node_env(t_env **env, char *var_name, char *var_value)
 {
 	t_env	*temp;
 	t_env	*new_node;
@@ -72,37 +72,15 @@ static void	add_node_env(t_env **env, char *var_name, char *var_value)
 	free(var_name);
 }
 
-void	keyword_with_info(char *cmd, t_env **env)
-{
-	char	**array;
-	char	*keyword;
-
-	array = ft_split(cmd, '=');
-	if (array != NULL)
-	{
-		keyword = ft_strcharjoin(array[0], '=');
-		if (env_node_checker(env, keyword, array[1]) == false)
-		{
-			add_node_env(env, keyword, array[1]);
-			free_split(array);
-		}
-	}
-	else
-		error_msg("Split Error");
-}
-
 void	ft_export(t_env **env, t_parser *parser, int fd)
 {
 	char	*keyword;
 	int		i;
 	char	**current_cmd;
 
+
 	if (parser->cmd[1] == NULL)
-	{
-		export_print(env, fd);
-		// export_sorting(env, fd);
-		printf("SORT ME\n");
-	}
+		export_sorting(env, fd);
 	else
 	{
 		i = 1;
