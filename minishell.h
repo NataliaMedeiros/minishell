@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/03 13:51:56 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 14:15:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int			pipe_counter(t_parser *parser);
 
 /* parser_heredoc */
 int			handle_heredoc(t_parser **parser, t_data *data);
-char		*replace_dollar_sign(char *line, char *new_line, t_data data);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -122,6 +121,7 @@ t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
+char		*get_var(char *line, int start, t_data data);
 
 // Builtin functions
 bool		is_builtin(t_parser *parse_data, t_data *data);

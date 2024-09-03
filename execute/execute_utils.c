@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 12:49:51 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 14:35:54 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*cmd_path_checker(t_data *data, t_parser *parser)
 	envp = ft_split(find_path_env(data->env), ':');
 	if (envp == NULL)
 	{
-		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
+		ft_putendl_fd(2, "\033[0;33m\tPATH DOESN'T EXIST, Unexpected Error\033[0m");
 		return (NULL);
 	}
 	if (access(parser->cmd[0], F_OK | X_OK) == 0)

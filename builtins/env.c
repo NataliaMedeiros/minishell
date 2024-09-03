@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 14:16:18 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/16 14:07:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 14:24:28 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ void	env_print(t_data *data, t_parser *parse, int fd)
 
 	if (ft_strncmp(parse->cmd[0], "env\0", 4) == 0
 		&& parse->cmd[1] != NULL)
-	{
 		error_msg("Not such a file or directory");
-		// exit (127);
-	}
 	head = data->env;
 	while (head != NULL)
 	{
