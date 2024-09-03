@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 16:43:53 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 13:51:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct s_env
 {
 	char			*key_word;
 	char			*info;
-	bool			min_node;
 	struct s_env	*next;
 }					t_env;
 
@@ -91,6 +90,7 @@ int			pipe_counter(t_parser *parser);
 
 /* parser_heredoc */
 int			handle_heredoc(t_parser **parser, t_data *data);
+char		*replace_dollar_sign(char *line, char *new_line, t_data data);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -132,7 +132,7 @@ void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
 void		ft_export(t_env **env, t_parser *parser, int fd);
 void		export_print(t_env **env_sort, int fd);
-void		export_sorting(t_env **env);
+void		export_sorting(t_env **env, int fd);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
@@ -162,7 +162,6 @@ int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 
 // Signal
 void		handle_signals(int proc);
-
 
 int			handle_outfile(t_data data, t_parser **parser, int i,
 				bool start_with_redirection);

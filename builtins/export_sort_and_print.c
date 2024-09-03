@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/30 15:40:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/02 13:39:29 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 12:55:04 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,62 @@ void	export_print(t_env **env_sort, int fd)
 	}
 }
 
-void export_sorting(t_env **env)
-{
-	// t_env	**env_sorting;
-	t_env	*temp;
-	int		test;
-	// int		i;
+// void add_node_env(t_env **tail, char *keyword, char *info)
+// {
+// 	t_env	*new_node;
 
-	temp = (*env);
-	while(temp->next != NULL)
-	{
-		test = ft_strcmp(temp->key_word, temp->next->key_word);
-		printf("this is the result of strcmp %d\n", test);
-		temp = temp->next;
-	}
-}
+// 	new_node = malloc(1 *sizeof(t_env));
+// 	if (new_node == NULL)
+// 		return ;
+// 	new_node->key_word = keyword;
+// 	new_node->info = info;
+// 	new_node->next = NULL;
+// 	if (*tail != NULL)
+// 	{
+// 		(*tail)->next = new_node;
+// 	}
+// 	*tail = new_node;
+// }
+
+// t_env **cpy_env(t_env **head)
+// {
+// 	t_env	*new_head;
+// 	t_env	*tail;
+// 	t_env	*temp;
+
+// 	temp = (*head);
+// 	tail = NULL;
+// 	new_head = NULL;
+// 	if (*head == NULL)
+// 		return (NULL);
+// 	while (temp != NULL)
+// 	{
+// 		if (new_head == NULL)
+// 		{
+// 				add_node_env(&new_head, temp->key_word, temp->info);
+// 				tail = new_head;
+// 		} else
+// 		{
+// 			add_node_env(&tail, temp->key_word, temp->info);
+// 		}
+// 		temp = temp->next;
+// 	}
+// 	return (new_head);
+// }
+
+// void export_sorting(t_env **env, int fd)
+// {
+// 	t_env	**env_cpy;
+// 	// t_env	*temp;
+// 	// int		result;
+
+// 	// temp = (*env);
+// 	// while (temp->next != NULL)
+// 	// {
+// 	// 	result = ft_strcmp(temp->key_word, temp->next->key_word);
+// 	// 	printf("this is the result of strcmp %d\n", result);
+// 	// 	temp = temp->next;
+// 	// }
+// 	env_cpy = cpy_env(env);
+// 	export_print(env_cpy, fd);
+// }

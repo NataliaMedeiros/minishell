@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 14:32:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/03 12:39:35 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,4 @@ void	cleanup(t_data data)
 	// 	printf("CLEAN 4\n");
 	// 	free_parser(&data.parser);
 	// }
-
 }

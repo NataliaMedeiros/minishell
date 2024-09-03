@@ -6,15 +6,15 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 15:35:16 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/03 12:43:08 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int handle_redirection_out(t_data data, t_parser **parser, int i)
+static int	handle_redirection_out(t_data data, t_parser **parser, int i)
 {
-	char **temp;
+	char	**temp;
 
 	temp = split_redirection_first(data.cmd_table[i + 1]);
 	if (temp == NULL)

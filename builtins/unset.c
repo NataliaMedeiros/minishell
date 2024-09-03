@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/02 14:10:10 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 12:51:02 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ void	ft_unset(t_env **env, t_parser *parser)
 		return ;
 	i = 1;
 	current_cmd = parser->cmd;
-	while(current_cmd[i] != NULL)
+	while (current_cmd[i] != NULL)
 	{
 		cmd = ft_strcharjoin(current_cmd[i], '=');
-		if(cmd == NULL)
+		if (cmd == NULL)
 		{
 			error_msg("Error strjoin");
 			return ;
@@ -62,5 +62,4 @@ void	ft_unset(t_env **env, t_parser *parser)
 		free(cmd);
 		i++;
 	}
-
 }

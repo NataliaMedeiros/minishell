@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/02 16:44:12 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 12:55:58 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,10 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 		return (env_print(data, parse_data, fd), true);
 	else if (ft_strncmp(parse_data->cmd[0], "unset", 5) == 0)
 		return (ft_unset(&data->env, parse_data), true);
-	else if(ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
+	else if (ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
 		return (ft_export(&data->env, parse_data, fd), true);
-	else if(ft_strncmp(parse_data->cmd[0], "exit", 4) == 0)
+	else if (ft_strncmp(parse_data->cmd[0], "exit", 4) == 0)
 		return (ft_exit(&data, parse_data), true);
 	else
 		return (false);
-	// falta o export and exit
 }
