@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 12:49:12 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/03 18:03:05 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,9 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp, int i)
 			free(path);
 		exit (127);
 	}
-	// if (path != NULL)
-	// 	free(path);
-	// exit(EXIT_SUCCESS);
+	if (path != NULL)
+		free(path);
+	exit(EXIT_SUCCESS);
 }
 
 void	parent(t_exec *exec, t_parser *temp)
