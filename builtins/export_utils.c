@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/30 15:40:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 14:23:11 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/03 15:13:48 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,37 @@ static int	lstsize(t_env *lst)
 	return (i);
 }
 
-static t_env	*find_env_to_print(t_env *aux, t_env *last_printed, int last_printed_result, int to_print_result)
+static t_env	*find_env_to_print(t_env *aux,
+	t_env *last_printed, int last_printed_result, int to_print_result)
 {
-	t_env *env_to_print;
+	t_env	*env_to_print;
 
 	env_to_print = NULL;
 	while (aux != NULL)
-			{
-				if (last_printed != NULL)
-					last_printed_result = ft_strcmp(aux->key_word, last_printed->key_word);
-				else
-					last_printed_result = 1;
-				if (env_to_print != NULL)
-					to_print_result = ft_strcmp(aux->key_word, env_to_print->key_word);
-				else
-					to_print_result = -1;
-				if (last_printed_result > 0 && to_print_result < 0)
-					env_to_print = aux;
-				aux = aux->next;
-			}
+	{
+		if (last_printed != NULL)
+			last_printed_result = ft_strcmp(aux->key_word,
+					last_printed->key_word);
+		else
+			last_printed_result = 1;
+		if (env_to_print != NULL)
+			to_print_result = ft_strcmp(aux->key_word, env_to_print->key_word);
+		else
+			to_print_result = -1;
+		if (last_printed_result > 0 && to_print_result < 0)
+			env_to_print = aux;
+		aux = aux->next;
+	}
 	return (env_to_print);
 }
 
-void export_sorting(t_env **env, int fd)
+void	export_sorting(t_env **env, int fd)
 {
-	int printed_amount;
-	int last_printed_result;
-	int to_print_result;
-	t_env *aux;
-	t_env *last_printed;
+	int		printed_amount;
+	int		last_printed_result;
+	int		to_print_result;
+	t_env	*aux;
+	t_env	*last_printed;
 
 	printed_amount = 0;
 	last_printed_result = INT_MIN;
@@ -90,9 +92,9 @@ void export_sorting(t_env **env, int fd)
 	{
 		aux = *env;
 		to_print_result = INT_MIN;
-		last_printed = find_env_to_print(aux, last_printed, last_printed_result, to_print_result);
+		last_printed = find_env_to_print(aux,
+				last_printed, last_printed_result, to_print_result);
 		export_print(last_printed, fd);
 		printed_amount++;
 	}
-
 }
