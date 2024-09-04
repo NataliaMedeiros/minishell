@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/03 17:59:10 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 13:05:55 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char	*add_spaces(char *str)
 			i++;
 		}
 	}
-	printf("new str: %s\n", temp);
 	return (temp);
 }
 
@@ -91,6 +90,7 @@ int	parser(t_data *data)
 	ft_strcpy(cmd_line, data->cmd_line);
 	free(data->cmd_line);
 	data->cmd_line = add_spaces(cmd_line);
+	free(cmd_line);
 	data->cmd_table = split_cmds(*data);
 	if (data->cmd_table == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1); // free
@@ -105,6 +105,5 @@ int	parser(t_data *data)
 	temp = data->parser;
 	create_infiles(&temp, data);
 	// print_struct(data->parser);
-	//implement free parser
 	return (0);
 }

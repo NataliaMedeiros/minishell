@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 15:10:00 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/04 14:11:09 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,35 +49,30 @@ bool	has_flags(char *arg, t_parser **parser)
 	return (false);
 }
 
-static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)//reduzir quantidade de linhas
+static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 {
 	char	*temp;
 	char	*new_cmd;
 
 	if (ft_strchr(arg, '$') != NULL)
-	{
 		temp = handle_dollar_sign(arg + j, data);
-		if (temp == NULL)
-			return (1);
-	}
 	else
-		temp = arg + j;
+		temp = ft_strdup(arg + j);
+	if (temp == NULL)
+		return (1);
 	if (has_flags(temp, parser) == true)
-	{
 		new_cmd = remove_flags(temp);
-		if (new_cmd == NULL)
-			return (error_msg("Failure to malloc"), 1);
-	}
 	else
-		new_cmd = temp;
+		new_cmd = ft_strdup(temp);
+	if (new_cmd == NULL)
+		return (1);
 	if (has_quotes(new_cmd) == true)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
-	//I think I should free new_cmd and temp, however it is returning error because it somethimes it is not allocated
 	if ((*parser)->cmd[1] == NULL)
-		return (1);
-	return (0);
+		return (free(temp), free(new_cmd), 1);
+	return (free(new_cmd), free(temp), 0);
 }
 
 static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)

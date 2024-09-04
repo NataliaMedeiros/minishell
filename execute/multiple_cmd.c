@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 11:52:17 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 14:31:21 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		exec.i++;
 		temp = temp->pipe;
 	}
+	close(exec.prev_read);
 	while (waitpid(-1, &exec.status, 0) > 0)
 	{
 		if (WIFEXITED(exec.status))
 			data->exit_code = WEXITSTATUS(exec.status);
 	}
-	close(exec.prev_read);
 	return (data->exit_code);
 }

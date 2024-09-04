@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/20 14:30:30 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 13:35:03 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/04 14:31:54 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	sig_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_redisplay();
@@ -27,9 +27,9 @@ static void	sig_child_c(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// rl_replace_line("", 0);
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_replace_line("", 0);
 		rl_on_new_line();
+		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_redisplay();
 	}
 }
@@ -44,7 +44,7 @@ static void	sig_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		ft_putchar_fd('\n', STDOUT_FILENO);
 		rl_on_new_line();
 		exit (130);

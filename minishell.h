@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 11:49:25 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 13:06:53 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ bool		env_node_checker(t_env **env, char *keyword, char *info);
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
 char		*get_env_node(t_env *env, char *str);
-void		cleanup(t_data data);
+void		cleanup(t_data *data);
 void		minus_one_verificator(t_parser **parser);
 
 /*parser_remove utils.c*/
@@ -192,5 +192,7 @@ bool		return_substring(const char *s, int start, bool has_double_quotes);
 void		exec_infile(t_parser **parser, t_data *data);
 
 void		ft_exit(t_data **data, t_parser *parser);
+
+char		*get_var(char *line, int start, t_data data);
 
 #endif
