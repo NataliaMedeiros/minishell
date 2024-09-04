@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 16:22:00 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 17:46:04 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 int			first_cmd(int *fd, t_parser *temp);
 int			middle_cmd(t_parser *temp, t_exec *exec);
 int			last_cmd(t_parser *temp, t_exec *exec);
+void		clean_helper(t_data *data, char *path);
 
 // Signal
 void		handle_signals(int proc);

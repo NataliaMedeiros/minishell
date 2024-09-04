@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 15:33:28 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/04 17:58:48 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,12 @@ int	handle_files(t_data data, t_parser **parser, int i, bool has_pipe)
 	if (data.cmd_table[i][0] == '>')
 	{
 		if (handle_outfile(data, parser, i, start_with_redirection) != 0)
-			return (error_msg("failurre on handle outfile"), 1);
+			return (error_msg("failure on handle outfile"), 1);
 	}
 	else if (data.cmd_table[i][0] == '<')
 	{
 		if (handle_infile(data, parser, i, start_with_redirection) != 0)
-			return (error_msg("failurre on handle infile"), 1);
+			return (error_msg("failure on handle infile"), 1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 16:22:51 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 18:24:51 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ bool	init_prompt(t_data *data)
 		handle_signals(PARENT);
 		temp = readline("[minishell]: ");
 		if (temp == NULL)
+		{
+			free(temp);
+			if (data->env != NULL)
+				free_env(&data->env);
+			rl_clear_history();
 			exit(EXIT_FAILURE);
+		}
 		data->cmd_line = ft_strtrim(temp, "\t\n\v\n ");
 		free(temp);
 		add_history(data->cmd_line);
@@ -30,14 +36,14 @@ bool	init_prompt(t_data *data)
 			if (data->cmd_line[0] != '\0')
 			{
 				if (parser(data) == 1)
-					return (false);
+					return (free(data->cmd_line), cleanup(data), false);
 				ft_execute(data);
 				cleanup(data);
 			}
+			else
+				free(data->cmd_line);
 		}
-		// free(data->cmd_line);
 	}
-	// free(data->cmd_line);
 	return (true);
 }
 
@@ -58,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 	data.exit_code = 0;
 	if (init_prompt(&data) == false)
 		return (free_env(&data.env), -1);
-	// rl_clear_history();
+	rl_clear_history();
 	cleanup(&data);
 	if (data.env != NULL)
 	{

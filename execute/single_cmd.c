@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/02 15:10:37 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/04 16:55:28 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int	one_cmd(t_data *data, char *path)
 			execve(path, data->parser->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", STDERR_FILENO);
 		ft_putendl_fd(STDERR_FILENO, data->parser->cmd[0]);
+		if (data->env != NULL)
+			free_env(&data->env);
+		cleanup(data);
 		exit (127);
 	}
 	if (data->parser->fd_infile != -2 && data->parser->fd_infile != -1)
