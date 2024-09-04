@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:27:23 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 13:20:09 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/04 15:27:45 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,10 @@ void	echo_n(t_parser *parse, int fd, t_data *data)
 {
 	if (parse->cmd[1] != NULL)
 	{
-		if (ft_strncmp(parse->cmd[0], "echoo", 5) == 0)
-		{
-			ft_putendl_fd(STDERR_FILENO, "Command not Found");
-			// data->exit_code = 127;
-		}
-		else if (ft_strncmp(parse->cmd[0], "echo", 4) == 0)
-			put_echo(parse, fd, data);
+		put_echo(parse, fd, data);
 	}
 	else
 	{
-		if (ft_strncmp(parse->cmd[0], "echoo", 5) == 0)
-		{
-			ft_putendl_fd(STDERR_FILENO, "Command not Found");
-			// data->exit_code = 127;
-		}
-		else
-		{
-			ft_putendl_fd(fd, "");
-			// data->exit_code = 0;
-		}
+		ft_putendl_fd(fd, "");
 	}
 }

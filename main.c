@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 15:05:50 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/04 16:22:51 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ bool	init_prompt(t_data *data)
 		// free(data->cmd_line);
 	}
 	// free(data->cmd_line);
-	// free(temp);
 	return (true);
 }
 
