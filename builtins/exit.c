@@ -6,13 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:17:35 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 10:59:35 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/04 15:25:36 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//need to exit and free everything, just received number arguments
 
 static long	ft_atoi_long(char *str, long nb)
 {
@@ -42,7 +40,6 @@ static long	ft_atoi_long(char *str, long nb)
 	return ((long)(sign * nb));
 }
 
-
 void	ft_exit(t_data **data, t_parser *parser)
 {
 	long long	exit_nb;
@@ -50,14 +47,14 @@ void	ft_exit(t_data **data, t_parser *parser)
 	if ((ft_strcmp(parser->cmd[0], "exit") == 0) && parser->cmd[1] == NULL)
 	{
 		(*data)->exit_code = 0;
-		ft_putstr_fd("exit\n", 2);
+		ft_putendl_fd(STDERR_FILENO, "exit");
 		exit((*data)->exit_code);
 	}
 	if (parser->cmd[2] != NULL)
 	{
 		(*data)->exit_code = 1;
-		ft_putstr_fd("exit\n", 2);
-		ft_putstr_fd("minishel: exit: to many argments\n", 2);
+		ft_putendl_fd(STDERR_FILENO, "exit");
+		ft_putendl_fd(STDERR_FILENO, "minishel: exit: to many arguments");
 	}
 	else
 	{
@@ -66,7 +63,7 @@ void	ft_exit(t_data **data, t_parser *parser)
 			exit(exit_nb);
 		exit_nb %= 256;
 		(*data)->exit_code = exit_nb;
-		ft_putstr_fd("exit\n", 2);
+		ft_putendl_fd(STDERR_FILENO, "exit");
 		exit((*data)->exit_code);
 	}
 }

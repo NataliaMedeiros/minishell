@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/09/03 14:23:34 by natalia       ########   odam.nl          #
+#    Updated: 2024/09/04 10:55:13 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,20 +51,22 @@ SOURCE = main.c \
 		parser/parser_get_cmd.c \
 		parser/exec_infile.c \
 		expander/dollarsign.c \
+		expander/dollarsign_utils.c \
 		builtins/manager_builtin.c \
 		builtins/echo_n.c \
 		builtins/pwd.c \
 		builtins/env.c \
 		builtins/cd.c \
+		builtins/cd_utils.c \
 		builtins/unset.c \
 		builtins/export.c \
 		builtins/export_utils.c \
 		builtins/exit.c \
-		builtins/utils_builtin.c \
 		execute/execute_main.c \
 		execute/execute_utils.c \
 		execute/single_cmd.c \
 		execute/multiple_cmd.c \
+		execute/multiple_cmd_utils.c \
 		signal/signal_handler.c \
 		utils/error_utils.c \
 		utils/exit_utils.c \

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 14:24:19 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/03 14:45:05 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static t_env	*create_new_env_node(char *var_name, char *var_value)
 {
 	t_env	*node;
 
-
 	node = malloc(1 * sizeof(t_env));
 	if (node == NULL)
 		return (error_msg("FAIL to ADD Node\n"), NULL);
@@ -78,7 +77,6 @@ void	ft_export(t_env **env, t_parser *parser, int fd)
 	char	*keyword;
 	int		i;
 	char	**current_cmd;
-
 
 	if (parser->cmd[1] == NULL)
 		export_sorting(env, fd);

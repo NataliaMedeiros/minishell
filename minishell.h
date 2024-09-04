@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/03 14:26:10 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/04 16:22:00 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <limits.h>
 
 # define RED "\033[31m"
+# define YEL "\033[0;33m"
 # define RESET "\033[0m"
 
 # define READ 0
@@ -43,8 +44,10 @@
 typedef struct s_execute
 {
 	int			fd[2];
+	pid_t		pid_child;
 	int			prev_read;
 	int			nb_pipes;
+	int			i;
 	int			status;
 }	t_exec;
 
@@ -89,7 +92,6 @@ typedef struct s_data
 /* parser */
 int			parser(t_data *data);
 int			nb_commands(char *cmd_line);
-int			pipe_counter(t_parser *parser);
 
 /* parser_heredoc */
 int			handle_heredoc(t_parser **parser, t_data *data);
@@ -97,7 +99,7 @@ int			handle_heredoc(t_parser **parser, t_data *data);
 /* parser utils */
 int			nb_commands(char *cmd_line);
 char		**split_cmds(t_data data);
-char		*get_cmd(char const *s, unsigned int start, size_t len);
+char		*get_cmd(char const *s, int unsigned start, size_t len);
 
 /* free_utils */
 void		free_array(int counter, char **cmd);
@@ -111,6 +113,7 @@ void		print_env(t_env *env);
 /* struct_utils */
 t_parser	*new_struct(void);
 void		free_parsing(t_parser **parser);
+int			pipe_counter(t_parser *parser);
 
 /* parser_fill_cmd */
 int			fill_cmd(t_parser **parser, t_data data, int i);
@@ -124,11 +127,12 @@ t_env		*parse_env(char **env);
 
 /* heredoc_dollarsign*/
 char		*handle_dollar_sign(char *line, t_data data);
+char		*get_var(char *line, int start, t_data data);
 
 // Builtin functions
 bool		is_builtin(t_parser *parse_data, t_data *data);
 void		echo_n(t_parser *parse, int fd, t_data *data);
-void		pwd(int fd);
+void		ft_pwd(int fd, t_parser *parser, t_data *data);
 void		ft_cd(t_parser *data, t_data *info);
 void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser);
@@ -141,7 +145,7 @@ bool		env_node_checker(t_env **env, char *keyword, char *info);
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
 char		*get_env_node(t_env *env, char *str);
-void		cleanup(t_data data);
+void		cleanup(t_data *data);
 void		minus_one_verificator(t_parser **parser);
 
 /*parser_remove utils.c*/
@@ -163,10 +167,12 @@ char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
 int			one_cmd(t_data *data, char *path);
 int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
+int			first_cmd(int *fd, t_parser *temp);
+int			middle_cmd(t_parser *temp, t_exec *exec);
+int			last_cmd(t_parser *temp, t_exec *exec);
 
 // Signal
 void		handle_signals(int proc);
-
 
 int			handle_outfile(t_data data, t_parser **parser, int i,
 				bool start_with_redirection);
@@ -177,7 +183,6 @@ int			handle_files(t_data data, t_parser **parser, int i,
 char		**split_redirection_first(char *cmd);
 
 void		exit_with_msg(char *str, int exit_nb);
-void		minus_one_verificator(t_parser **parser);
 
 int			fill_parser(t_data	data, t_parser	**parser);
 
@@ -186,5 +191,7 @@ bool		return_substring(const char *s, int start, bool has_double_quotes);
 void		exec_infile(t_parser **parser, t_data *data);
 
 void		ft_exit(t_data **data, t_parser *parser);
+
+char		*get_var(char *line, int start, t_data data);
 
 #endif

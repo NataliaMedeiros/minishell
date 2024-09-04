@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/02 15:38:42 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/03 12:42:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,3 @@ bool	return_substring(const char *s, int start, bool has_double_quotes)
 		return (true);
 	return (false);
 }
-
