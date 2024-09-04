@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/04 14:20:15 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/04 15:11:46 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	free_parser(t_parser **parser)
 		*parser = (*parser)->pipe;
 		free_array(0, temp->cmd);
 		// free(temp->outfile);
-		// free_infile(temp->infile);
+		free_infile(temp->infile);
 		free(temp);
 	}
 	// *env = NULL;
