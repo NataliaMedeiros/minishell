@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/03 14:43:02 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/04 11:49:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include <limits.h>
 
 # define RED "\033[31m"
+# define YEL "\033[0;33m"
 # define RESET "\033[0m"
 
 # define READ 0
@@ -43,8 +44,10 @@
 typedef struct s_execute
 {
 	int			fd[2];
+	pid_t		pid_child;
 	int			prev_read;
 	int			nb_pipes;
+	int			i;
 	int			status;
 }	t_exec;
 
@@ -164,6 +167,9 @@ char		*cmd_path_checker(t_data *data, t_parser *parser);
 void		free_split(char **array);
 int			one_cmd(t_data *data, char *path);
 int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
+int			first_cmd(int *fd, t_parser *temp);
+int			middle_cmd(t_parser *temp, t_exec *exec);
+int			last_cmd(t_parser *temp, t_exec *exec);
 
 // Signal
 void		handle_signals(int proc);

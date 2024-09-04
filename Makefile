@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/09/03 14:42:22 by natalia       ########   odam.nl          #
+#    Updated: 2024/09/04 10:55:13 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SOURCE = main.c \
 		execute/execute_utils.c \
 		execute/single_cmd.c \
 		execute/multiple_cmd.c \
+		execute/multiple_cmd_utils.c \
 		signal/signal_handler.c \
 		utils/error_utils.c \
 		utils/exit_utils.c \
