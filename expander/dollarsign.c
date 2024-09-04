@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 16:19:06 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/04 12:05:13 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	var_end(char *line, int i)
 
 static char	*search_envp(t_data data, char *var, int len)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_strjoin(var, "=");
 	while (data.env)
@@ -70,45 +70,55 @@ static char	*get_var(char *line, int start, t_data data)
 	return (new_line);
 }
 
-char	*replace_dollar_sign(char *line, char *new_line, t_data data)
+bool	check_single_quote(char *line, int i, bool has_single_quote)
 {
-	int i;
-	bool	has_single_quote;
-	bool	has_double_quotes;
+	if (line[i] == '\'')
+		has_single_quote = !has_single_quote;
+	return (has_single_quote);
+
+}
+
+bool	check_double_quote(char *line, int i, bool has_double_quote)
+{
+	if (line[i] == '"')
+		has_double_quote = !has_double_quote;
+	return (has_double_quote);
+}
+
+void	get_new_line(char **new_line, char **line, int i, t_data data)
+{
+	*new_line = get_var(*line, i + 1, data);
+	*line = *new_line;
+}
+
+char	*replace_dollar_sign(char *l, char *new_line, t_data data)
+{
+	int		i;
+	bool	sing_quote;
+	bool	doub_quote;
 
 	i = 0;
-	has_single_quote = false;
-	has_double_quotes = false;
-	while (line[i])
+	sing_quote = false;
+	doub_quote = false;
+	while (l[i])
 	{
-		if (line[i] == '\'')
-			has_single_quote = !has_single_quote;
-		if (line[i] == '"')
-			has_double_quotes = !has_double_quotes;
-		if (line[i] == '$' && line[i + 1] != '"' && line [i + 1] != '\0'
-				&& line[i + 1] != ' ' && line[i + 1] != '?'
-				&& ((!has_double_quotes && !has_single_quote) || has_double_quotes))
+		sing_quote = check_single_quote(l, i, sing_quote);
+		doub_quote = check_double_quote(l, i, doub_quote);
+		if (l[i] == '$' && l[i + 1] != '"' && l[i + 1] != '\0'
+			&& l[i + 1] != ' ' && l[i + 1] != '?' && (ft_isalpha(l[i + 1]))
+			&& ((!doub_quote && !sing_quote) || doub_quote))
 		{
-			new_line = get_var(line, i + 1, data);
-			line = new_line;
-			if (strcmp(new_line, "") == 0 || ft_strlen(new_line) <= 3)
+			get_new_line(&new_line, &l, i, data);
+			if (!*new_line || ft_strlen(new_line) <= 3)
 				return (new_line);
 		}
-		else if (line[i] == '$' && (line [i + 1] == '\0' || line [i + 1] == '"'))
-		{
-			new_line = line;
-			break ;
-		}
+		else if (l[i] == '$' && (l[i + 1] == '\0' || l[i + 1] == '"'))
+			new_line = l;
 		i++;
 	}
 	return (new_line);
 }
 
-/* This function replaces the env variable to it's value and return the line
-with ALL env variable replaced on the right place when we are working with
-heredoc NOTE: On the subject is specified that the env variable just be
-replaced ONLY when we have DOUBLE quotes or NO quotes (if we have single
-quotes it should NOT be replaced)*/
 char	*handle_dollar_sign(char *line, t_data data)
 {
 	char	*new_line;
