@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 18:24:51 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 10:27:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ bool	init_prompt(t_data *data)
 			if (data->env != NULL)
 				free_env(&data->env);
 			rl_clear_history();
+			printf("exit\n");
 			exit(EXIT_FAILURE);
 		}
 		data->cmd_line = ft_strtrim(temp, "\t\n\v\n ");

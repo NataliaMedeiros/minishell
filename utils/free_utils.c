@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/04 15:11:46 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/05 09:22:19 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ void	cleanup(t_data *data)
 	// }
 	if (data->cmd_line != NULL)
 	{
-		printf("CLEAN 2\n");
+		// printf("CLEAN 2\n");ma
 		free(data->cmd_line);
 	}
 	if (data->cmd_table != NULL)
 	{
-		printf("CLEAN 3\n");
+		// printf("CLEAN 3\n");
 		free_array(0, data->cmd_table);
 	}
 	if (data->parser != NULL)
 	{
-		printf("CLEAN 4\n");
+		// printf("CLEAN 4\n");
 		free_parser(&data->parser);
 	}
 }
