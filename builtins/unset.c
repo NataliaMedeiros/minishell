@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 14:26:07 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 12:12:14 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	node_checker(t_env **env, char *cmd)
 	}
 }
 
-void	ft_unset(t_env **env, t_parser *parser)
+void	ft_unset(t_env **env, t_parser *parser, t_data *data)
 {
 	char	*cmd;
 	int		i;
@@ -62,6 +62,7 @@ void	ft_unset(t_env **env, t_parser *parser)
 		if (cmd == NULL)
 		{
 			error_msg("Error strjoin");
+			data->exit_code = 1;
 			return ;
 		}
 		node_checker(env, cmd);
