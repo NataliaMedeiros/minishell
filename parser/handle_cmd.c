@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser_fill_cmd.c                                  :+:    :+:            */
+/*   handle_cmd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 15:27:47 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 14:11:09 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	has_quotes(char *arg)
 	return (false);
 }
 
-bool	has_flags(char *arg, t_parser	**parser)
+bool	has_flags(char *arg, t_parser **parser)
 {
 	int	i;
 
@@ -55,24 +55,24 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	char	*new_cmd;
 
 	if (ft_strchr(arg, '$') != NULL)
-	{
 		temp = handle_dollar_sign(arg + j, data);
-		if (temp == NULL)
-			return (1);
-	}
 	else
-		temp = arg + j;
+		temp = ft_strdup(arg + j);
+	if (temp == NULL)
+		return (1);
 	if (has_flags(temp, parser) == true)
 		new_cmd = remove_flags(temp);
 	else
-		new_cmd = temp;
+		new_cmd = ft_strdup(temp);
+	if (new_cmd == NULL)
+		return (1);
 	if (has_quotes(new_cmd) == true)
 		(*parser)->cmd[1] = remove_quotes(new_cmd);
 	else
 		(*parser)->cmd[1] = ft_strdup(new_cmd);
 	if ((*parser)->cmd[1] == NULL)
-		return (1);
-	return (0);
+		return (free(temp), free(new_cmd), 1);
+	return (free(new_cmd), free(temp), 0);
 }
 
 static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
@@ -82,7 +82,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	int		j;
 
 	j = 0;
-	arg = ft_strchr_adp(data.cmd_table[i], ' '); //alterar nome dessa funcao
+	arg = ft_strchr_arg(data.cmd_table[i], ' ');
 	if (arg != NULL)
 	{
 		while (arg[j] == ' ')

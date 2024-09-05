@@ -6,11 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/19 17:48:13 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 09:22:19 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_array(int counter, char **cmd)
 {
@@ -73,13 +73,13 @@ void	free_parser(t_parser **parser)
 		*parser = (*parser)->pipe;
 		free_array(0, temp->cmd);
 		// free(temp->outfile);
-		// free_infile(temp->infile);
+		free_infile(temp->infile);
 		free(temp);
 	}
 	// *env = NULL;
 }
 
-void	cleanup(t_data data)
+void	cleanup(t_data *data)
 {
 	// if (data.envp != NULL)
 	// 	free(data.envp);
@@ -88,20 +88,19 @@ void	cleanup(t_data data)
 	// 	printf("clean 1!\n");
 	// 	free_env(&data.env);
 	// }
-	if (data.cmd_line != NULL)
+	if (data->cmd_line != NULL)
 	{
-		printf("CLEAN 2\n");
-		free(data.cmd_line);
+		// printf("CLEAN 2\n");ma
+		free(data->cmd_line);
 	}
-	if (data.cmd_table != NULL)
+	if (data->cmd_table != NULL)
 	{
-		printf("CLEAN 3\n");
-		free_array(0, data.cmd_table);
+		// printf("CLEAN 3\n");
+		free_array(0, data->cmd_table);
 	}
-	// if (data.parser != NULL)
-	// {
-	// 	printf("CLEAN 4\n");
-	// 	free_parser(&data.parser);
-	// }
-	
+	if (data->parser != NULL)
+	{
+		// printf("CLEAN 4\n");
+		free_parser(&data->parser);
+	}
 }

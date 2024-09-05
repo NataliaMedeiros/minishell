@@ -6,40 +6,45 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/27 14:07:59 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/05 10:27:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	init_prompt(t_data data)
+bool	init_prompt(t_data *data)
 {
 	char	*temp;
 
 	while (1)
 	{
-		// set_signals();
 		handle_signals(PARENT);
 		temp = readline("[minishell]: ");
 		if (temp == NULL)
-			exit(EXIT_SUCCESS);
-		data.cmd_line = ft_strtrim(temp, "\t\n\v\n ");
-		add_history(data.cmd_line);
-		//add function to add space where it is needed
-		if (is_input_valid(data.cmd_line) == true)
 		{
-			if (data.cmd_line[0] != '\0')
-			{
-				if (parser(&data) == 1)
-					return (false);
-				ft_execute(&data);
-				// cleanup(data);
-			}
+			free(temp);
+			if (data->env != NULL)
+				free_env(&data->env);
+			rl_clear_history();
+			printf("exit\n");
+			exit(EXIT_FAILURE);
 		}
-		free(data.cmd_line);
+		data->cmd_line = ft_strtrim(temp, "\t\n\v\n ");
+		free(temp);
+		add_history(data->cmd_line);
+		if (is_input_valid(data->cmd_line) == true)
+		{
+			if (data->cmd_line[0] != '\0')
+			{
+				if (parser(data) == 1)
+					return (free(data->cmd_line), cleanup(data), false);
+				ft_execute(data);
+				cleanup(data);
+			}
+			else
+				free(data->cmd_line);
+		}
 	}
-	free(data.cmd_line);
-	free(temp);
 	return (true);
 }
 
@@ -55,13 +60,15 @@ int	main(int argc, char **argv, char **envp)
 	}
 	data.envp = envp;
 	data.env = parse_env(envp);
-	if (init_prompt(data) == false)
+	if (data.env == NULL)
+		return (EXIT_FAILURE);
+	data.exit_code = 0;
+	if (init_prompt(&data) == false)
 		return (free_env(&data.env), -1);
-	// rl_clear_history();
-	cleanup(data);
+	rl_clear_history();
+	cleanup(&data);
 	if (data.env != NULL)
 	{
-		printf("clean 1!\n");
 		free_env(&data.env);
 	}
 	return (0);

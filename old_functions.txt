@@ -211,3 +211,63 @@ int	handle_infile(t_data *data, int i, bool start_with_redirection)
 	}
 	return (0);
 }
+// char	*add_spaces(char *str)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*temp;
+
+// 	i = 0;
+// 	j = 0;
+// 	temp = ft_calloc((3 * ft_strlen(str) + 1), sizeof(char));
+// 	if (temp == NULL)
+// 		return (NULL);
+// 	while (str[i] != '\0')
+// 	{
+// 		if ((str[i] == '|' || str[i] == '>' || str[i] == '<') && (i == 0 /*|| ft_isalpha(str[i + 1]) == 1*/))
+// 		{
+// 			temp[j] = str[i];
+// 			j++;
+// 			if ((str[i] == '<' && str[i + 1] != '<') || (str[i] == '>' && str[i + 1] != '>'))
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			i++;
+// 		}
+// 		else
+// 		{
+// 			temp[j] = str[i];
+// 			j++;
+// 			i++;
+// 		}
+// 		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+// 		{
+// 			if(ft_isalpha(str[i - 1]) == 1)
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			temp[j] = str[i];
+// 			j++;
+// 			i++;
+// 			if (ft_isalpha(str[i]) == 1)
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			if ((str[i] == '<' && str[i + 1] != '<') && (str[i] == '>' && str[i + 1] != '>'))
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 			if (str[i - 1] == '|' && (str[i] == '<' || str[i] == '>'))
+// 			{
+// 				temp[j] = ' ';
+// 				j++;
+// 			}
+// 		}
+// 	}
+// 	printf("new str: %s\n", temp);
+// 	return (temp);
+// }

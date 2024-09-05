@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:44:00 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/03 12:42:21 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	**split_cmds(t_data data)
 	int		start;
 
 	nb_args = nb_commands(data.cmd_line);
-	// printf("nb commands: %d\n", nb_args);
 	counter = 0;
 	i = 0;
 	cmd = ft_calloc(nb_args + 1, sizeof(char *));
@@ -95,75 +94,16 @@ char	**split_cmds(t_data data)
 	return (cmd);
 }
 
-int	check_len(const char *s, int start, size_t len)
-{
-	if (ft_strlen(s) <= len)
-		return(ft_strlen(s) - start);
-	if (ft_strlen(s) == 1 || start >= (int)ft_strlen(s))
-		return(0);
-	else if (ft_strlen(s) - start < len)
-		return(ft_strlen(s) - start);
-	return (len);
-}
-
-int	remove_space_at_begging(const char *s, int start)
-{
-	while (s[start] == ' ')
-		start++;
-	return (start);
-}
-
 bool	return_substring(const char *s, int start, bool has_double_quotes)
 {
 	if (s[start] == ' ' && s[start + 1] == '\0')
 		return (true);
 	else if ((s[start] == ' ' && has_double_quotes == false)
-			&& (s[start + 1] == '>'|| s[start + 1] == '<'
+		&& (s[start + 1] == '>' || s[start + 1] == '<'
 			|| s[start + 1] == '|'))
 		return (true);
 	else if (s[start] == ' ' && is_operator_or_null(s[start - 1]) == 1
-			&& ft_isalpha(s[start + 1]) == 1 && has_double_quotes == false)
+		&& ft_isalpha(s[start + 1]) == 1 && has_double_quotes == false)
 		return (true);
 	return (false);
-}
-
-/*this substring was modified to remove space on the beginning*/
-char	*get_cmd(char const *s, int unsigned start, size_t len)
-{
-	char	*substring;
-	size_t	i;
-	bool	has_double_quotes;
-
-	i = 0;
-	if (!s)
-		return (NULL);
-	start = remove_space_at_begging(s, start);
-	len = check_len(s, start, len);
-	substring = ft_calloc(len + 1, sizeof(char));
-	if (substring == NULL)
-		return (NULL);
-	has_double_quotes = false;
-	while (i < len && start < ft_strlen(s))
-	{
-		if (s[start] == '"')
-				has_double_quotes = !has_double_quotes;
-		if (return_substring(s, start,
-				has_double_quotes) == true)
-			return (substring);
-		substring[i] = s[start];
-		i++;
-		start++;
-	}
-	return (substring);
-}
-void	minus_one_verificator(t_parser **parser)
-{
-	if ((*parser)->fd_infile == -1)
-		perror("bash");
-}
-
-void	exit_with_msg(char *str, int exit_nb)
-{
-	ft_putstr_fd(str, STDERR_FILENO);
-	exit(exit_nb);
 }

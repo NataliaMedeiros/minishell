@@ -6,13 +6,12 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/28 16:41:09 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/02 15:37:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-/*This functions remove quotes (simple or double) of the heredoc limiter*/
 static char	*remove_lim_quotes(char *limiter)
 {
 	char	*new_limiter;
@@ -36,9 +35,6 @@ static char	*remove_lim_quotes(char *limiter)
 	return (new_limiter);
 }
 
-/*This functions remove backslash of the heredoc limiter
-- Check if we should handle this, because I checked on
-bash and it removes the backslash*/
 static char	*remove_lim_backslash(char *limiter)
 {
 	char	*new_limiter;
@@ -75,7 +71,8 @@ char	*find_limiter(t_parser **parser)
 		limiter = (*parser)->infile->name;
 	return (limiter);
 }
-static void heredoc_child(t_parser **parser, t_data *data)
+
+static void	heredoc_child(t_parser **parser, t_data *data)
 {
 	char	*line;
 	char	*limiter;
@@ -121,27 +118,10 @@ int	handle_heredoc(t_parser **parser, t_data *data)
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid_child, &status, 0);
 	}
-	// if (WIFEXITED(status))
-	// {
-		int exit_code = WEXITSTATUS(status);
-		printf("Child exited with status: %d\n", exit_code);
-
-		// Verify if exit status is 130, indicating it was terminated by SIGINT
-		data->exit_code = exit_code;
-		if (exit_code == 130)
-		{
-			unlink((*parser)->infile->name);
-		}
-		if (exit_code == 0)
-		{
-			(*parser)->fd_infile = open((*parser)->infile->name,
-				O_RDONLY, 0644);
-		}
-	// }
-	// else
-	// {
-	// 	printf("Unhandled exit status: %d\n", status);
-	// }
-	printf("I've received the status: %d\n", status);
+	data->exit_code = WEXITSTATUS(status);
+	if (data->exit_code == 130)
+		unlink((*parser)->infile->name);
+	if (data->exit_code == 0)
+		(*parser)->fd_infile = open((*parser)->infile->name, O_RDONLY, 0644);
 	return (WEXITSTATUS(status));
 }

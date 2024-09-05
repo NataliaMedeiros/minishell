@@ -6,84 +6,40 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 14:04:48 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 10:37:28 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_pipe(t_parser **parser)
+void	write_space(char **temp, int *j)
 {
-	(*parser)->pipe = new_struct();
-	if ((*parser)->pipe == NULL)
-		return (error_msg("Failed to allocate memory for pipe\n"), 1);
-	(*parser) = (*parser)->pipe;
-	return (0);
+	(*temp)[*j] = ' ';
+	(*j)++;
 }
 
-int	fill_parser(t_data	data, t_parser	**parser)
+void	fill_conditional(char **temp, int *j, int *i, char *str)
 {
-	int		i;
-	bool	has_pipe;
-	bool	start_with_redirection;
-
-	i = 0;
-	has_pipe = false;
-	while (data.cmd_table[i] != NULL)
+	if (*i != 0 && ft_isalpha(str[*i - 1]) == 1)
+		write_space(temp, j);
+	if (*i == 0 || ft_isalpha(str[*i + 1]) == 1)
 	{
-		start_with_redirection = false;
-		if (data.cmd_table[i][0] == '|')
-		{
-			if (handle_pipe(parser) != 0)
-				return (error_msg("failure on handle pipe"), 1);
-			has_pipe = true;
-		}
-		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
-		{
-			if (i == 0)
-				start_with_redirection = true;
-			else if (has_pipe == true)
-				start_with_redirection = true;
-			if (handle_files(data, parser, i, start_with_redirection) != 0)
-				return (error_msg("failure on handle files"), 1);
-			i++;
-			// if (data.cmd_table[i + 1] != NULL)
-			// 	i++;
-			has_pipe = false;
-		}
-		else
-		{
-			if (fill_cmd(parser, data, i) != 0)
-				return (error_msg("failure on fill cmd"), 1);
-			has_pipe = false;
-		}
-		i++;
+		(*temp)[*j] = str[*i];
+		(*j)++;
+		if ((str[*i] == '<' && str[*i + 1] != '<')
+			|| (str[*i] == '>' && str[*i + 1] != '>'))
+			write_space(temp, j);
+		else if (str[*i] == '|' && str[*i + 1] != ' ')
+			write_space(temp, j);
+		(*i)++;
 	}
-	return (0);
-}
-
-void	exec_infile(t_parser **parser, t_data *data)
-{
-	while ((*parser)->infile->next != NULL)
-	{
-		if (ft_strcmp((*parser)->infile->type, "infile") == 0)
-		{
-			(*parser)->fd_infile = open((*parser)->infile->name,
-					O_RDONLY, 0644);
-			minus_one_verificator(parser);
-		}
-		else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-			handle_heredoc(parser, data);
-		(*parser)->infile = (*parser)->infile->next;
-	}
-	if (ft_strcmp((*parser)->infile->type, "infile") == 0)
-	{
-		(*parser)->fd_infile = open((*parser)->infile->name,
-				O_RDONLY, 0644);
-		minus_one_verificator(parser);
-	}
-	else if (ft_strcmp((*parser)->infile->type, "heredoc") == 0)
-		handle_heredoc(parser, data);
+	(*temp)[*j] = str[*i];
+	(*j)++;
+	if (((str[*i] == '<' && str[*i + 1] != '<')
+			|| (str[*i] == '>' && str[*i + 1] != '>'))
+		|| (str[*i] == '|' && (str[*i + 1] == '<' || str[*i + 1] == '>')))
+		write_space(temp, j);
+	(*i)++;
 }
 
 char	*add_spaces(char *str)
@@ -99,52 +55,26 @@ char	*add_spaces(char *str)
 		return (NULL);
 	while (str[i] != '\0')
 	{
-		if ((str[i] == '|' || str[i] == '>' || str[i] == '<') && (i == 0 /*|| ft_isalpha(str[i + 1]) == 1*/))
-		{
-			temp[j] = str[i];
-			j++;
-			if ((str[i] == '<' && str[i + 1] != '<') || (str[i] == '>' && str[i + 1] != '>'))
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			i++;
-		}
+		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
+			fill_conditional(&temp, &j, &i, str);
 		else
 		{
 			temp[j] = str[i];
 			j++;
 			i++;
 		}
-		if (str[i] == '|' || str[i] == '>' || str[i] == '<')
-		{
-			if(ft_isalpha(str[i - 1]) == 1)
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			temp[j] = str[i];
-			j++;
-			i++;
-			if (ft_isalpha(str[i]) == 1)
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			if ((str[i] == '<' && str[i + 1] != '<') && (str[i] == '>' && str[i + 1] != '>'))
-			{
-				temp[j] = ' ';
-				j++;
-			}
-			if (str[i - 1] == '|' && (str[i] == '<' || str[i] == '>'))
-			{
-				temp[j] = ' ';
-				j++;
-			}
-		}
 	}
-	printf("new str: %s\n", temp);
 	return (temp);
+}
+
+void	create_infiles(t_parser **temp, t_data *data)
+{
+	while (*temp != NULL)
+	{
+		if ((*temp)->infile != NULL)
+			exec_infile(temp, data);
+		*temp = (*temp)->pipe;
+	}
 }
 
 /*Function creates parser struct*/
@@ -160,8 +90,8 @@ int	parser(t_data *data)
 	ft_strcpy(cmd_line, data->cmd_line);
 	free(data->cmd_line);
 	data->cmd_line = add_spaces(cmd_line);
+	free(cmd_line);
 	data->cmd_table = split_cmds(*data);
-	// print_array(data->cmd_table);
 	if (data->cmd_table == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1); // free
 	data->parser = new_struct();
@@ -173,15 +103,7 @@ int	parser(t_data *data)
 		return (free_parsing(&head_parser),
 			error_msg("Failure on parsing\n"), 1);
 	temp = data->parser;
-	while (temp != NULL)
-	{
-		if (temp->infile != NULL)
-			exec_infile(&temp, data);
-		temp = temp->pipe;
-	}
-	print_struct(data->parser);
-	//free_array(0, &data.cmd_line);
-	//implement free parser
+	create_infiles(&temp, data);
+	// print_struct(data->parser);
 	return (0);
 }
-

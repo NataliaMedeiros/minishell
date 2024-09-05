@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/20 12:02:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/03 12:44:04 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static t_infile	*new_infile(char *name, char *type)
 	new_element->name = name;
 	new_element->type = type;
 	new_element->next = NULL;
-
 	return (new_element);
 }
 
@@ -41,9 +40,11 @@ static void	add_infile_back(t_infile **head, char *name, char *type)
 	new_node = new_infile(name, type);
 	current_node->next = new_node;
 }
-static t_infile	*handle_redirection_in(t_data data, t_parser **parser, int i, char *type)
+
+static t_infile	*handle_redirection_in(t_data data, t_parser **parser, int i,
+	char *type)
 {
-	char		**temp;
+	char	**temp;
 
 	temp = split_redirection_first(data.cmd_table[i + 1]);
 	i = 0;
@@ -60,18 +61,15 @@ static t_infile	*handle_redirection_in(t_data data, t_parser **parser, int i, ch
 	return ((*parser)->infile);
 }
 
-
-/*function to handle input redirection (<) and heredoc (<<).
-However the heredod still neds some implementation*/
-int	handle_infile(t_data data, t_parser **parser, int i, bool start_with_redirection)
+int	handle_infile(t_data data, t_parser **parser, int i, bool start_redirection)
 {
-	char		*type;
+	char	*type;
 
 	if (data.cmd_table[i][1] == '<')
 		type = "heredoc";
 	else
 		type = "infile";
-	if (start_with_redirection == true)
+	if (start_redirection == true)
 	{
 		(*parser)->infile = handle_redirection_in(data, parser, i, type);
 		if ((*parser)->infile == NULL)

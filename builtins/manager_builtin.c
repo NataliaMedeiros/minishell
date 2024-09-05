@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   manager_builtin.c                                  :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: nmedeiro <nmedeiro@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/08/30 16:00:02 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 16:11:04 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ bool	is_builtin(t_parser *parse_data, t_data *data)
 	if (data->parser->cmd == NULL)
 	{
 		return (free_parsing(&data->parser),
-			error_msg("data->parser->cmd is not initialized\n"), STDERR_FILENO);
+			error_msg("data->parser->cmd is not initialized"), STDERR_FILENO);
 	}
-	if (ft_strncmp(parse_data->cmd[0], "echo", 4) == 0)
-		return (echo_n(parse_data, fd), true);
-	else if (ft_strncmp(parse_data->cmd[0], "pwd", 4) == 0)
-		return (pwd(fd), true);
-	else if (ft_strncmp(parse_data->cmd[0], "cd", 2) == 0)
+	if (ft_strcmp(parse_data->cmd[0], "echo") == 0)
+		return (echo_n(parse_data, fd, data), true);
+	else if (ft_strcmp(parse_data->cmd[0], "pwd") == 0)
+		return (ft_pwd(fd, parse_data, data), true);
+	else if (ft_strcmp(parse_data->cmd[0], "cd") == 0)
 		return (ft_cd(parse_data, data), true);
-	else if (ft_strncmp(parse_data->cmd[0], "env\0", 4) == 0
-		&& parse_data->cmd[1] == NULL)
+	else if (ft_strcmp(parse_data->cmd[0], "env") == 0)
 		return (env_print(data, parse_data, fd), true);
-	else if (ft_strncmp(parse_data->cmd[0], "unset", 5) == 0)
+	else if (ft_strcmp(parse_data->cmd[0], "unset") == 0)
 		return (ft_unset(&data->env, parse_data), true);
-	else if(ft_strncmp(parse_data->cmd[0], "export", 5) == 0)
+	else if (ft_strcmp(parse_data->cmd[0], "export") == 0)
 		return (ft_export(&data->env, parse_data, fd), true);
+	else if (ft_strcmp(parse_data->cmd[0], "exit") == 0)
+		return (ft_exit(&data, parse_data), true);
 	else
 		return (false);
-	// falta o export and exit
 }

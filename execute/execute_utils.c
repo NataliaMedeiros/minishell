@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/26 16:24:28 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 11:47:15 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,19 @@ static char	*find_path_env(t_env *env)
 	return (NULL);
 }
 
-static char	*check_path(t_parser *parser, char **path)
+static char	*check_path(t_data *data, t_parser *parser)
 {
 	int		i;
 	char	*execute;
 	char	*part_path;
+	char	**path;
 
+	path = ft_split(find_path_env(data->env), ':');
+	if (path == NULL)
+	{
+		ft_putendl_fd(2, YEL"\tPATH DOESN'T EXIST, Unexpected Error"RESET);
+		return (NULL);
+	}
 	i = 0;
 	while (path[i])
 	{
@@ -63,20 +70,12 @@ void	free_split(char **array)
 char	*cmd_path_checker(t_data *data, t_parser *parser)
 {
 	char	*path;
-	char	**envp;
 
-	envp = ft_split(find_path_env(data->env), ':');
-	if (envp == NULL)
-	{
-		// ft_putendl_fd(2, "\033[0;33m\tNot PATH, Unexpected error\033[0m");
-		return (NULL);
-	}
 	if (access(parser->cmd[0], F_OK | X_OK) == 0)
 	{
-		path = ft_strdup(parser->cmd[0]); 
-		free_split(envp);
+		path = ft_strdup(parser->cmd[0]);
 	}
 	else
-		path = check_path(parser, envp);
+		path = check_path(data, parser);
 	return (path);
 }

@@ -3,38 +3,50 @@
 /*                                                        ::::::::            */
 /*   echo_n.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:27:23 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/19 14:56:26 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 15:27:45 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	echo_n(t_parser *parse, int fd)
+static void	put_echo(t_parser *parse, int fd, t_data *data)
 {
-	if (parse->cmd[1] != NULL)
+	int	i;
+
+	i = 0;
+	if (ft_strcmp(parse->cmd[1], "$?") == 0)
 	{
-		if (ft_strncmp(parse->cmd[0], "echoo", 5) == 0)
+		while (parse->cmd[1][i] != '\0')
 		{
-			ft_putendl_fd(STDERR_FILENO, "Command not Found");
-			// exit(127);
-		}
-		else if (ft_strncmp(parse->cmd[0], "echo", 4) == 0)
-		{
-			if (parse->flag == true)
-				ft_putstr_fd(parse->cmd[1], fd);
-			else
-				ft_putendl_fd(fd, parse->cmd[1]);
+			if (parse->cmd[1][i] == '$' && parse->cmd[1][i + 1] == '?')
+			{
+				ft_putnbr_fd(data->exit_code, fd);
+				ft_putchar_fd('\n', fd);
+			}
+			i++;
 		}
 	}
 	else
 	{
-		
-		if (ft_strncmp(parse->cmd[0], "echoo", 5) == 0)
-			ft_putendl_fd(STDERR_FILENO, "Command not Found");
+		if (parse->flag == true)
+			ft_putstr_fd(parse->cmd[1], fd);
 		else
-			ft_putendl_fd(fd, "");
+			ft_putendl_fd(fd, parse->cmd[1]);
+	}
+	data->exit_code = 0;
+}
+
+void	echo_n(t_parser *parse, int fd, t_data *data)
+{
+	if (parse->cmd[1] != NULL)
+	{
+		put_echo(parse, fd, data);
+	}
+	else
+	{
+		ft_putendl_fd(fd, "");
 	}
 }
