@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/05 12:42:14 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 17:20:01 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void		export_sorting(t_env **env, int fd);
 void		keyword_with_info(char *cmd, t_env **env, t_data *data);
 void		add_node_env(t_env **env, char *var_name, char *var_value);
 bool		env_node_checker(t_env **env, char *kw, char *info, t_data *d);
+void		ft_exit(t_data *data, t_parser *parser);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
@@ -190,8 +191,6 @@ int			fill_parser(t_data	data, t_parser	**parser);
 bool		return_substring(const char *s, int start, bool has_double_quotes);
 
 void		exec_infile(t_parser **parser, t_data *data);
-
-void		ft_exit(t_data **data, t_parser *parser);
 
 char		*get_var(char *line, int start, t_data data);
 
