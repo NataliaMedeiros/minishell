@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/05 12:13:50 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 12:42:14 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void		ft_export(t_env **env, t_parser *parser, int fd, t_data *data);
 void		export_sorting(t_env **env, int fd);
 void		keyword_with_info(char *cmd, t_env **env, t_data *data);
 void		add_node_env(t_env **env, char *var_name, char *var_value);
-bool		env_node_checker(t_env **env, char *keyword, char *info, t_data *data);
+bool		env_node_checker(t_env **env, char *kw, char *info, t_data *d);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);

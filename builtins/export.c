@@ -6,28 +6,28 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/05 12:17:20 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 12:41:39 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	env_node_checker(t_env **env, char *keyword, char *info, t_data *data)
+bool	env_node_checker(t_env **env, char *kw, char *info, t_data *d)
 {
 	t_env	*temp;
 
 	temp = (*env);
-	if (keyword == NULL)
-		return (error_msg("strjoin Error"), true);
-	if (ft_isalpha(keyword[0]) == 0)
+	if (kw == NULL)
+		return (error_msg("strjoin Error"), d->exit_code = 1, true);
+	if (ft_isalpha(kw[0]) == 0)
 	{
 		ft_putstr_fd("export: ", STDERR_FILENO);
-		ft_putstr_fd(keyword, STDERR_FILENO);
-		return (error_msg(" : not a valid identifier"), free(keyword), data->exit_code = 1, true);
+		ft_putstr_fd(kw, STDERR_FILENO);
+		return (error_msg(" : not valid"), free(kw), d->exit_code = 1, true);
 	}
 	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->key_word, keyword, sizeof(keyword)) == 0)
+		if (ft_strncmp(temp->key_word, kw, sizeof(kw)) == 0)
 		{
 			if (info != NULL)
 			{
