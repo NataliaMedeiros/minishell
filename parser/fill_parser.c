@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/29 16:36:53 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/03 12:42:41 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/06 17:38:05 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	handle_pipe(t_parser **parser)
 	return (0);
 }
 
-int	fill_parser(t_data	data, t_parser	**parser) //reduzir linhas, pensei em usar o exit pra isso
+int	fill_parser(t_data	data, t_parser	**parser)
 {
 	int		i;
 	bool	has_pipe;

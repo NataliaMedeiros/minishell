@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 14:28:09 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/06 16:52:00 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	fill_temp(char **temp, int i, char *cmd, int j)
 		temp[0] = ft_calloc((i + 1), sizeof(char));
 		if (temp[0] == NULL)
 			return ;
-		ft_strlcpy(temp[0], cmd, i + 1);
+		ft_strlcpy(temp[0], cmd, (i + 1));
 	}
 	else
 	{
-		temp[1] = ft_calloc((i + 1), sizeof(char));
+		temp[1] = ft_calloc((j - i + 1), sizeof(char));
 		if (temp[1] == NULL)
 			return ;
 		ft_strlcpy(temp[1], cmd + i, (j - i + 1));

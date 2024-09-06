@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 13:52:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/06 13:30:21 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/06 16:57:38 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ bool	is_input_valid(char *cmd)
 	char	operator;
 
 	i = 0;
-	if ((cmd[0] == '>' || cmd[0] == '<' || cmd[0] == '|') 
-		&& (cmd[1] == '>' || cmd[1] == '<' || cmd[1] == '|') && (cmd[2] == '\0'))
+	if (has_no_arg(cmd) == false)
 		return (error_msg("Syntax Error"), free(cmd), false);
 	if (has_cmd_before_operator(cmd) == false)
 		return (error_msg("Syntax Error"), free(cmd), false);
