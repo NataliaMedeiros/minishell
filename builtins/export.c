@@ -6,28 +6,28 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 14:45:05 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/05 12:41:39 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-bool	env_node_checker(t_env **env, char *keyword, char *info)
+bool	env_node_checker(t_env **env, char *kw, char *info, t_data *d)
 {
 	t_env	*temp;
 
 	temp = (*env);
-	if (keyword == NULL)
-		return (error_msg("strjoin Error"), true);
-	if (ft_isalpha(keyword[0]) == 0)
+	if (kw == NULL)
+		return (error_msg("strjoin Error"), d->exit_code = 1, true);
+	if (ft_isalpha(kw[0]) == 0)
 	{
 		ft_putstr_fd("export: ", STDERR_FILENO);
-		ft_putstr_fd(keyword, STDERR_FILENO);
-		return (error_msg(" : not a valid identifier"), free(keyword), true);
+		ft_putstr_fd(kw, STDERR_FILENO);
+		return (error_msg(" : not valid"), free(kw), d->exit_code = 1, true);
 	}
 	while (temp != NULL)
 	{
-		if (ft_strncmp(temp->key_word, keyword, sizeof(keyword)) == 0)
+		if (ft_strncmp(temp->key_word, kw, sizeof(kw)) == 0)
 		{
 			if (info != NULL)
 			{
@@ -72,7 +72,7 @@ void	add_node_env(t_env **env, char *var_name, char *var_value)
 	free(var_name);
 }
 
-void	ft_export(t_env **env, t_parser *parser, int fd)
+void	ft_export(t_env **env, t_parser *parser, int fd, t_data *data)
 {
 	char	*keyword;
 	int		i;
@@ -87,11 +87,11 @@ void	ft_export(t_env **env, t_parser *parser, int fd)
 		while (current_cmd[i] != NULL)
 		{
 			if (ft_strchr(current_cmd[i], '=') != NULL)
-				keyword_with_info(current_cmd[i], env);
+				keyword_with_info(current_cmd[i], env, data);
 			else
 			{
-				keyword = ft_strcharjoin(current_cmd[i], '=');
-				if (env_node_checker(env, keyword, NULL) == false)
+				keyword = ft_strdup(current_cmd[i]);
+				if (env_node_checker(env, keyword, NULL, data) == false)
 					add_node_env(env, keyword, NULL);
 			}
 			i++;

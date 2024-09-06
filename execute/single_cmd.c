@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/02 15:10:37 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/05 11:33:14 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	checker_fd_dup(t_data *data)
 			return (perror("Problem Dup Single CMD IN"), false);
 		close(data->parser->fd_infile);
 	}
-	if (data->parser->fd_outfile != -2)
+	if (data->parser->fd_outfile != -2 && data->parser->fd_outfile != -1)
 	{
 		if (dup2(data->parser->fd_outfile, STDOUT_FILENO) == -1)
 			return (perror("Problem Dup Single CMD OUT"), false);
@@ -37,6 +37,7 @@ int	one_cmd(t_data *data, char *path)
 	int		status;
 
 	pid_child = fork();
+	handle_signals(CHILD);
 	if (pid_child == -1)
 		error_msg("Problem forking");
 	if (pid_child == 0)
@@ -47,6 +48,7 @@ int	one_cmd(t_data *data, char *path)
 			execve(path, data->parser->cmd, data->envp);
 		ft_putstr_fd("Command not found: ", STDERR_FILENO);
 		ft_putendl_fd(STDERR_FILENO, data->parser->cmd[0]);
+		clean_helper(data, path);
 		exit (127);
 	}
 	if (data->parser->fd_infile != -2 && data->parser->fd_infile != -1)

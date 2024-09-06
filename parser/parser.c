@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 13:05:55 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/06 14:52:32 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,6 @@ int	parser(t_data *data)
 			error_msg("Failure on parsing\n"), 1);
 	temp = data->parser;
 	create_infiles(&temp, data);
-	// print_struct(data->parser);
+	//print_struct(data->parser);
 	return (0);
 }

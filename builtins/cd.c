@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/08/23 10:03:06 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/04 15:46:57 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 			if (opendir(data->cmd[1]) == NULL)
 			{
 				perror("cd");
+				info->exit_code = 1;
 				return (false);
 			}
 		}
@@ -62,7 +63,7 @@ static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 	else
 	{
 		perror("cd");
-		return (false);
+		return (info->exit_code = 1, false);
 	}
 	return (true);
 }
@@ -76,8 +77,7 @@ static char	*home_dir(t_env *env, char *old_pwd)
 		return (NULL);
 	if (chdir(home) == -1)
 	{
-		error_msg("HOME NOT FOUND");
-		exit (EXIT_FAILURE);
+		return (NULL);
 	}
 	change_pwd_value(env, old_pwd, home);
 	return (home);
@@ -91,10 +91,14 @@ static void	minus_case(t_data *info)
 	if (old_pwd == NULL)
 	{
 		error_msg("OLDPWD not found");
+		info->exit_code = 1;
 		return ;
 	}
 	if (chdir(old_pwd) == -1)
+	{
+		info->exit_code = 1;
 		return ;
+	}
 	else
 	{
 		ft_putendl_fd(STDOUT_FILENO, old_pwd);
@@ -109,7 +113,8 @@ void	ft_cd(t_parser *data, t_data *info)
 
 	if (data->cmd[1] && data->cmd[2] != NULL)
 	{
-		error_msg("Too many arguments");
+		ft_putendl_fd(STDERR_FILENO, "Too many arguments");
+		info->exit_code = 1;
 		return ;
 	}
 	old_pwd = getcwd(NULL, 0);
@@ -118,6 +123,7 @@ void	ft_cd(t_parser *data, t_data *info)
 		home = home_dir(info->env, old_pwd);
 		if (home == NULL)
 			ft_putendl_fd(STDOUT_FILENO, "HOME Deleted from ENV");
+		info->exit_code = 1;
 		return ;
 	}
 	else if (data->cmd[1][0] == '-')
