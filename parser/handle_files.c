@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 17:58:48 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/06 14:28:09 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,13 @@ char	**split_redirection_first(char *cmd)
 	while (cmd[i] != ' ' && cmd[i] != '\0')
 		i++;
 	fill_temp(temp, i, cmd, j);
-	i++;
+	if (temp[0] == NULL)
+		return (free_array(3, temp), NULL);
 	j = i;
 	while (cmd[j] != '\0')
 		j++;
 	if (j > i)
 		fill_temp(temp, i, cmd, j);
-	if (temp[0] == NULL || temp[1] == NULL)
-		return (free_array(3, temp), NULL);
 	return (temp);
 }
 
