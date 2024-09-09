@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/06 17:37:42 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 11:29:23 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	free_infile(t_infile *infile)
 	while (infile)
 	{
 		temp = infile;
-		infile = infile->next;
 		if (ft_strcmp(temp->type, "heredoc") == 0)
 			unlink(temp->name);
 		free(temp);
+		infile = infile->next;
 	}
 }
 

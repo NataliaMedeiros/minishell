@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 16:57:12 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 11:26:58 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,5 +195,6 @@ void		exec_infile(t_parser **parser, t_data *data);
 char		*get_var(char *line, int start, t_data data);
 
 bool		has_no_arg(char *cmd);
+void	free_infile(t_infile *infile);
 
 #endif

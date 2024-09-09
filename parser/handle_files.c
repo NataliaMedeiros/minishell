@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 16:52:00 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 11:40:32 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	handle_files(t_data data, t_parser **parser, int i, bool has_pipe)
 {
 	bool	start_with_redirection;
 
-	if (i == 0 || has_pipe == true)
+	if (i == 0 || has_pipe == true || (*parser)->cmd == NULL)
 		start_with_redirection = true;
 	else
 		start_with_redirection = false;
