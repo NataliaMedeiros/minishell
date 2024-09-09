@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/04 14:11:09 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 12:11:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	return (0);
 }
 
-int	fill_cmd(t_parser **parser, t_data data, int i)
+int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 {
 	if (ft_strncmp(data.cmd_table[i], "echo", 4) == 0)
 	{
@@ -114,5 +114,6 @@ int	fill_cmd(t_parser **parser, t_data data, int i)
 		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
 	if ((*parser)->cmd == NULL)
 		return (1);
+	has_pipe = false;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/09 12:02:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 12:17:35 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int	one_cmd(t_data *data, char *path)
 		exit (127);
 	}
 	handle_fd_infile(&data);
-	// if (data->parser->fd_infile != -2 && data->parser->fd_infile != -1)
-	// 	close(data->parser->fd_infile);
 	if (data->parser->fd_outfile != -2 && data->parser->fd_outfile != -1)
 		close(data->parser->fd_outfile);
 	waitpid(pid_child, &status, 0);

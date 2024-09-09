@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/23 15:10:34 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/09 11:40:32 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 12:15:38 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ char	**split_redirection_first(char *cmd)
 	return (temp);
 }
 
-int	handle_files(t_data data, t_parser **parser, int i, bool has_pipe)
+int	handle_files(t_data data, t_parser **parser, int i, bool *has_pipe)
 {
 	bool	start_with_redirection;
 
-	if (i == 0 || has_pipe == true || (*parser)->cmd == NULL)
+	if (i == 0 || *has_pipe == true || (*parser)->cmd == NULL)
 		start_with_redirection = true;
 	else
 		start_with_redirection = false;
@@ -83,5 +83,6 @@ int	handle_files(t_data data, t_parser **parser, int i, bool has_pipe)
 		if (handle_infile(data, parser, i, start_with_redirection) != 0)
 			return (error_msg("failure on handle infile"), 1);
 	}
+	*has_pipe = false;
 	return (0);
 }

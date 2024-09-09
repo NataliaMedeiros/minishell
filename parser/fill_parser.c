@@ -6,17 +6,18 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/29 16:36:53 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 17:38:05 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 12:28:39 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	handle_pipe(t_parser **parser)
+int	handle_pipe(t_parser **parser, bool *has_pipe)
 {
 	(*parser)->pipe = new_struct();
 	if ((*parser)->pipe == NULL)
 		return (error_msg("Failed to allocate memory for pipe\n"), 1);
+	*has_pipe = true;
 	(*parser) = (*parser)->pipe;
 	return (0);
 }
@@ -32,23 +33,18 @@ int	fill_parser(t_data	data, t_parser	**parser)
 	{
 		if (data.cmd_table[i][0] == '|')
 		{
-			if (handle_pipe(parser) != 0)
+			if (handle_pipe(parser, &has_pipe) != 0)
 				return (error_msg("failure on handle pipe"), 1);
-			has_pipe = true;
 		}
 		else if (data.cmd_table[i][0] == '>' || data.cmd_table[i][0] == '<')
 		{
-			if (handle_files(data, parser, i, has_pipe) != 0)
+			if (handle_files(data, parser, i, &has_pipe) != 0)
 				return (error_msg("failure on handle files"), 1);
 			i++;
-			has_pipe = false;
 		}
 		else
-		{
-			if (fill_cmd(parser, data, i) != 0)
+			if (fill_cmd(parser, data, i, &has_pipe) != 0)
 				return (error_msg("failure on fill cmd"), 1);
-			has_pipe = false;
-		}
 		i++;
 	}
 	return (0);
