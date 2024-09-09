@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 13:52:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/06 16:57:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 15:48:03 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static bool	has_cmd_before_operator(char	*cmd)
 static bool	has_cmd_after_operator(char	*cmd, int i)
 {
 	if (cmd[i + 1] == '\0' || cmd[i + 1] == '|')
+		return (false);
+	if ((cmd[i + 1] == '>' || cmd[i + 1] == '<') && cmd[i + 2] == '\0')
 		return (false);
 	if (i != 0 && ((cmd[i] == '>' && cmd[i - 1] == '<')
 			|| (cmd[i] == '<' && cmd[i - 1] == '>')))

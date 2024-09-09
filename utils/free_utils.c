@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/09 11:29:23 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 15:38:57 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ void	free_infile(t_infile *infile)
 {
 	t_infile	*temp;
 
-	while (infile)
-	{
+	// while (infile)
+	// {
 		temp = infile;
+		// infile = infile->next;
 		if (ft_strcmp(temp->type, "heredoc") == 0)
 			unlink(temp->name);
+		free(temp->name);
 		free(temp);
-		infile = infile->next;
-	}
+	// }
 }
 
 void	free_parser(t_parser **parser)
@@ -72,8 +73,10 @@ void	free_parser(t_parser **parser)
 		*parser = (*parser)->pipe;
 		if (temp->cmd != NULL)
 			free_array(0, temp->cmd);
-		free(temp->outfile);
-		free_infile(temp->infile);
+		if (temp->outfile != NULL)
+			free(temp->outfile);
+		if (temp->infile != NULL)
+			free_infile(temp->infile);
 		free(temp);
 	}
 }

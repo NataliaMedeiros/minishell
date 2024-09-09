@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 17:46:43 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 17:09:17 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp)
 	{
 		if (path != NULL)
 			execve(path, temp->cmd, data->envp);
-		ft_putstr_fd("Command NOT found: ", STDERR_FILENO);
-		ft_putendl_fd(STDERR_FILENO, temp->cmd[0]);
+		ft_putstr_fd("Command NOT found", STDERR_FILENO);
 		clean_helper(data, path);
 		exit (127);
 	}
@@ -100,10 +99,15 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		temp = temp->pipe;
 	}
 	close(exec.prev_read);
+	waitpid(exec.pid_child, &exec.status, 0);
+	if (WIFEXITED(exec.status))
+		data->exit_code = WEXITSTATUS(exec.status);
+	else if (WIFSIGNALED(exec.status))
+		data->exit_code = WTERMSIG(exec.status) + 128;
 	while (waitpid(-1, &exec.status, 0) > 0)
 	{
-		if (WIFEXITED(exec.status))
-			data->exit_code = WEXITSTATUS(exec.status);
+		// if (WIFEXITED(exec.status))
+		// 	data->exit_code = WEXITSTATUS(exec.status);
 	}
 	return (data->exit_code);
 }

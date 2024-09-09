@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/09 11:27:22 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 13:26:02 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,6 @@ static int	change_fd(t_parser *parser)
 	return (fd);
 }
 
-void	check_unlink(t_parser **parser)
-{
-	if ((*parser)->outfile != NULL) // Why unlink the outfile?
-		unlink((*parser)->outfile);
-	if ((*parser)->infile != NULL) //Shouldn't this be just to heredoc? And unlink the full struct?
-	{
-		free_infile((*parser)->infile);
-	}
-}
-
 bool	is_builtin(t_parser *parser, t_data *data)
 {
 	int	fd;
@@ -40,7 +30,8 @@ bool	is_builtin(t_parser *parser, t_data *data)
 	fd = change_fd(parser);
 	if (data->parser->cmd == NULL)
 	{
-		check_unlink(&parser);
+		if (parser->infile != NULL)
+			handle_fd_infile(&data);
 		return (free_parsing(&data->parser), true);
 	}
 	if (ft_strcmp(parser->cmd[0], "echo") == 0)

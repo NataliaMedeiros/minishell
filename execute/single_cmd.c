@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/09 12:17:35 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 14:41:59 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,15 @@ static bool	checker_fd_dup(t_data *data)
 
 void	handle_fd_infile(t_data **data)
 {
-	while ((*data)->parser->infile != NULL)
+	if ((*data)->parser->fd_infile != -2
+		&& (*data)->parser->fd_infile != -1)
 	{
-		if ((*data)->parser->fd_infile != -2
-			&& (*data)->parser->fd_infile != -1)
+		if (ft_strcmp((*data)->parser->infile->type, "infile") == 0)
+			close((*data)->parser->fd_infile);
+		else
 		{
-			if (ft_strcmp((*data)->parser->infile->type, "infile") == 0)
-				close((*data)->parser->fd_infile);
-			else
-				unlink((*data)->parser->infile->name);
+			unlink((*data)->parser->infile->name);
 		}
-		(*data)->parser->infile = (*data)->parser->infile->next;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/09 12:17:49 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 17:46:31 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			parser(t_data *data);
 int			nb_commands(char *cmd_line);
 
 /* parser_heredoc */
-int			handle_heredoc(t_parser **parser, t_data *data);
+void		handle_heredoc(t_parser **parser, t_data *data);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -193,5 +193,7 @@ char		*get_var(char *line, int start, t_data data);
 
 bool		has_no_arg(char *cmd);
 void		free_infile(t_infile *infile);
+void		handle_fd_infile(t_data **data);
+void		sig_heredoc(int signum);
 
 #endif

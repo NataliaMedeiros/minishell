@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/09 12:11:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 18:09:07 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,16 @@ int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 			return (1);
 	}
 	else
+	{
 		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
-	if ((*parser)->cmd == NULL)
-		return (1);
+		if ((*parser)->cmd == NULL)
+			return (1);
+		// int i = 0;
+		// while (parser->cmd[i])
+		// {
+		// 	handle_dollar_sign(parser->cmd[i], data);
+		// }
+	}
 	has_pipe = false;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 17:33:34 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 16:47:50 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	data.exit_code = 0;
 	if (init_prompt(&data) == false)
-		return (free_env(&data.env), -1);
+		return (free_env(&data.env), data.exit_code);
 	rl_clear_history();
 	cleanup(&data);
 	if (data.env != NULL)

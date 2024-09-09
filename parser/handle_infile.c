@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:27:24 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/09 12:20:38 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 15:29:44 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_infile	*handle_redirection_in(t_data data, t_parser **parser, int i,
 		(*parser)->infile = new_infile(temp[0], type);
 	else
 		add_infile_back(&(*parser)->infile, temp[0], type);
-	free(temp);
+	free_array(0, temp);
 	return ((*parser)->infile);
 }
 
