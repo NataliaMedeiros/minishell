@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/10 13:45:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 17:37:22 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,10 @@ void	free_parser(t_parser **parser)
 		*parser = (*parser)->pipe;
 		if (temp->cmd != NULL)
 			free_array(0, temp->cmd);
+		if (temp->fd_outfile != -2 && temp->fd_outfile != -1)
+			close(temp->fd_outfile);
+		if (temp->fd_infile != -2 && temp->fd_infile != -1)
+			close(temp->fd_infile);
 		if (temp->outfile != NULL)
 			free(temp->outfile);
 		if (temp->infile != NULL)
