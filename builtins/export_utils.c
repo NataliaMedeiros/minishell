@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/30 15:40:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/05 12:33:18 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 16:38:31 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,27 @@
 
 void	keyword_with_info(char *cmd, t_env **env, t_data *data)
 {
-	char	**array;
 	char	*keyword;
+	char	*info;
+	int		position;
+	char	*temp;
 
-	array = ft_split(cmd, '=');
-	if (array != NULL)
+	temp = cmd;
+	position = ft_strchr_pos(cmd, '=');
+	info = ft_strchr(temp, '=') + 1;
+	keyword = malloc(position + 2 * sizeof(char));
+	if (keyword == NULL)
 	{
-		keyword = ft_strcharjoin(array[0], '=');
-		if (env_node_checker(env, keyword, array[1], data) == false)
-		{
-			add_node_env(env, keyword, array[1]);
-			free_split(array);
-		}
+		data->exit_code = 1;
+		return ;
 	}
-	else
-		error_msg("Split Error");
+	ft_strlcpy(keyword, cmd, position + 2);
+	if (env_node_checker(env, keyword, info) == false)
+	{
+		add_node_env(env, keyword, info);
+	}
+	if (keyword != NULL)
+		free(keyword);
 }
 
 static void	export_print(t_env *last_printed, int fd)
