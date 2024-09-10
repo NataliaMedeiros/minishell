@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/20 14:30:30 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/10 12:39:11 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 14:00:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	sig_heredoc(int signum)
 	if (signum == SIGINT)
 	{
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		ft_putchar_fd('\n', STDOUT_FILENO);
+		rl_replace_line("", 0);
 	}
 }
 

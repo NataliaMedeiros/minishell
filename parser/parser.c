@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/10 10:57:48 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 13:46:08 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,20 +106,3 @@ int	parser(t_data *data)
 	create_infiles(&temp, data);
 	return (0);
 }
-
-
-	// temp = data->parser;
-	// while (temp->infile->next != NULL)
-	// {
-	// 	if (temp->fd_infile != -2
-	// 	&& temp->fd_infile != -1)
-	// {
-	// 	if (ft_strcmp(temp->infile->type, "infile") == 0)
-	// 		close(temp->fd_infile);
-	// 	else
-	// 	{
-	// 		unlink(temp->infile->name);
-	// 	}
-	// }
-	// temp->infile = temp->infile->next;
-	// }

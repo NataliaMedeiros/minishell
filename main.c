@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/10 12:09:45 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 14:35:54 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,30 @@ void	handle_readline(t_data *data)
 	printf("exit\n");
 }
 
-bool	init_prompt(t_data *data)
+static bool	first_step(t_data *data)
 {
 	char	*temp;
 
+	temp = readline("[minishell]: ");
+	if (temp == NULL)
+	{
+		handle_readline(data);
+		free(temp);
+		return (false);
+	}
+	data->cmd_line = ft_strtrim(temp, "\t\n\v\n ");
+	free(temp);
+	add_history(data->cmd_line);
+	return (true);
+}
+
+bool	init_prompt(t_data *data)
+{
 	while (1)
 	{
 		handle_signals(PARENT);
-		temp = readline("[minishell]: ");
-		if (temp == NULL)
-			return (handle_readline(data), free(temp), false);
-		data->cmd_line = ft_strtrim(temp, "\t\n\v\n ");
-		free(temp);
-		add_history(data->cmd_line);
+		if (first_step(data) == false)
+			return (false);
 		if (is_input_valid(data->cmd_line) == true)
 		{
 			if (data->cmd_line[0] != '\0')

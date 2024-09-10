@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/10 10:28:39 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 13:43:36 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	change_pwd_value(t_env *env, char *oldpwd, char *pwd)
 		temp = temp->next;
 	}
 	if (verificator == 7)
-		return (free(oldpwd) ,true);
+		return (free(oldpwd), true);
 	else
 		return (free(oldpwd), false);
 }
