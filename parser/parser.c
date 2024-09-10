@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 14:52:32 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 18:03:48 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,15 +69,14 @@ char	*add_spaces(char *str)
 
 void	create_infiles(t_parser **temp, t_data *data)
 {
-	while (*temp != NULL)
+	while ((*temp) != NULL)
 	{
 		if ((*temp)->infile != NULL)
 			exec_infile(temp, data);
-		*temp = (*temp)->pipe;
+		(*temp) = (*temp)->pipe;
 	}
 }
 
-/*Function creates parser struct*/
 int	parser(t_data *data)
 {
 	t_parser	*head_parser;
@@ -93,7 +92,7 @@ int	parser(t_data *data)
 	free(cmd_line);
 	data->cmd_table = split_cmds(*data);
 	if (data->cmd_table == NULL)
-		return (error_msg("Failure on create cmd list\n"), 1); // free
+		return (error_msg("Failure on create cmd list\n"), 1);
 	data->parser = new_struct();
 	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n",
@@ -102,8 +101,25 @@ int	parser(t_data *data)
 	if (fill_parser((*data), &head_parser) != 0)
 		return (free_parsing(&head_parser),
 			error_msg("Failure on parsing\n"), 1);
+	print_struct(data->parser);
 	temp = data->parser;
 	create_infiles(&temp, data);
-	//print_struct(data->parser);
 	return (0);
 }
+
+
+	// temp = data->parser;
+	// while (temp->infile->next != NULL)
+	// {
+	// 	if (temp->fd_infile != -2
+	// 	&& temp->fd_infile != -1)
+	// {
+	// 	if (ft_strcmp(temp->infile->type, "infile") == 0)
+	// 		close(temp->fd_infile);
+	// 	else
+	// 	{
+	// 		unlink(temp->infile->name);
+	// 	}
+	// }
+	// temp->infile = temp->infile->next;
+	// }

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 13:38:54 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/06 15:29:11 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	handle_redirection_out(t_data data, t_parser **parser, int i)
 	}
 	(*parser)->outfile = ft_strdup(temp[0]);
 	if ((*parser)->outfile == NULL)
-		return (free_array(0, temp), 1);
+		return (free_array(0, temp), free((*parser)->outfile), 1);
 	return (free_array(0, temp), 0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:34:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/05 12:12:14 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/06 17:01:40 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	ft_unset(t_env **env, t_parser *parser, t_data *data)
 	current_cmd = parser->cmd;
 	while (current_cmd[i] != NULL)
 	{
+		node_checker(env, current_cmd[i]);
 		cmd = ft_strcharjoin(current_cmd[i], '=');
 		if (cmd == NULL)
 		{

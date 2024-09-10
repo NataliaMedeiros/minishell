@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/05 17:20:01 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 17:46:31 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			parser(t_data *data);
 int			nb_commands(char *cmd_line);
 
 /* parser_heredoc */
-int			handle_heredoc(t_parser **parser, t_data *data);
+void		handle_heredoc(t_parser **parser, t_data *data);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -116,7 +116,7 @@ void		free_parsing(t_parser **parser);
 int			pipe_counter(t_parser *parser);
 
 /* parser_fill_cmd */
-int			fill_cmd(t_parser **parser, t_data data, int i);
+int			fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe);
 
 /* utils */
 void		error_msg(char *msg);
@@ -154,8 +154,9 @@ char		*remove_quotes(char *limiter);
 char		*remove_flags(char *arg);
 
 /*handle file*/
-int			handle_files(t_data data, t_parser **parser, int i,
-				bool start_with_redirection);
+int			handle_files(t_data data, t_parser **parser, int i, bool *has_pipe);
+int			handle_infile(t_data data, t_parser **parser, int i,
+				bool start_redirection);
 
 bool		has_quotes(char *arg);
 
@@ -178,10 +179,6 @@ void		handle_signals(int proc);
 
 int			handle_outfile(t_data data, t_parser **parser, int i,
 				bool start_with_redirection);
-int			handle_infile(t_data data, t_parser **parser, int i,
-				bool start_with_redirection);
-int			handle_files(t_data data, t_parser **parser, int i,
-				bool start_with_redirection);
 char		**split_redirection_first(char *cmd);
 
 void		exit_with_msg(char *str, int exit_nb);
@@ -193,5 +190,10 @@ bool		return_substring(const char *s, int start, bool has_double_quotes);
 void		exec_infile(t_parser **parser, t_data *data);
 
 char		*get_var(char *line, int start, t_data data);
+
+bool		has_no_arg(char *cmd);
+void		free_infile(t_infile *infile);
+void		handle_fd_infile(t_data **data);
+void		sig_heredoc(int signum);
 
 #endif

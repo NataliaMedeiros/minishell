@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/02 15:37:56 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/09 17:47:47 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	heredoc_child(t_parser **parser, t_data *data)
 	exit(EXIT_SUCCESS);
 }
 
-int	handle_heredoc(t_parser **parser, t_data *data)
+void	handle_heredoc(t_parser **parser, t_data *data)
 {
 	pid_t	pid_child;
 	int		status;
@@ -109,19 +109,22 @@ int	handle_heredoc(t_parser **parser, t_data *data)
 	status = 0;
 	pid_child = fork();
 	if (pid_child < 0)
-		return (perror("Fork error"), EXIT_FAILURE);
+	{
+		perror("Fork error");
+		return ;
+	}
 	if (pid_child == 0)
 		heredoc_child(parser, data);
 	else
 	{
-		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, sig_heredoc);
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid_child, &status, 0);
 	}
 	data->exit_code = WEXITSTATUS(status);
-	if (data->exit_code == 130)
-		unlink((*parser)->infile->name);
+	// if (data->exit_code == 130)
+	// 	free_infile((*parser)->infile);
 	if (data->exit_code == 0)
 		(*parser)->fd_infile = open((*parser)->infile->name, O_RDONLY, 0644);
-	return (WEXITSTATUS(status));
+	// return (WEXITSTATUS(status));
 }

@@ -6,11 +6,19 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 14:34:38 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 16:47:50 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_readline(t_data *data)
+{
+	if (data->env != NULL)
+		free_env(&data->env);
+	rl_clear_history();
+	printf("exit\n");
+}
 
 bool	init_prompt(t_data *data)
 {
@@ -21,14 +29,7 @@ bool	init_prompt(t_data *data)
 		handle_signals(PARENT);
 		temp = readline("[minishell]: ");
 		if (temp == NULL)
-		{
-			free(temp);
-			if (data->env != NULL)
-				free_env(&data->env);
-			rl_clear_history();
-			printf("exit\n");
-			exit(EXIT_FAILURE);
-		}
+			return (handle_readline(data), free(temp), false);
 		data->cmd_line = ft_strtrim(temp, "\t\n\v\n ");
 		free(temp);
 		add_history(data->cmd_line);
@@ -64,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	data.exit_code = 0;
 	if (init_prompt(&data) == false)
-		return (free_env(&data.env), -1);
+		return (free_env(&data.env), data.exit_code);
 	rl_clear_history();
 	cleanup(&data);
 	if (data.env != NULL)

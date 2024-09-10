@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/06 14:03:15 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 13:26:02 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ bool	is_builtin(t_parser *parser, t_data *data)
 	fd = change_fd(parser);
 	if (data->parser->cmd == NULL)
 	{
-		if (parser->outfile != NULL)
-			unlink(parser->outfile);
 		if (parser->infile != NULL)
-			unlink(parser->infile->name);
+			handle_fd_infile(&data);
 		return (free_parsing(&data->parser), true);
 	}
 	if (ft_strcmp(parser->cmd[0], "echo") == 0)

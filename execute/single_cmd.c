@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/05 11:33:14 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 14:41:59 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ static bool	checker_fd_dup(t_data *data)
 	return (true);
 }
 
+void	handle_fd_infile(t_data **data)
+{
+	if ((*data)->parser->fd_infile != -2
+		&& (*data)->parser->fd_infile != -1)
+	{
+		if (ft_strcmp((*data)->parser->infile->type, "infile") == 0)
+			close((*data)->parser->fd_infile);
+		else
+		{
+			unlink((*data)->parser->infile->name);
+		}
+	}
+}
+
 int	one_cmd(t_data *data, char *path)
 {
 	pid_t	pid_child;
@@ -51,8 +65,7 @@ int	one_cmd(t_data *data, char *path)
 		clean_helper(data, path);
 		exit (127);
 	}
-	if (data->parser->fd_infile != -2 && data->parser->fd_infile != -1)
-		close(data->parser->fd_infile);
+	handle_fd_infile(&data);
 	if (data->parser->fd_outfile != -2 && data->parser->fd_outfile != -1)
 		close(data->parser->fd_outfile);
 	waitpid(pid_child, &status, 0);
