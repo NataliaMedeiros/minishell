@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/09 15:58:01 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/10 11:57:38 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,12 @@ char	*cmd_path_checker(t_data *data, t_parser *parser)
 	else
 		path = check_path(data, parser);
 	return (path);
+}
+
+void	exit_status_helper(t_data *data, int status)
+{
+	if (WIFEXITED(status))
+		data->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit_code = (WTERMSIG(status) + 128);
 }

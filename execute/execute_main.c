@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 11:38:28 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 10:33:23 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 12:17:06 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	ft_execute(t_data *data)
 	char	*path;
 	int		nb_pipes;
 
-	if (data->exit_code == 130)
-		return (data->exit_code);
 	nb_pipes = pipe_counter(data->parser);
 	if (nb_pipes == 0)
 	{

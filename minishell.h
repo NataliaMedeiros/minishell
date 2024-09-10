@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/09 17:46:31 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/10 11:58:26 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int			first_cmd(int *fd, t_parser *temp);
 int			middle_cmd(t_parser *temp, t_exec *exec);
 int			last_cmd(t_parser *temp, t_exec *exec);
 void		clean_helper(t_data *data, char *path);
+void		exit_status_helper(t_data *data, int status);
 
 // Signal
 void		handle_signals(int proc);
