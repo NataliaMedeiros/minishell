@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/09 17:46:31 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/10 16:45:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void		ft_export(t_env **env, t_parser *parser, int fd, t_data *data);
 void		export_sorting(t_env **env, int fd);
 void		keyword_with_info(char *cmd, t_env **env, t_data *data);
 void		add_node_env(t_env **env, char *var_name, char *var_value);
-bool		env_node_checker(t_env **env, char *kw, char *info, t_data *d);
+bool		env_node_checker(t_env **env, char *keyword, char *info);
 void		ft_exit(t_data *data, t_parser *parser);
 
 // UTILS
@@ -173,6 +173,8 @@ int			first_cmd(int *fd, t_parser *temp);
 int			middle_cmd(t_parser *temp, t_exec *exec);
 int			last_cmd(t_parser *temp, t_exec *exec);
 void		clean_helper(t_data *data, char *path);
+void		exit_status_helper(t_data *data, int status);
+void		ft_waiting(t_exec exec);
 
 // Signal
 void		handle_signals(int proc);

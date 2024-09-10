@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:17:35 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/06 11:04:06 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 11:03:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,16 @@ static void	multiple_arg(t_data *data, t_parser *parser)
 	int		not_numerical;
 	char	**array;
 
-	nb_cmd = 0;
+	nb_cmd = 1;
 	array = parser->cmd;
-	not_numerical = 0;
+	not_numerical = 1;
 	while (array[nb_cmd])
 	{
 		if (is_numerical(array[nb_cmd]) == false)
 			not_numerical++;
 		nb_cmd++;
 	}
-	if (nb_cmd == not_numerical)
+	if (nb_cmd == not_numerical || is_numerical(array[1]) == false)
 	{
 		data->exit_code = 2;
 		ft_putendl_fd(STDERR_FILENO, "exit");
@@ -89,7 +89,6 @@ void	ft_exit(t_data *data, t_parser *parser)
 {
 	if (parser->cmd[1] == NULL)
 	{
-		data->exit_code = 0;
 		ft_putendl_fd(STDERR_FILENO, "exit");
 		exit_cleaner(data);
 		exit(data->exit_code);

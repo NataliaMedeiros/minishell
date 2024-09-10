@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/09 17:47:47 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/10 12:40:10 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,10 +121,7 @@ void	handle_heredoc(t_parser **parser, t_data *data)
 		signal(SIGQUIT, SIG_IGN);
 		waitpid(pid_child, &status, 0);
 	}
-	data->exit_code = WEXITSTATUS(status);
-	// if (data->exit_code == 130)
-	// 	free_infile((*parser)->infile);
+	exit_status_helper(data, status);
 	if (data->exit_code == 0)
 		(*parser)->fd_infile = open((*parser)->infile->name, O_RDONLY, 0644);
-	// return (WEXITSTATUS(status));
 }

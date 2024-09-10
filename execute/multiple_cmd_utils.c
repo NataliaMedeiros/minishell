@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/04 10:49:18 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 18:23:29 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 13:58:38 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,4 +95,11 @@ void	clean_helper(t_data *data, char *path)
 	if (data->env != NULL)
 		free_env(&data->env);
 	cleanup(data);
+}
+
+void	ft_waiting(t_exec exec)
+{
+	while (waitpid(-1, &exec.status, 0) > 0)
+	{
+	}
 }
