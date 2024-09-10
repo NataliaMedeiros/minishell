@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 15:46:57 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 10:28:39 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ static bool	change_pwd_value(t_env *env, char *oldpwd, char *pwd)
 		temp = temp->next;
 	}
 	if (verificator == 7)
-		return (true);
+		return (free(oldpwd) ,true);
 	else
-		return (false);
+		return (free(oldpwd), false);
 }
 
 static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
@@ -53,19 +53,19 @@ static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 			{
 				perror("cd");
 				info->exit_code = 1;
-				return (false);
+				return (free(old_pwd), false);
 			}
 		}
 		new_pwd = getcwd(NULL, 0);
 		if (change_pwd_value(info->env, old_pwd, new_pwd) == false)
-			return (false);
+			return (free(new_pwd), false);
 	}
 	else
 	{
 		perror("cd");
-		return (info->exit_code = 1, false);
+		return (free(old_pwd), info->exit_code = 1, false);
 	}
-	return (true);
+	return (free(old_pwd), true);
 }
 
 static char	*home_dir(t_env *env, char *old_pwd)
