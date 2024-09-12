@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   check_input.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 13:52:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/09 15:48:03 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/12 10:37:41 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ bool	has_unclosed_quote(char *cmd)
 	has_single_quotes = false;
 	while (cmd[i] != '\0')
 	{
-		if (cmd[i] == '"')
+		if (cmd[i] == '"' && !has_single_quotes)
 			has_double_quotes = !has_double_quotes;
-		if (cmd[i] == '\'' && has_double_quotes == false)
+		if (cmd[i] == '\'' && !has_double_quotes)
 			has_single_quotes = !has_single_quotes;
 		i++;
 	}

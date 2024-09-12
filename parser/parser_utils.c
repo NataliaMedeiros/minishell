@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/03 12:42:21 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/12 11:18:52 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ int	find_position(t_data data, int i)
 		i++;
 	else
 	{
-		while (!is_operator_or_null(data.cmd_line[i + 1])
-			|| has_double_quotes == true)
+		while (data.cmd_line[i] != '\0')
 		{
 			if (data.cmd_line[i] == '"')
 				has_double_quotes = !has_double_quotes;
+			if (is_operator_or_null(data.cmd_line[i + 1]) && !has_double_quotes)
+				break;
 			i++;
 		}
 	}
@@ -75,6 +76,7 @@ char	**split_cmds(t_data data)
 	int		i;
 	int		start;
 
+	printf("%s\n", data.cmd_line);
 	nb_args = nb_commands(data.cmd_line);
 	counter = 0;
 	i = 0;

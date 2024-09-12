@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/10 13:46:08 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/12 11:08:46 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	parser(t_data *data)
 	data->cmd_table = split_cmds(*data);
 	if (data->cmd_table == NULL)
 		return (error_msg("Failure on create cmd list\n"), 1);
+	print_array(data->cmd_table);
 	data->parser = new_struct();
 	if (data->parser == NULL)
 		return (error_msg_with_free("Failure on create parsing struct\n",
