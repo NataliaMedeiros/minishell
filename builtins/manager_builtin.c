@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/09 13:26:02 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/12 13:57:40 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ bool	is_builtin(t_parser *parser, t_data *data)
 	{
 		if (parser->infile != NULL)
 			handle_fd_infile(&data);
-		return (free_parsing(&data->parser), true);
+		return (free_parser(&parser), true);
 	}
 	if (ft_strcmp(parser->cmd[0], "echo") == 0)
 		return (echo_n(parser, fd, data), true);
