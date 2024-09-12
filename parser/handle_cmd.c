@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 11:08:20 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 11:29:51 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 
 int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 {
+	char *temp;
 	if (ft_strncmp(data.cmd_table[i], "echo", 4) == 0)
 	{
 		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
@@ -115,14 +116,10 @@ int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 	}
 	else
 	{
-		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
+		temp = handle_dollar_sign(data.cmd_table[i], data);
+		(*parser)->cmd = ft_split(temp, ' ');
 		if ((*parser)->cmd == NULL)
 			return (1);
-		// int i = 0;
-		// while (parser->cmd[i])
-		// {
-		// 	handle_dollar_sign(parser->cmd[i], data);
-		// }
 	}
 	*has_pipe = false;
 	return (0);
