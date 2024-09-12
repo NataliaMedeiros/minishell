@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 12:53:55 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 17:07:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	find_position(t_data data, int i)
 			if (data.cmd_line[i] == '"')
 				has_double_quotes = !has_double_quotes;
 			if (is_operator_or_null(data.cmd_line[i + 1]) && !has_double_quotes)
-				break;
+				break ;
 			i++;
 		}
 	}

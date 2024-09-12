@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:04:37 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 13:57:40 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 16:33:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,26 @@ static int	change_fd(t_parser *parser)
 	return (fd);
 }
 
+bool	is_cmd_null(t_parser *parser, t_data *data)
+{
+	if (parser->cmd == NULL)
+	{
+		if (parser->fd_outfile != -2 && parser->fd_outfile != -1)
+			close(parser->fd_outfile);
+		if (parser->infile != NULL)
+			handle_fd_infile(&data);
+		return (true);
+	}
+	return (false);
+}
+
 bool	is_builtin(t_parser *parser, t_data *data)
 {
 	int	fd;
 
 	fd = change_fd(parser);
-	if (data->parser->cmd == NULL)
-	{
-		if (parser->infile != NULL)
-			handle_fd_infile(&data);
-		return (free_parser(&parser), true);
-	}
+	if (is_cmd_null(parser, data) == true)
+		return (true);
 	if (ft_strcmp(parser->cmd[0], "echo") == 0)
 		return (echo_n(parser, fd, data), true);
 	else if (ft_strcmp(parser->cmd[0], "pwd") == 0)

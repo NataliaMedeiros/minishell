@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 10:54:49 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 16:32:30 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	fill_without_quotes(char *arg, char *new_arg)
 			i++;
 		if ((arg[i] != '"' && arg[i] != '\'')
 			|| (arg[i] == '\'' && has_double_quotes == true)
-			||(arg[i] == '"' && has_single_quotes))
+			|| (arg[i] == '"' && has_single_quotes))
 		{
 			new_arg[j] = arg[i];
 			j++;

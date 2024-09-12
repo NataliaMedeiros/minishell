@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/12 12:57:06 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 15:48:45 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	parser(t_data *data)
 				data->cmd_table), 1);
 	head_parser = data->parser;
 	if (fill_parser((*data), &head_parser) != 0)
-		return (free_parsing(&head_parser),
+		return (free_parser(&head_parser),
 			error_msg("Failure on parsing\n"), 1);
 	// print_struct(data->parser);
 	temp = data->parser;

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 12:48:52 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 17:10:52 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ bool	has_flags(char *arg, t_parser **parser)
 		{
 			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
 					|| arg[i + 2] == ' ' || arg[i + 2] == '\0')
-					&& (arg[i - 1] == ' ' || i == 0))
+				&& (arg[i - 1] == ' ' || i == 0))
 			{
 				(*parser)->flag = true;
 				return (true);
 			}
 			if (arg[i + 1] == ' ' || arg[i + 1] == '-')
-				break;
+				break ;
 		}
 		if (arg[i] == '"' || arg[i] == '\'')
 			break ;
@@ -105,7 +105,8 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 
 int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 {
-	char *temp;
+	char	*temp;
+
 	if (ft_strncmp(data.cmd_table[i], "echo", 4) == 0)
 	{
 		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
