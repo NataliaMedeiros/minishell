@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 11:29:51 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 12:48:52 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 		(*parser)->cmd = ft_split(temp, ' ');
 		if ((*parser)->cmd == NULL)
 			return (1);
+		free (temp);
 	}
 	*has_pipe = false;
 	return (0);

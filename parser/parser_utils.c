@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:54:38 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 11:18:52 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/12 12:53:55 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	**split_cmds(t_data data)
 	int		i;
 	int		start;
 
-	printf("%s\n", data.cmd_line);
 	nb_args = nb_commands(data.cmd_line);
 	counter = 0;
 	i = 0;
