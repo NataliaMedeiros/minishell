@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/04/09 11:03:51 by natalia       #+#    #+#                 */
-/*   Updated: 2024/08/30 13:50:27 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/10 16:28:53 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 100
@@ -82,5 +83,7 @@ int		ft_toupper(int c);
 char	*ft_strrchr(const char *str, int c);
 int		ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strchr_arg(const char *s, int c);
+long	ft_atoi_long(char *str, long nb);
+int		ft_strchr_pos(const char *s, int c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/04 16:22:00 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 16:45:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			parser(t_data *data);
 int			nb_commands(char *cmd_line);
 
 /* parser_heredoc */
-int			handle_heredoc(t_parser **parser, t_data *data);
+void		handle_heredoc(t_parser **parser, t_data *data);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -116,7 +116,7 @@ void		free_parsing(t_parser **parser);
 int			pipe_counter(t_parser *parser);
 
 /* parser_fill_cmd */
-int			fill_cmd(t_parser **parser, t_data data, int i);
+int			fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe);
 
 /* utils */
 void		error_msg(char *msg);
@@ -135,12 +135,13 @@ void		echo_n(t_parser *parse, int fd, t_data *data);
 void		ft_pwd(int fd, t_parser *parser, t_data *data);
 void		ft_cd(t_parser *data, t_data *info);
 void		env_print(t_data *data, t_parser *parse, int fd);
-void		ft_unset(t_env **env, t_parser *parser);
-void		ft_export(t_env **env, t_parser *parser, int fd);
+void		ft_unset(t_env **env, t_parser *parser, t_data *data);
+void		ft_export(t_env **env, t_parser *parser, int fd, t_data *data);
 void		export_sorting(t_env **env, int fd);
-void		keyword_with_info(char *cmd, t_env **env);
+void		keyword_with_info(char *cmd, t_env **env, t_data *data);
 void		add_node_env(t_env **env, char *var_name, char *var_value);
 bool		env_node_checker(t_env **env, char *keyword, char *info);
+void		ft_exit(t_data *data, t_parser *parser);
 
 // UTILS
 bool		has_flags(char *arg, t_parser **parser);
@@ -153,8 +154,9 @@ char		*remove_quotes(char *limiter);
 char		*remove_flags(char *arg);
 
 /*handle file*/
-int			handle_files(t_data data, t_parser **parser, int i,
-				bool start_with_redirection);
+int			handle_files(t_data data, t_parser **parser, int i, bool *has_pipe);
+int			handle_infile(t_data data, t_parser **parser, int i,
+				bool start_redirection);
 
 bool		has_quotes(char *arg);
 
@@ -170,15 +172,14 @@ int			pipeline(t_data *data, t_parser *parser, int nb_pipes);
 int			first_cmd(int *fd, t_parser *temp);
 int			middle_cmd(t_parser *temp, t_exec *exec);
 int			last_cmd(t_parser *temp, t_exec *exec);
+void		clean_helper(t_data *data, char *path);
+void		exit_status_helper(t_data *data, int status);
+void		ft_waiting(t_exec exec);
 
 // Signal
 void		handle_signals(int proc);
 
 int			handle_outfile(t_data data, t_parser **parser, int i,
-				bool start_with_redirection);
-int			handle_infile(t_data data, t_parser **parser, int i,
-				bool start_with_redirection);
-int			handle_files(t_data data, t_parser **parser, int i,
 				bool start_with_redirection);
 char		**split_redirection_first(char *cmd);
 
@@ -190,8 +191,11 @@ bool		return_substring(const char *s, int start, bool has_double_quotes);
 
 void		exec_infile(t_parser **parser, t_data *data);
 
-void		ft_exit(t_data **data, t_parser *parser);
-
 char		*get_var(char *line, int start, t_data data);
+
+bool		has_no_arg(char *cmd);
+void		free_infile(t_infile *infile);
+void		handle_fd_infile(t_data **data);
+void		sig_heredoc(int signum);
 
 #endif

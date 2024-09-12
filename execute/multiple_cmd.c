@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 15:05:17 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/10 13:55:20 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,18 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp)
 	path = cmd_path_checker(data, temp);
 	if (dup_manager(exec, exec->i, temp) == 1)
 	{
-		if (path != NULL)
-			free(path);
+		clean_helper(data, path);
 		exit (EXIT_FAILURE);
 	}
 	if (is_builtin(temp, data) == false)
 	{
 		if (path != NULL)
 			execve(path, temp->cmd, data->envp);
-		ft_putstr_fd("Command NOT found: ", STDERR_FILENO);
-		ft_putendl_fd(STDERR_FILENO, temp->cmd[0]);
-		if (path != NULL)
-			free(path);
+		ft_putendl_fd(STDERR_FILENO, "Command not found");
+		clean_helper(data, path);
 		exit (127);
 	}
-	if (path != NULL)
-		free(path);
+	clean_helper(data, path);
 	exit(EXIT_SUCCESS);
 }
 
@@ -99,14 +95,14 @@ int	pipeline(t_data *data, t_parser *parser, int nb_pipes)
 		if (exec.pid_child == 0)
 			child(&exec, data, temp);
 		parent(&exec, temp);
+		if (data->exit_code == 130)
+			break ;
 		exec.i++;
 		temp = temp->pipe;
 	}
 	close(exec.prev_read);
-	while (waitpid(-1, &exec.status, 0) > 0)
-	{
-		if (WIFEXITED(exec.status))
-			data->exit_code = WEXITSTATUS(exec.status);
-	}
+	waitpid(exec.pid_child, &exec.status, 0);
+	exit_status_helper(data, exec.status);
+	ft_waiting(exec);
 	return (data->exit_code);
 }

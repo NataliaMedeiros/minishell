@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/09/04 10:55:13 by edribeir      ########   odam.nl          #
+#    Updated: 2024/09/06 16:58:21 by nmedeiro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ RESET = \033[0m
 
 SOURCE = main.c \
 		check_input.c \
+		check_input2.c \
 		utils.c \
 		parser/parser.c \
 		parser/parser_heredoc.c \

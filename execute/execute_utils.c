@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/30 17:15:47 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 11:47:15 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/10 13:43:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ char	*cmd_path_checker(t_data *data, t_parser *parser)
 {
 	char	*path;
 
+	if (parser->cmd == NULL)
+		return (NULL);
 	if (access(parser->cmd[0], F_OK | X_OK) == 0)
 	{
 		path = ft_strdup(parser->cmd[0]);
@@ -78,4 +80,12 @@ char	*cmd_path_checker(t_data *data, t_parser *parser)
 	else
 		path = check_path(data, parser);
 	return (path);
+}
+
+void	exit_status_helper(t_data *data, int status)
+{
+	if (WIFEXITED(status))
+		data->exit_code = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->exit_code = (WTERMSIG(status) + 128);
 }

@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 13:52:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/03 13:52:57 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/09 15:48:03 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static bool	has_cmd_before_operator(char	*cmd)
 static bool	has_cmd_after_operator(char	*cmd, int i)
 {
 	if (cmd[i + 1] == '\0' || cmd[i + 1] == '|')
+		return (false);
+	if ((cmd[i + 1] == '>' || cmd[i + 1] == '<') && cmd[i + 2] == '\0')
 		return (false);
 	if (i != 0 && ((cmd[i] == '>' && cmd[i - 1] == '<')
 			|| (cmd[i] == '<' && cmd[i - 1] == '>')))
@@ -82,20 +84,22 @@ bool	is_input_valid(char *cmd)
 	char	operator;
 
 	i = 0;
+	if (has_no_arg(cmd) == false)
+		return (error_msg("Syntax Error"), free(cmd), false);
 	if (has_cmd_before_operator(cmd) == false)
-		return (error_msg("Syntax Error"), false);
+		return (error_msg("Syntax Error"), free(cmd), false);
 	if (has_unclosed_quote(cmd) == true)
-		return (error_msg("Syntax error: unclosed quotes"), false);
+		return (error_msg("Syntax error: unclosed quotes"), free(cmd), false);
 	while (cmd[i] != '\0')
 	{
 		if (cmd[i] == '|' || cmd[i] == '>' || cmd[i] == '<')
 		{
 			if (has_cmd_after_operator(cmd, i) == false)
-				return (error_msg("Syntax Error"), false);
+				return (error_msg("Syntax Error"), free(cmd), false);
 			operator = cmd[i];
 			i++;
 			if (has_cmd_between_operators(cmd, i, operator) == false)
-				return (error_msg("Syntax Error"), false);
+				return (error_msg("Syntax Error"), free(cmd), false);
 		}
 		i++;
 	}
