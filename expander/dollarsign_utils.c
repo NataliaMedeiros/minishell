@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   dollarsign_utils.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 12:57:52 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/04 12:51:04 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/12 11:02:29 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*search_envp(t_data data, char *var, int len)
 		}
 		data.env = data.env->next;
 	}
-	return (free(temp), "");
+	return (free(temp), ft_strdup(""));
 }
 
 char	*get_var(char *line, int start, t_data data)

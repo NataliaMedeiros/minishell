@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/10 16:45:25 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/12 13:55:36 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ void		print_env(t_env *env);
 
 /* struct_utils */
 t_parser	*new_struct(void);
-void		free_parsing(t_parser **parser);
+// void		free_parsing(t_parser **parser);
+void		free_parser(t_parser **parser);
 int			pipe_counter(t_parser *parser);
 
 /* parser_fill_cmd */

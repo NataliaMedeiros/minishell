@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/09 18:09:07 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/12 17:10:52 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,14 @@ bool	has_flags(char *arg, t_parser **parser)
 		if (arg[i] == '-')
 		{
 			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
-					|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
+					|| arg[i + 2] == ' ' || arg[i + 2] == '\0')
+				&& (arg[i - 1] == ' ' || i == 0))
 			{
 				(*parser)->flag = true;
 				return (true);
 			}
+			if (arg[i + 1] == ' ' || arg[i + 1] == '-')
+				break ;
 		}
 		if (arg[i] == '"' || arg[i] == '\'')
 			break ;
@@ -102,6 +105,8 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 
 int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 {
+	char	*temp;
+
 	if (ft_strncmp(data.cmd_table[i], "echo", 4) == 0)
 	{
 		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
@@ -112,15 +117,12 @@ int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
 	}
 	else
 	{
-		(*parser)->cmd = ft_split(data.cmd_table[i], ' ');
+		temp = handle_dollar_sign(data.cmd_table[i], data);
+		(*parser)->cmd = ft_split(temp, ' ');
 		if ((*parser)->cmd == NULL)
 			return (1);
-		// int i = 0;
-		// while (parser->cmd[i])
-		// {
-		// 	handle_dollar_sign(parser->cmd[i], data);
-		// }
+		free (temp);
 	}
-	has_pipe = false;
+	*has_pipe = false;
 	return (0);
 }

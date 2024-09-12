@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   single_cmd.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
+/*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:53:46 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/10 11:58:20 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/12 13:53:45 by natalia       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ void	handle_fd_infile(t_data **data)
 		if (ft_strcmp((*data)->parser->infile->type, "infile") == 0)
 			close((*data)->parser->fd_infile);
 		else
-		{
 			unlink((*data)->parser->infile->name);
-		}
 	}
 }
 

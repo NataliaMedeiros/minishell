@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/10 12:40:10 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/12 16:39:56 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*find_limiter(t_parser **parser)
 static void	heredoc_child(t_parser **parser, t_data *data)
 {
 	char	*line;
+	char	*temp;
 	char	*limiter;
 
 	handle_signals(HEREDOC);
@@ -89,8 +90,12 @@ static void	heredoc_child(t_parser **parser, t_data *data)
 		if (ft_strlen(line) == ft_strlen(limiter)
 			&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 			break ;
-		while (ft_strchr(line, '$') != NULL)
-			line = handle_dollar_sign(line, (*data));
+		while (ft_strchr(line, '$'))
+		{
+			temp = handle_dollar_sign(line, (*data));
+			line = ft_strdup(temp);
+			free(line);
+		}
 		write((*parser)->fd_infile, line, strlen(line));
 		write((*parser)->fd_infile, "\n", 1);
 		free(line);
