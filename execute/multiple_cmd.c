@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/10 13:55:20 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 16:35:18 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ static void	child(t_exec *exec, t_data *data, t_parser *temp)
 	path = cmd_path_checker(data, temp);
 	if (dup_manager(exec, exec->i, temp) == 1)
 	{
+		close(exec->fd[READ]);
+		close(exec->fd[WRITE]);
+		if (exec->prev_read != STDIN_FILENO)
+			close(exec->prev_read);
 		clean_helper(data, path);
 		exit (EXIT_FAILURE);
 	}

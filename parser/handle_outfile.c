@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/06 15:29:11 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/13 13:32:28 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	handle_outfile(t_data data, t_parser **parser, int i,
 		(*parser)->fd_outfile = open((*parser)->outfile,
 				O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if ((*parser)->fd_outfile == -1)
-		return (error_msg("Failure to open outfile\n"),
-			free((*parser)->outfile), 1);
+		return (error_msg("Failure to open outfile\n"), 1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:34:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 16:32:30 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 17:17:19 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,23 @@ static void	fill_without_quotes(char *arg, char *new_arg)
 {
 	int		j;
 	int		i;
-	bool	has_double_quotes;
-	bool	has_single_quotes;
+	bool	dbl_q;
+	bool	sgl_q;
 
 	j = 0;
 	i = 0;
-	has_double_quotes = false;
-	has_single_quotes = false;
+	dbl_q = false;
+	sgl_q = false;
 	while (arg[i] != '\0')
 	{
-		if (arg[i] == '"' && !has_single_quotes)
-			has_double_quotes = !has_double_quotes;
-		else if (arg[i] == '\'' && !has_double_quotes)
-			has_single_quotes = !has_single_quotes;
-		if (arg[i] == '$' && (arg[i + 1] == '\''
-				|| arg[i + 1] == '"'))
+		if (arg[i] == '"' && !sgl_q)
+			dbl_q = !dbl_q;
+		else if (arg[i] == '\'' && !dbl_q)
+			sgl_q = !sgl_q;
+		if (arg[i] == '$' && (arg[i + 1] == '\'' || arg[i + 1] == '"'))
 			i++;
 		if ((arg[i] != '"' && arg[i] != '\'')
-			|| (arg[i] == '\'' && has_double_quotes == true)
-			|| (arg[i] == '"' && has_single_quotes))
+			|| (arg[i] == '\'' && dbl_q == true) || (arg[i] == '"' && sgl_q))
 		{
 			new_arg[j] = arg[i];
 			j++;

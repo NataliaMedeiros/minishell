@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/15 13:30:17 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/10 17:37:22 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 14:46:34 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	free_array(int counter, char **cmd)
 		}
 	}
 	free(cmd);
+	cmd = NULL;
 }
 
 void	free_env(t_env **env)

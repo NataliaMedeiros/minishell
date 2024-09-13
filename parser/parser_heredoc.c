@@ -6,76 +6,39 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:20:29 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 16:39:56 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 18:05:57 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*remove_lim_quotes(char *limiter)
+static void	line_exists(t_parser **parser, char *line, char *limiter, t_data *d)
 {
-	char	*new_limiter;
-	int		i;
-	int		j;
+	char	*temp;
 
-	new_limiter = ft_calloc(sizeof(char), ft_strlen(limiter) - 1);
-	if (new_limiter == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (limiter[i] != '\0')
+	while (line != NULL)
 	{
-		if (limiter[i] != '"' && limiter[i] != '\'')
+		if (ft_strlen(line) == ft_strlen(limiter)
+			&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
+			break ;
+		while (ft_strchr(line, '$'))
 		{
-			new_limiter[j] = limiter[i];
-			j++;
+			temp = handle_dollar_sign(line, (*d));
+			free(line);
+			line = ft_strdup(temp);
+			free(temp);
 		}
-		i++;
+		write((*parser)->fd_infile, line, strlen(line));
+		write((*parser)->fd_infile, "\n", 1);
+		free(line);
+		line = readline(">");
 	}
-	return (new_limiter);
-}
-
-static char	*remove_lim_backslash(char *limiter)
-{
-	char	*new_limiter;
-	int		i;
-	int		j;
-
-	new_limiter = ft_calloc(sizeof(char), ft_strlen(limiter) - 1);
-	if (new_limiter == NULL)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (limiter[i] != '\0')
-	{
-		if (limiter[i] != '\\')
-		{
-			new_limiter[j] = limiter[i];
-			j++;
-		}
-		i++;
-	}
-	return (new_limiter);
-}
-
-char	*find_limiter(t_parser **parser)
-{
-	char	*limiter;
-
-	if (ft_strchr((*parser)->infile->name, '"') != NULL
-		|| ft_strchr((*parser)->infile->name, '\'') != NULL)
-		limiter = remove_lim_quotes((*parser)->infile->name);
-	else if (ft_strchr((*parser)->infile->name, '\\') != NULL)
-		limiter = remove_lim_backslash((*parser)->infile->name);
-	else
-		limiter = (*parser)->infile->name;
-	return (limiter);
+	free(line);
 }
 
 static void	heredoc_child(t_parser **parser, t_data *data)
 {
 	char	*line;
-	char	*temp;
 	char	*limiter;
 
 	handle_signals(HEREDOC);
@@ -85,24 +48,8 @@ static void	heredoc_child(t_parser **parser, t_data *data)
 		exit_with_msg("Fail to open infile\n", EXIT_FAILURE);
 	limiter = find_limiter(parser);
 	line = readline(">");
-	while (line != NULL)
-	{
-		if (ft_strlen(line) == ft_strlen(limiter)
-			&& ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
-			break ;
-		while (ft_strchr(line, '$'))
-		{
-			temp = handle_dollar_sign(line, (*data));
-			line = ft_strdup(temp);
-			free(line);
-		}
-		write((*parser)->fd_infile, line, strlen(line));
-		write((*parser)->fd_infile, "\n", 1);
-		free(line);
-		line = readline(">");
-	}
+	line_exists(parser, line, limiter, data);
 	close((*parser)->fd_infile);
-	free(line);
 	exit(EXIT_SUCCESS);
 }
 
