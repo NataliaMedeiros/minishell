@@ -6,31 +6,31 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/10 13:43:36 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 11:08:50 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static bool	change_pwd_value(t_env *env, char *oldpwd, char *pwd)
+static bool	change_pwd_value(t_env **env, char *oldpwd, char *pwd)
 {
 	int		verificator;
 	t_env	*temp;
 
 	verificator = 0;
-	temp = env;
+	temp = (*env);
 	while (temp)
 	{
-		if (ft_strncmp(env->key_word, "OLDPWD", 6) == 0)
+		if (ft_strncmp(temp->key_word, "OLDPWD", 6) == 0)
 		{
-			free(env->info);
-			env->info = ft_strdup(oldpwd);
+			free(temp->info);
+			temp->info = ft_strdup(oldpwd);
 			verificator = 3;
 		}
-		else if (ft_strncmp(env->key_word, "PWD", 3) == 0)
+		else if (ft_strncmp(temp->key_word, "PWD", 3) == 0)
 		{
-			free(env->info);
-			env->info = ft_strdup(pwd);
+			free(temp->info);
+			temp->info = ft_strdup(pwd);
 			verificator = verificator + 4;
 		}
 		temp = temp->next;
@@ -57,15 +57,16 @@ static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
 			}
 		}
 		new_pwd = getcwd(NULL, 0);
-		if (change_pwd_value(info->env, old_pwd, new_pwd) == false)
+		if (change_pwd_value(&info->env, old_pwd, new_pwd) == false)
 			return (free(new_pwd), false);
+		free(new_pwd);
 	}
 	else
 	{
 		perror("cd");
 		return (free(old_pwd), info->exit_code = 1, false);
 	}
-	return (free(old_pwd), true);
+	return (true);
 }
 
 static char	*home_dir(t_env *env, char *old_pwd)
@@ -79,7 +80,7 @@ static char	*home_dir(t_env *env, char *old_pwd)
 	{
 		return (NULL);
 	}
-	change_pwd_value(env, old_pwd, home);
+	change_pwd_value(&env, old_pwd, home);
 	return (home);
 }
 
