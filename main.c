@@ -6,19 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/13 14:45:03 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 16:34:25 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// void	handle_readline(t_data *data)
-// {
-// 	if (data->env != NULL)
-// 		free_env(&data->env);
-// 	rl_clear_history();
-// 	printf("exit\n");
-// }
 
 static bool	handle_readline(t_data *data)
 {
@@ -56,10 +48,8 @@ bool	init_prompt(t_data *data)
 				if (parser(data) == 1)
 					data->exit_code = 1;
 				else
-				{
 					data->exit_code = ft_execute(data);
-					cleanup(data);
-				}
+				cleanup(data);
 			}
 			else
 				free(data->cmd_line);
@@ -89,12 +79,10 @@ int	main(int argc, char **argv, char **envp)
 		return (EXIT_FAILURE);
 	data.exit_code = 0;
 	if (init_prompt(&data) == false)
-		return (free_env(&data.env), data.exit_code);
+		return (free_env(&data.env), rl_clear_history(), data.exit_code);
 	rl_clear_history();
 	cleanup(&data);
 	if (data.env != NULL)
-	{
 		free_env(&data.env);
-	}
 	return (0);
 }

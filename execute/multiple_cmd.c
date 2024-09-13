@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/16 13:54:49 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/13 12:07:24 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 16:35:18 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	parent(t_exec *exec, t_parser *temp)
 
 int	pipe_and_fork(t_exec *exec)
 {
-	if (pipe(exec->fd) < 0 )
+	if (pipe(exec->fd) < 0)
 		return (perror("Pipe error"), EXIT_FAILURE);
 	exec->pid_child = fork();
 	if (exec->pid_child < 0)

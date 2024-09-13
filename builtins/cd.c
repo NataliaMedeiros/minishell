@@ -6,7 +6,7 @@
 /*   By: edribeir <edribeir@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:26:59 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/13 11:08:50 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 16:58:52 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,30 @@ static bool	change_pwd_value(t_env **env, char *oldpwd, char *pwd)
 		return (free(oldpwd), false);
 }
 
-static bool	other_dir(t_parser *data, t_data *info, char *old_pwd)
+static bool	other_dir(t_parser *parser, t_data *data, char *old_pwd)
 {
 	char	*new_pwd;
 
-	if (access(data->cmd[1], F_OK) == 0)
+	if (access(parser->cmd[1], F_OK) == 0)
 	{
-		if (chdir(data->cmd[1]) != 0)
+		if (chdir(parser->cmd[1]) != 0)
 		{
-			if (opendir(data->cmd[1]) == NULL)
+			if (opendir(parser->cmd[1]) == NULL)
 			{
 				perror("cd");
-				info->exit_code = 1;
+				data->exit_code = 1;
 				return (free(old_pwd), false);
 			}
 		}
 		new_pwd = getcwd(NULL, 0);
-		if (change_pwd_value(&info->env, old_pwd, new_pwd) == false)
+		if (change_pwd_value(&data->env, old_pwd, new_pwd) == false)
 			return (free(new_pwd), false);
 		free(new_pwd);
 	}
 	else
 	{
 		perror("cd");
-		return (free(old_pwd), info->exit_code = 1, false);
+		return (free(old_pwd), data->exit_code = 1, false);
 	}
 	return (true);
 }
@@ -84,20 +84,20 @@ static char	*home_dir(t_env *env, char *old_pwd)
 	return (home);
 }
 
-static void	minus_case(t_data *info)
+static void	minus_case(t_data *data)
 {
 	char	*old_pwd;
 
-	old_pwd = get_env_node(info->env, "OLDPWD");
+	old_pwd = get_env_node(data->env, "OLDPWD");
 	if (old_pwd == NULL)
 	{
 		error_msg("OLDPWD not found");
-		info->exit_code = 1;
+		data->exit_code = 1;
 		return ;
 	}
 	if (chdir(old_pwd) == -1)
 	{
-		info->exit_code = 1;
+		data->exit_code = 1;
 		return ;
 	}
 	else
@@ -107,31 +107,30 @@ static void	minus_case(t_data *info)
 	}
 }
 
-void	ft_cd(t_parser *data, t_data *info)
+void	ft_cd(t_parser *parser, t_data *data)
 {
 	char	*old_pwd;
 	char	*home;
 
-	if (data->cmd[1] && data->cmd[2] != NULL)
-	{
-		ft_putendl_fd(STDERR_FILENO, "Too many arguments");
-		info->exit_code = 1;
+	if (is_multiples_arg(parser, data) == true)
 		return ;
-	}
 	old_pwd = getcwd(NULL, 0);
-	if (data->cmd[1] == NULL || data->cmd[1][0] == '~')
+	if (parser->cmd[1] == NULL || parser->cmd[1][0] == '~')
 	{
-		home = home_dir(info->env, old_pwd);
+		home = home_dir(data->env, old_pwd);
 		if (home == NULL)
 			ft_putendl_fd(STDOUT_FILENO, "HOME Deleted from ENV");
-		info->exit_code = 1;
+		data->exit_code = 1;
 		return ;
 	}
-	else if (data->cmd[1][0] == '-')
-		minus_case(info);
+	else if (parser->cmd[1][0] == '-')
+	{
+		minus_case(data);
+		free(old_pwd);
+	}
 	else
 	{
-		if (other_dir(data, info, old_pwd) == false)
+		if (other_dir(parser, data, old_pwd) == false)
 			return ;
 	}
 }
