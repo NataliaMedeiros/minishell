@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/13 16:57:12 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/13 18:05:32 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int			nb_commands(char *cmd_line);
 
 /* parser_heredoc */
 void		handle_heredoc(t_parser **parser, t_data *data);
+char		*find_limiter(t_parser **parser);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
