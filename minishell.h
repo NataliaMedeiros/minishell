@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/12 13:55:36 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/13 18:05:32 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int			nb_commands(char *cmd_line);
 
 /* parser_heredoc */
 void		handle_heredoc(t_parser **parser, t_data *data);
+char		*find_limiter(t_parser **parser);
 
 /* parser utils */
 int			nb_commands(char *cmd_line);
@@ -112,7 +113,6 @@ void		print_env(t_env *env);
 
 /* struct_utils */
 t_parser	*new_struct(void);
-// void		free_parsing(t_parser **parser);
 void		free_parser(t_parser **parser);
 int			pipe_counter(t_parser *parser);
 
@@ -135,6 +135,7 @@ bool		is_builtin(t_parser *parse_data, t_data *data);
 void		echo_n(t_parser *parse, int fd, t_data *data);
 void		ft_pwd(int fd, t_parser *parser, t_data *data);
 void		ft_cd(t_parser *data, t_data *info);
+bool		is_multiples_arg(t_parser *parser, t_data *data);
 void		env_print(t_data *data, t_parser *parse, int fd);
 void		ft_unset(t_env **env, t_parser *parser, t_data *data);
 void		ft_export(t_env **env, t_parser *parser, int fd, t_data *data);
