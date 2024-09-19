@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 12:57:52 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/12 11:02:29 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/16 15:14:51 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static char	*replace_var(char *line, char *var_exp, int start, int end)
 
 	first_part = ft_substr(line, 0, start - 1);
 	temp = ft_strjoin(first_part, var_exp);
+	free(first_part);
 	last_part = ft_substr(line, end, ft_strlen(line));
 	new_line = ft_strjoin(temp, last_part);
-	free(first_part);
 	free(temp);
 	free(last_part);
 	return (new_line);
@@ -31,7 +31,7 @@ static char	*replace_var(char *line, char *var_exp, int start, int end)
 
 static int	var_end(char *line, int i)
 {
-	while (ft_isalnum(line[i]) || line[i] == '_')
+	while (line && line[i] && (ft_isalnum(line[i]) || line[i] == '_'))
 	{
 		i++;
 		if (line[i] == ' ')
@@ -49,11 +49,13 @@ static char	*search_envp(t_data data, char *var, int len)
 	{
 		if (ft_strncmp(data.env->key_word, temp, len + 1) == 0)
 		{
-			return (free(temp), ft_strdup(data.env->info));
+			free(temp);
+			return (ft_strdup(data.env->info));
 		}
 		data.env = data.env->next;
 	}
-	return (free(temp), ft_strdup(""));
+	free(temp);
+	return (ft_strdup(""));
 }
 
 char	*get_var(char *line, int start, t_data data)
@@ -71,9 +73,3 @@ char	*get_var(char *line, int start, t_data data)
 	free(var_value);
 	return (new_line);
 }
-
-// void	get_new_line(char **new_line, char **line, int i, t_data data)
-// {
-// 	*new_line = get_var(*line, i + 1, data);
-// 	*line = *new_line;
-// }

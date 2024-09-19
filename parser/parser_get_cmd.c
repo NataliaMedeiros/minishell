@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/30 14:35:29 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/02 15:36:05 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/18 14:11:16 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,9 @@ static char	*write_substring(size_t len, int unsigned start,
 		if (return_substring(s, start,
 				has_double_quotes) == true)
 			return (substring);
-		if (s[start] == ' ' && s[start + 1] == ' ')
-			start++;
-		else
-		{
-			substring[i] = s[start];
-			i++;
-			start++;
-		}
+		substring[i] = s[start];
+		i++;
+		start++;
 	}
 	return (substring);
 }

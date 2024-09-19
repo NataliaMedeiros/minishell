@@ -6,7 +6,7 @@
 #    By: natalia <natalia@student.42.fr>              +#+                      #
 #                                                    +#+                       #
 #    Created: 2024/05/17 16:50:00 by edribeir      #+#    #+#                  #
-#    Updated: 2024/09/13 18:03:27 by edribeir      ########   odam.nl          #
+#    Updated: 2024/09/17 16:01:07 by edribeir      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBFT = ./libft/libft.a
 
 LIBFTDIR = libft
 
-CFLAGS = -Wall -Werror -Wextra -g -I/opt/hmomebrew/Cellar/readline/8.2.10/include
+CFLAGS = -Wall -Werror -Wextra -g
 #CFLAGS += -fsanitize=address
 LFLAGS = -L /opt/homebrew/Cellar/readline/8.2.10/lib -lreadline #MAC M1
 #LFLAGS = -L $(HOME)/.brew/Cellar/readline/8.2.1/lib -lreadline #MAC based intel
@@ -34,14 +34,13 @@ RESET = \033[0m
 # https://ss64.com/nt/syntax-ansi.html site that have colors
 
 SOURCE = main.c \
-		check_input.c \
-		check_input2.c \
-		utils.c \
+		utils/check_input.c \
+		utils/check_input2.c \
+		utils/utils.c \
 		parser/parser.c \
 		parser/parser_heredoc.c \
 		parser/parser_heredoc_utils.c \
 		parser/parser_utils.c \
-		parser/temporary_functions.c \
 		parser/struct_utils.c \
 		parser/handle_cmd.c \
 		parser/parser_remove_utils.c \
@@ -62,6 +61,7 @@ SOURCE = main.c \
 		builtins/cd_utils.c \
 		builtins/unset.c \
 		builtins/export.c \
+		builtins/export_null_arg.c \
 		builtins/export_utils.c \
 		builtins/exit.c \
 		execute/execute_main.c \

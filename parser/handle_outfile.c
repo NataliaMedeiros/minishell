@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/08/15 11:32:40 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/13 13:32:28 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/18 14:36:58 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static int	handle_redirection_out(t_data data, t_parser **parser, int i)
 int	handle_outfile(t_data data, t_parser **parser, int i,
 	bool start_with_redirection)
 {
+	if ((*parser)->outfile != NULL)
+	{
+		free((*parser)->outfile);
+		close((*parser)->fd_outfile);
+	}
 	if (start_with_redirection == true)
 	{
 		if (handle_redirection_out(data, parser, i) == 1)
@@ -52,6 +57,6 @@ int	handle_outfile(t_data data, t_parser **parser, int i,
 		(*parser)->fd_outfile = open((*parser)->outfile,
 				O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if ((*parser)->fd_outfile == -1)
-		return (error_msg("Failure to open outfile\n"), 1);
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/30 11:43:27 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/13 18:05:32 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/16 17:25:56 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,5 +199,7 @@ bool		has_no_arg(char *cmd);
 void		free_infile(t_infile *infile);
 void		handle_fd_infile(t_data **data);
 void		sig_heredoc(int signum);
+int			fill_echo_cmd(t_parser	**parser, t_data data, int i);
+char		*replace_dollar_sign(char *l, t_data data, char *new_line);
 
 #endif

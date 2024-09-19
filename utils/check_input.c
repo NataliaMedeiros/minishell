@@ -6,11 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/09/03 13:52:56 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/12 10:37:41 by natalia       ########   odam.nl         */
+/*   Updated: 2024/09/16 11:45:01 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static bool	has_cmd_before_operator(char	*cmd)
 {

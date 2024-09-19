@@ -6,32 +6,11 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/18 16:42:43 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/10 16:44:42 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/17 15:58:40 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-bool	env_node_checker(t_env **env, char *keyword, char *info)
-{
-	t_env	*temp;
-
-	temp = (*env);
-	while (temp != NULL)
-	{
-		if (ft_strncmp(temp->key_word, keyword, sizeof(keyword)) == 0)
-		{
-			if (info != NULL)
-			{
-				free(temp->info);
-				temp->info = ft_strdup(info);
-			}
-			return (true);
-		}
-		temp = temp->next;
-	}
-	return (false);
-}
 
 static t_env	*create_new_env_node(char *var_name, char *var_value)
 {

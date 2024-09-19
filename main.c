@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/28 11:41:54 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/13 16:34:25 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/18 12:18:17 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ bool	init_prompt(t_data *data)
 				if (parser(data) == 1)
 					data->exit_code = 1;
 				else
+				{
 					data->exit_code = ft_execute(data);
+				}
 				cleanup(data);
 			}
 			else

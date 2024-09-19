@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/05/31 10:20:46 by natalia       #+#    #+#                 */
-/*   Updated: 2024/09/13 16:35:51 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/18 13:54:48 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	parser(t_data *data)
 				data->cmd_table), 1);
 	head_parser = data->parser;
 	if (fill_parser((*data), &head_parser) != 0)
-		return (error_msg("Failure on parsing\n"), 1);
+		return (error_msg("minishell: Permission denied"), 1);
 	temp = data->parser;
 	create_infiles(&temp, data);
 	return (0);

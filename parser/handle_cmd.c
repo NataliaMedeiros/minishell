@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 20:33:47 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/12 17:10:52 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/16 16:24:02 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,22 @@ bool	has_quotes(char *arg)
 bool	has_flags(char *arg, t_parser **parser)
 {
 	int	i;
+	int	j;
 
 	i = 0;
+	j = 0;
 	while (arg[i] != '\0')
 	{
-		if (arg[i] == '-')
+		while (arg[i] == ' ')
+			i++;
+		if (arg[i] == '-' && arg[i + 1] == 'n' && (arg[i + 2] == 'n'
+				|| arg[i + 2] == ' ' || arg[i + 2] == '\0'))
 		{
-			if (arg[i + 1] == 'n' && (arg[i + 2] == 'n'
-					|| arg[i + 2] == ' ' || arg[i + 2] == '\0')
-				&& (arg[i - 1] == ' ' || i == 0))
-			{
-				(*parser)->flag = true;
-				return (true);
-			}
-			if (arg[i + 1] == ' ' || arg[i + 1] == '-')
-				break ;
+			(*parser)->flag = true;
+			return (true);
 		}
-		if (arg[i] == '"' || arg[i] == '\'')
-			break ;
+		else
+			return (false);
 		i++;
 	}
 	return (false);
@@ -78,7 +76,7 @@ static int	fill_echo_argument(t_parser **parser, t_data data, char *arg, int j)
 	return (free(new_cmd), free(temp), 0);
 }
 
-static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
+int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 {
 	char	*arg;
 	int		len_arg;
@@ -100,29 +98,5 @@ static int	fill_echo_cmd(t_parser	**parser, t_data data, int i)
 	}
 	else
 		(*parser)->cmd[0] = ft_strdup(data.cmd_table[i]);
-	return (0);
-}
-
-int	fill_cmd(t_parser **parser, t_data data, int i, bool *has_pipe)
-{
-	char	*temp;
-
-	if (ft_strncmp(data.cmd_table[i], "echo", 4) == 0)
-	{
-		(*parser)->cmd = ft_calloc(sizeof(char *), 3);
-		if ((*parser)->cmd == NULL)
-			return (1);
-		if (fill_echo_cmd(parser, data, i) == 1)
-			return (1);
-	}
-	else
-	{
-		temp = handle_dollar_sign(data.cmd_table[i], data);
-		(*parser)->cmd = ft_split(temp, ' ');
-		if ((*parser)->cmd == NULL)
-			return (1);
-		free (temp);
-	}
-	*has_pipe = false;
 	return (0);
 }

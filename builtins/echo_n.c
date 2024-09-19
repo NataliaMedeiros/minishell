@@ -6,44 +6,38 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/12 12:27:23 by edribeir      #+#    #+#                 */
-/*   Updated: 2024/09/10 12:13:18 by edribeir      ########   odam.nl         */
+/*   Updated: 2024/09/17 12:08:01 by edribeir      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	put_echo(t_parser *parse, int fd, t_data *data)
+static void	put_echo(t_parser *parser, int fd, t_data *data)
 {
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(parse->cmd[1], "$?") == 0)
+	while (parser->cmd[1][i] != '\0')
 	{
-		while (parse->cmd[1][i] != '\0')
+		if (parser->cmd[1][i] == '$' && parser->cmd[1][i + 1] == '?')
 		{
-			if (parse->cmd[1][i] == '$' && parse->cmd[1][i + 1] == '?')
-			{
-				ft_putnbr_fd(data->exit_code, fd);
-				ft_putchar_fd('\n', fd);
-			}
+			ft_putnbr_fd(data->exit_code, fd);
 			i++;
 		}
-	}
-	else
-	{
-		if (parse->flag == true)
-			ft_putstr_fd(parse->cmd[1], fd);
 		else
-			ft_putendl_fd(fd, parse->cmd[1]);
+			ft_putchar_fd(parser->cmd[1][i], fd);
+		i++;
 	}
+	if (parser->flag == false)
+		ft_putchar_fd('\n', fd);
 	data->exit_code = 0;
 }
 
-void	echo_n(t_parser *parse, int fd, t_data *data)
+void	echo_n(t_parser *parser, int fd, t_data *data)
 {
-	if (parse->cmd[1] != NULL)
+	if (parser->cmd[1] != NULL)
 	{
-		put_echo(parse, fd, data);
+		put_echo(parser, fd, data);
 	}
 	else
 	{

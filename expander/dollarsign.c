@@ -6,7 +6,7 @@
 /*   By: natalia <natalia@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/07/10 15:05:52 by nmedeiro      #+#    #+#                 */
-/*   Updated: 2024/09/04 14:19:01 by nmedeiro      ########   odam.nl         */
+/*   Updated: 2024/09/16 16:16:37 by nmedeiro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,27 @@ bool	check_double_quote(char *line, int i, bool has_double_quote)
 	return (has_double_quote);
 }
 
-char	*replace_dollar_sign(char *l, char *new_line, t_data data)
+void	new_line_handle(char **l, t_data data, char **new_line, int i)
 {
-	int		i;
+	char	*temp;
+
+	temp = NULL;
+	temp = *new_line;
+	*new_line = get_var(*l, i + 1, data);
+	if (temp != NULL)
+		free(temp);
+	*l = *new_line;
+}
+
+char	*replace_dollar_sign(char *l, t_data data, char *new_line)
+{
 	bool	sing_quote;
 	bool	doub_quote;
+	int		i;
 
-	i = 0;
 	sing_quote = false;
 	doub_quote = false;
+	i = 0;
 	while (l[i])
 	{
 		sing_quote = check_single_quote(l, i, sing_quote);
@@ -43,8 +55,7 @@ char	*replace_dollar_sign(char *l, char *new_line, t_data data)
 			&& l[i + 1] != ' ' && l[i + 1] != '?' && (ft_isalpha(l[i + 1]))
 			&& ((!doub_quote && !sing_quote) || doub_quote))
 		{
-			new_line = get_var(l, i + 1, data);
-			l = new_line;
+			new_line_handle(&l, data, &new_line, i);
 			if (!*new_line || ft_strlen(new_line) <= 3)
 				return (new_line);
 		}
@@ -60,9 +71,10 @@ char	*handle_dollar_sign(char *line, t_data data)
 	char	*new_line;
 
 	new_line = NULL;
-	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL)
+	if (ft_strchr(line, '"') != NULL || ft_strchr(line, '\'') == NULL
+		|| ft_strchr(line, '$') != NULL)
 	{
-		new_line = replace_dollar_sign(line, new_line, data);
+		new_line = replace_dollar_sign(line, data, new_line);
 		if (new_line != NULL)
 			return (new_line);
 	}
